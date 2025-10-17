@@ -71,6 +71,14 @@
       "edit": "Edit Place",
       "delete": "Delete Place"
     },
+    "delete": {
+      "title": "Delete Place",
+      "message": "Are you sure you want to delete this place? This action cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "deleting": "Deleting...",
+      "success": "Place '{name}' deleted successfully"
+    },
     "empty": {
       "title": "No places found",
       "description": "Get started by adding your first place"

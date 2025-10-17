@@ -234,6 +234,7 @@
                           </svg>
                         </button>
                         <button
+                          @click="confirmDelete(place)"
                           class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           :title="t('places.actions.delete')"
                         >
@@ -324,6 +325,87 @@
         </div>
       </main>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div
+      v-if="showDeleteModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      @click.self="cancelDelete"
+    >
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              {{ t('places.delete.title') }}
+            </h3>
+            <p class="text-sm text-gray-600 mb-1">
+              {{ t('places.delete.message') }}
+            </p>
+            <p class="text-sm font-semibold text-gray-900">
+              "{{ placeToDelete?.name }}"
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-end space-x-3">
+          <button
+            @click="cancelDelete"
+            :disabled="deleting"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {{ t('places.delete.cancel') }}
+          </button>
+          <button
+            @click="deletePlace"
+            :disabled="deleting"
+            class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          >
+            <svg v-if="deleting" class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>{{ deleting ? t('places.delete.deleting') : t('places.delete.confirm') }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Toast Notification -->
+    <transition
+      enter-active-class="transition ease-out duration-300"
+      enter-from-class="translate-y-2 opacity-0"
+      enter-to-class="translate-y-0 opacity-100"
+      leave-active-class="transition ease-in duration-200"
+      leave-from-class="translate-y-0 opacity-100"
+      leave-to-class="translate-y-2 opacity-0"
+    >
+      <div
+        v-if="showSuccessMessage"
+        class="fixed bottom-6 right-6 z-50"
+      >
+        <div class="bg-green-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3 max-w-md">
+          <div class="flex-shrink-0">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p class="text-sm font-medium">{{ successMessage }}</p>
+          <button
+            @click="showSuccessMessage = false"
+            class="flex-shrink-0 ml-4 text-white hover:text-green-100 transition-colors"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -351,6 +433,15 @@ const places = ref([])
 const loading = ref(false)
 const error = ref(null)
 
+// Delete State
+const showDeleteModal = ref(false)
+const placeToDelete = ref(null)
+const deleting = ref(false)
+
+// Success notification
+const showSuccessMessage = ref(false)
+const successMessage = ref('')
+
 // Fetch places from API
 const fetchPlaces = async () => {
   loading.value = true
@@ -370,6 +461,65 @@ const fetchPlaces = async () => {
 onMounted(() => {
   fetchPlaces()
 })
+
+// Delete Functions
+const confirmDelete = (place) => {
+  placeToDelete.value = place
+  showDeleteModal.value = true
+}
+
+const cancelDelete = () => {
+  showDeleteModal.value = false
+  placeToDelete.value = null
+}
+
+const deletePlace = async () => {
+  console.log('deletePlace called')
+  console.log('placeToDelete:', placeToDelete.value)
+  
+  if (!placeToDelete.value) {
+    console.log('No place to delete, returning')
+    return
+  }
+  
+  deleting.value = true
+  console.log('Sending DELETE request for ID:', placeToDelete.value.id)
+  console.log('Token from localStorage:', localStorage.getItem('token'))
+  
+  try {
+    const response = await apiClient.delete(`/api/places/${placeToDelete.value.id}`)
+    console.log('Delete successful:', response)
+    
+    // Store the name for the success message
+    const deletedPlaceName = placeToDelete.value.name
+    
+    // Remove from local array
+    places.value = places.value.filter(p => p.id !== placeToDelete.value.id)
+    
+    // Close modal
+    showDeleteModal.value = false
+    placeToDelete.value = null
+    
+    // Show success message
+    successMessage.value = t('places.delete.success', { name: deletedPlaceName })
+    showSuccessMessage.value = true
+    
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+      showSuccessMessage.value = false
+    }, 3000)
+    
+  } catch (err) {
+    console.error('Error deleting place:', err)
+    console.error('Error response:', err.response)
+    console.error('Error response data:', err.response?.data)
+    console.error('Error response status:', err.response?.status)
+    console.error('Error response headers:', err.response?.headers)
+    error.value = err.response?.data?.message || 'Failed to delete place'
+  } finally {
+    deleting.value = false
+  }
+}
 
 // Computed: Filtered Places
 const filteredPlaces = computed(() => {

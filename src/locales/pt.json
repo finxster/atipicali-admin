@@ -71,6 +71,14 @@
       "edit": "Editar Local",
       "delete": "Excluir Local"
     },
+    "delete": {
+      "title": "Excluir Local",
+      "message": "Tem certeza de que deseja excluir este local? Esta ação não pode ser desfeita.",
+      "confirm": "Excluir",
+      "cancel": "Cancelar",
+      "deleting": "Excluindo...",
+      "success": "Local '{name}' excluído com sucesso"
+    },
     "empty": {
       "title": "Nenhum local encontrado",
       "description": "Comece adicionando seu primeiro local"
