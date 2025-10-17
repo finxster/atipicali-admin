@@ -142,39 +142,6 @@ node --version
 npm --version
 ```
 
-## 🚀 Installation
-
-### Option 1: Using the Setup Script
-
-1. **Save the setup script** as `setup-atipicali.sh`
-
-2. **Make it executable:**
-```bash
-chmod +x setup-atipicali.sh
-```
-
-3. **Run the script:**
-```bash
-./setup-atipicali.sh
-```
-
-The script will create the project structure, generate all files, and install dependencies automatically.
-
-### Option 2: Manual Installation
-
-1. **Clone or create the project directory:**
-```bash
-mkdir atipicali-admin
-cd atipicali-admin
-```
-
-2. **Install dependencies:**
-```bash
-npm install
-```
-
-3. **Copy all project files** from the provided structure into their respective locations.
-
 ## ⚙️ Environment Configuration
 
 The application uses environment variables to configure the API base URL for different environments.
@@ -270,53 +237,6 @@ http://localhost:4173
 ```
 
 ## 🔌 API Integration
-
-### Backend Requirements
-
-The application expects the following API endpoints:
-
-#### Authentication Endpoints
-
-**1. Login**
-```http
-POST /auth/login
-Content-Type: application/json
-
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
-```
-
-**Expected Response:**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "id": 1,
-    "email": "user@example.com",
-    "name": "John Doe"
-  }
-}
-```
-
-**2. Register**
-```http
-POST /auth/register
-Content-Type: application/json
-
-{
-  "email": "newuser@example.com",
-  "password": "password123"
-}
-```
-
-**Expected Response:**
-```json
-{
-  "message": "User registered successfully"
-}
-```
 
 ### Axios Configuration
 
