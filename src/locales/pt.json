@@ -27,8 +27,59 @@
   },
   "nav": {
     "dashboard": "Painel",
+    "places": "Locais",
     "profile": "Perfil",
     "settings": "Configurações"
+  },
+  "places": {
+    "title": "Locais",
+    "subtitle": "Gerencie todos os seus locais e lugares",
+    "addNew": "Adicionar Novo Local",
+    "searchPlaceholder": "Pesquisar locais por nome, endereço ou descrição...",
+    "allStatuses": "Todos os Status",
+    "ascending": "Ordem Crescente",
+    "descending": "Ordem Decrescente",
+    "hasImage": "Tem Imagem",
+    "noImage": "Sem Imagem",
+    "loading": "Carregando locais...",
+    "status": {
+      "PENDING": "Pendente",
+      "CHANGES_REQUESTED": "Alterações Solicitadas",
+      "APPROVED": "Aprovado",
+      "REJECTED": "Rejeitado"
+    },
+    "error": {
+      "title": "Erro ao carregar locais",
+      "retry": "Tentar Novamente"
+    },
+    "sortBy": {
+      "name": "Ordenar por Nome",
+      "rating": "Ordenar por Avaliação",
+      "status": "Ordenar por Status",
+      "date": "Ordenar por Data"
+    },
+    "table": {
+      "name": "Nome",
+      "address": "Endereço",
+      "status": "Status",
+      "rating": "Avaliação",
+      "image": "Imagem",
+      "actions": "Ações"
+    },
+    "actions": {
+      "view": "Ver Detalhes",
+      "edit": "Editar Local",
+      "delete": "Excluir Local"
+    },
+    "empty": {
+      "title": "Nenhum local encontrado",
+      "description": "Comece adicionando seu primeiro local"
+    },
+    "pagination": {
+      "showing": "Mostrando",
+      "of": "de",
+      "entries": "entradas"
+    }
   },
   "errors": {
     "required": "Este campo é obrigatório",

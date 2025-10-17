@@ -31,14 +31,14 @@ export const useAuthStore = defineStore('auth', {
     async login(email, password) {
       try {
         const response = await apiClient.post('/api/auth/login', { email, password })
-        const { token, user } = response.data
+        const { token, email: userEmail, name } = response.data
         
         this.token = token
-        this.user = user
+        this.user = { email: userEmail, name }
         this.isAuthenticated = true
         
         localStorage.setItem('token', token)
-        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('user', JSON.stringify(this.user))
         
         router.push('/dashboard')
         return { success: true }

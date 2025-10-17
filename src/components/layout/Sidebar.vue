@@ -1,5 +1,16 @@
 <template>
   <aside class="w-64 bg-white border-r border-gray-200 min-h-[calc(100vh-73px)]">
+    <!-- Logo Section -->
+    <div class="p-4 border-b border-gray-200">
+      <div class="flex items-center space-x-3">
+        <img src="@/assets/logo.png" alt="AtipicALI Logo" class="w-10 h-10" />
+        <div>
+          <h2 class="text-lg font-bold text-atipical-blue">{{ t('app.title') }}</h2>
+          <p class="text-xs text-gray-500">{{ t('app.subtitle') }}</p>
+        </div>
+      </div>
+    </div>
+
     <nav class="p-4 space-y-2">
       <router-link
         to="/dashboard"
@@ -10,6 +21,18 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
         <span class="font-medium">{{ t('nav.dashboard') }}</span>
+      </router-link>
+
+      <router-link
+        to="/places"
+        class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+        active-class="bg-atipical-blue text-white hover:bg-blue-600"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span class="font-medium">{{ t('nav.places') }}</span>
       </router-link>
 
       <a

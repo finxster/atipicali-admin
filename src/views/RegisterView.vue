@@ -2,6 +2,9 @@
   <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-teal-100 px-4">
     <div class="max-w-md w-full">
       <div class="text-center mb-8">
+        <div class="flex justify-center mb-4">
+          <img src="@/assets/logo.png" alt="AtipicALI Logo" class="w-24 h-24" />
+        </div>
         <h1 class="text-4xl font-bold text-atipical-green mb-2">{{ t('app.title') }}</h1>
         <p class="text-gray-600">{{ t('app.subtitle') }}</p>
       </div>

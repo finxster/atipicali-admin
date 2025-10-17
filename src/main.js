@@ -29,4 +29,9 @@ app.use(pinia)
 app.use(router)
 app.use(i18n)
 
+// Initialize auth from localStorage before mounting
+import { useAuthStore } from './store/auth'
+const authStore = useAuthStore()
+authStore.initializeAuth()
+
 app.mount('#app')

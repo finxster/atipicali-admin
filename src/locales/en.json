@@ -27,8 +27,59 @@
   },
   "nav": {
     "dashboard": "Dashboard",
+    "places": "Places",
     "profile": "Profile",
     "settings": "Settings"
+  },
+  "places": {
+    "title": "Places",
+    "subtitle": "Manage all your places and locations",
+    "addNew": "Add New Place",
+    "searchPlaceholder": "Search places by name, address, or description...",
+    "allStatuses": "All Statuses",
+    "ascending": "Sort Ascending",
+    "descending": "Sort Descending",
+    "hasImage": "Has Image",
+    "noImage": "No Image",
+    "loading": "Loading places...",
+    "status": {
+      "PENDING": "Pending",
+      "CHANGES_REQUESTED": "Changes Requested",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "error": {
+      "title": "Error loading places",
+      "retry": "Try Again"
+    },
+    "sortBy": {
+      "name": "Sort by Name",
+      "rating": "Sort by Rating",
+      "status": "Sort by Status",
+      "date": "Sort by Date"
+    },
+    "table": {
+      "name": "Name",
+      "address": "Address",
+      "status": "Status",
+      "rating": "Rating",
+      "image": "Image",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "View Details",
+      "edit": "Edit Place",
+      "delete": "Delete Place"
+    },
+    "empty": {
+      "title": "No places found",
+      "description": "Get started by adding your first place"
+    },
+    "pagination": {
+      "showing": "Showing",
+      "of": "of",
+      "entries": "entries"
+    }
   },
   "errors": {
     "required": "This field is required",

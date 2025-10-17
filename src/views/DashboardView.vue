@@ -6,7 +6,7 @@
       <Sidebar />
       
       <main class="flex-1 p-6">
-        <div class="max-w-7xl mx-auto">
+        <div class="flex-1">
           <!-- Main content card wrapper for depth effect -->
           <div class="bg-white rounded-xl shadow-lg p-6">
             <!-- Header -->

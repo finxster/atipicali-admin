@@ -2,9 +2,12 @@
   <nav class="bg-white shadow-sm border-b border-gray-200">
     <div class="px-6 py-4">
       <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-          <h1 class="text-2xl font-bold text-atipical-blue">{{ t('app.title') }}</h1>
-          <span class="text-sm text-gray-500">{{ t('app.subtitle') }}</span>
+        <div class="flex items-center space-x-3">
+          <img src="@/assets/logo.png" alt="AtipicALI Logo" class="w-8 h-8" />
+          <div class="flex items-center space-x-2">
+            <h1 class="text-2xl font-bold text-atipical-blue">{{ t('app.title') }}</h1>
+            <span class="text-sm text-gray-500">{{ t('app.subtitle') }}</span>
+          </div>
         </div>
 
         <div class="flex items-center space-x-4">
@@ -12,8 +15,8 @@
           
           <div class="flex items-center space-x-3 border-l pl-4">
             <div class="text-right">
-              <p class="text-sm font-medium text-gray-900">{{ authStore.user?.email }}</p>
-              <p class="text-xs text-gray-500">Administrator</p>
+              <p class="text-sm font-medium text-gray-900">{{ authStore.user?.name || authStore.user?.email }}</p>
+              <p class="text-xs text-gray-500">{{ authStore.user?.email }}</p>
             </div>
             
             <button
