@@ -114,25 +114,25 @@
 
             <!-- Table Section -->
             <div v-else class="flex-1 overflow-x-auto overflow-y-auto">
-              <table class="w-full">
+              <table class="w-full table-fixed">
                 <thead class="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
                       {{ t('places.table.name') }}
                     </th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">
                       {{ t('places.table.address') }}
                     </th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
                       {{ t('places.table.status') }}
                     </th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
                       {{ t('places.table.rating') }}
                     </th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">
                       {{ t('places.table.image') }}
                     </th>
-                    <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">
                       {{ t('places.table.actions') }}
                     </th>
                   </tr>
@@ -144,37 +144,28 @@
                     class="hover:bg-gray-50 transition-colors"
                   >
                     <!-- Name & Description -->
-                    <td class="px-6 py-4">
-                      <div class="flex items-start space-x-3">
-                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <svg class="w-5 h-5 text-atipical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <p class="text-sm font-semibold text-gray-900 truncate">{{ place.name }}</p>
-                          <p class="text-xs text-gray-500 truncate mt-0.5">{{ place.description }}</p>
-                        </div>
+                    <td class="px-4 py-3">
+                      <div class="min-w-0">
+                        <p class="text-sm font-semibold text-gray-900 truncate">{{ place.name }}</p>
+                        <p class="text-xs text-gray-500 truncate" :title="place.description">
+                          {{ place.description.length > 50 ? place.description.substring(0, 50) + '...' : place.description }}
+                        </p>
                       </div>
                     </td>
 
                     <!-- Address -->
-                    <td class="px-6 py-4">
-                      <div class="max-w-xs">
-                        <p class="text-sm text-gray-700 truncate">{{ place.address }}</p>
-                        <p v-if="place.comment" class="text-xs text-gray-500 truncate mt-0.5">{{ place.comment }}</p>
-                      </div>
+                    <td class="px-4 py-3">
+                      <p class="text-sm text-gray-700 truncate" :title="place.address">{{ place.address }}</p>
                     </td>
 
                     <!-- Status -->
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-3">
                       <span
-                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium"
+                        class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap"
                         :class="getStatusClass(place.status)"
                       >
                         <span
-                          class="w-1.5 h-1.5 rounded-full mr-1.5"
+                          class="w-1.5 h-1.5 rounded-full mr-1"
                           :class="getStatusDotClass(place.status)"
                         ></span>
                         {{ t(`places.status.${place.status}`) }}
@@ -182,8 +173,8 @@
                     </td>
 
                     <!-- Rating -->
-                    <td class="px-6 py-4">
-                      <div class="flex items-center space-x-1">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center space-x-0.5">
                         <svg
                           v-for="star in 5"
                           :key="star"
@@ -199,31 +190,34 @@
                     </td>
 
                     <!-- Image -->
-                    <td class="px-6 py-4">
-                      <div class="flex items-center">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center justify-center">
                         <span
                           v-if="place.hasImage"
-                          class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                          class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-100 text-green-800"
+                          :title="t('places.hasImage')"
                         >
-                          <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
-                          {{ t('places.hasImage') }}
                         </span>
                         <span
                           v-else
-                          class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600"
+                          class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400"
+                          :title="t('places.noImage')"
                         >
-                          {{ t('places.noImage') }}
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
                         </span>
                       </div>
                     </td>
 
                     <!-- Actions -->
-                    <td class="px-6 py-4 text-right">
-                      <div class="flex items-center justify-end space-x-2">
+                    <td class="px-4 py-3 text-right">
+                      <div class="flex items-center justify-end space-x-1">
                         <button
-                          class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          class="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           :title="t('places.actions.view')"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,7 +226,7 @@
                           </svg>
                         </button>
                         <button
-                          class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                          class="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                           :title="t('places.actions.edit')"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +234,7 @@
                           </svg>
                         </button>
                         <button
-                          class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          class="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           :title="t('places.actions.delete')"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

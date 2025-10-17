@@ -1,16 +1,5 @@
 <template>
   <aside class="w-64 bg-white border-r border-gray-200 min-h-[calc(100vh-73px)]">
-    <!-- Logo Section -->
-    <div class="p-4 border-b border-gray-200">
-      <div class="flex items-center space-x-3">
-        <img src="@/assets/logo.png" alt="AtipicALI Logo" class="w-10 h-10" />
-        <div>
-          <h2 class="text-lg font-bold text-atipical-blue">{{ t('app.title') }}</h2>
-          <p class="text-xs text-gray-500">{{ t('app.subtitle') }}</p>
-        </div>
-      </div>
-    </div>
-
     <nav class="p-4 space-y-2">
       <router-link
         to="/dashboard"

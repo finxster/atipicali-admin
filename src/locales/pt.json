@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "AtipicALI",
-    "subtitle": "Painel Administrativo"
+    "title": "AtipicALI Admin",
+    "subtitle": ""
   },
   "auth": {
     "login": "Entrar",
