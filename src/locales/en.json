@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "AtipicALI",
+    "subtitle": "Admin Panel"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Sign Up",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "welcome": "Welcome back",
+    "createAccount": "Create your account",
+    "loginSubtitle": "Sign in to access your admin panel",
+    "registerSubtitle": "Get started with AtipicALI"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome to AtipicALI",
+    "description": "Your admin panel is ready to use"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "errors": {
+    "required": "This field is required",
+    "emailInvalid": "Please enter a valid email",
+    "passwordMismatch": "Passwords do not match",
+    "loginFailed": "Login failed. Please check your credentials",
+    "registerFailed": "Registration failed. Please try again"
+  },
+  "success": {
+    "registerSuccess": "Account created successfully! Please login."
+  }
+}
