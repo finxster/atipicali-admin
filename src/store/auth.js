@@ -14,10 +14,17 @@ export const useAuthStore = defineStore('auth', {
       const token = localStorage.getItem('token')
       const user = localStorage.getItem('user')
       
-      if (token && user) {
-        this.token = token
-        this.user = JSON.parse(user)
-        this.isAuthenticated = true
+      if (token && user && user !== 'undefined') {
+        try {
+          this.token = token
+          this.user = JSON.parse(user)
+          this.isAuthenticated = true
+        } catch (error) {
+          console.error('Error parsing user data:', error)
+          // Clear invalid data
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+        }
       }
     },
 
