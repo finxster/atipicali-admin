@@ -1,0 +1,610 @@
+<template>
+  <Teleport to="body">
+    <Transition
+      enter-active-class="transition-opacity duration-200"
+      leave-active-class="transition-opacity duration-200"
+      enter-from-class="opacity-0"
+      leave-to-class="opacity-0"
+    >
+      <div
+        v-if="isOpen"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+        @click.self="closeModal"
+      >
+        <Transition
+          enter-active-class="transition-all duration-200"
+          leave-active-class="transition-all duration-200"
+          enter-from-class="opacity-0 scale-95"
+          leave-to-class="opacity-0 scale-95"
+        >
+          <div
+            v-if="isOpen"
+            class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
+          >
+            <!-- Header -->
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900">{{ t('places.editPlace.title') }}</h2>
+                <p class="text-sm text-gray-500 mt-1">{{ t('places.editPlace.subtitle') }}</p>
+              </div>
+              <button
+                @click="closeModal"
+                class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Form Content -->
+            <div class="flex-1 overflow-y-auto p-6">
+              <form @submit.prevent="handleSubmit" class="space-y-6">
+                <!-- ID (Read-only) -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                    {{ t('places.editPlace.id') }}
+                  </label>
+                  <p class="text-sm font-mono text-gray-700 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
+                    {{ formData.id }}
+                  </p>
+                </div>
+
+                <!-- Name -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.editPlace.name') }}
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    v-model="formData.name"
+                    type="text"
+                    required
+                    :placeholder="t('places.editPlace.namePlaceholder')"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                    :class="{ 'border-red-500': errors.name }"
+                  />
+                  <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+                </div>
+
+                <!-- Description -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.editPlace.description') }}
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    v-model="formData.description"
+                    required
+                    rows="3"
+                    :placeholder="t('places.editPlace.descriptionPlaceholder')"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all resize-none"
+                    :class="{ 'border-red-500': errors.description }"
+                  ></textarea>
+                  <p v-if="errors.description" class="mt-1 text-sm text-red-600">{{ errors.description }}</p>
+                </div>
+
+                <!-- Address & Location Section -->
+                <div class="bg-blue-50 rounded-lg p-4 space-y-4">
+                  <div class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div class="flex-1">
+                      <h3 class="text-sm font-semibold text-gray-900">{{ t('places.editPlace.locationInfo') }}</h3>
+                      <p class="text-xs text-gray-600 mt-1">{{ t('places.editPlace.locationHelp') }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Address -->
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                      {{ t('places.editPlace.address') }}
+                      <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                      <input
+                        ref="addressInput"
+                        v-model="formData.address"
+                        type="text"
+                        required
+                        :placeholder="t('places.editPlace.addressPlaceholder')"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                        :class="{ 'border-red-500': errors.address }"
+                        @input="handleAddressInput"
+                        @focus="showAddressSuggestions = true"
+                        @blur="handleAddressBlur"
+                        @keydown.down.prevent="navigateSuggestions(1)"
+                        @keydown.up.prevent="navigateSuggestions(-1)"
+                        @keydown.enter.prevent="selectSuggestion(selectedSuggestionIndex)"
+                        @keydown.escape="showAddressSuggestions = false"
+                        autocomplete="off"
+                      />
+                      
+                      <!-- Autocomplete Dropdown -->
+                      <div
+                        v-if="showAddressSuggestions && addressSuggestions.length > 0"
+                        class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+                      >
+                        <button
+                          v-for="(suggestion, index) in addressSuggestions"
+                          :key="suggestion.place_id"
+                          type="button"
+                          @mousedown.prevent="selectSuggestion(index)"
+                          class="w-full px-4 py-2.5 text-left hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0 flex items-start space-x-2"
+                          :class="{ 'bg-blue-50': index === selectedSuggestionIndex }"
+                        >
+                          <svg class="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-gray-900 truncate">{{ suggestion.structured_formatting?.main_text || suggestion.description }}</p>
+                            <p class="text-xs text-gray-500 truncate">{{ suggestion.structured_formatting?.secondary_text || '' }}</p>
+                          </div>
+                        </button>
+                      </div>
+                      
+                      <!-- Loading indicator -->
+                      <div
+                        v-if="isLoadingAddressSuggestions"
+                        class="absolute right-3 top-1/2 -translate-y-1/2"
+                      >
+                        <svg class="w-5 h-5 animate-spin text-blue-600" fill="none" viewBox="0 0 24 24">
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <p v-if="errors.address" class="mt-1 text-sm text-red-600">{{ errors.address }}</p>
+                  </div>
+
+                  <!-- Map Preview -->
+                  <div v-if="hasValidCoordinates" class="rounded-lg overflow-hidden border border-gray-300">
+                    <div class="relative bg-gray-100 h-48">
+                      <iframe
+                        :src="mapPreviewUrl"
+                        class="w-full h-full border-0"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Map preview"
+                      ></iframe>
+                      <a
+                        :href="mapPreviewLink"
+                        target="_blank"
+                        class="absolute top-2 right-2 bg-white px-3 py-1.5 rounded-lg shadow-md hover:shadow-lg transition-shadow text-xs font-medium text-gray-700 hover:text-atipical-blue flex items-center space-x-1"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        <span>{{ t('places.editPlace.openMap') }}</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Comment (Optional) -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.editPlace.comment') }}
+                    <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.editPlace.optional') }}</span>
+                  </label>
+                  <textarea
+                    v-model="formData.comment"
+                    rows="2"
+                    :placeholder="t('places.editPlace.commentPlaceholder')"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all resize-none"
+                  ></textarea>
+                </div>
+
+                <!-- Image URL -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.editPlace.imageUrl') }}
+                    <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.editPlace.optional') }}</span>
+                  </label>
+                  <input
+                    v-model="formData.imageUrl"
+                    type="url"
+                    :placeholder="t('places.editPlace.imageUrlPlaceholder')"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                    :class="{ 'border-red-500': errors.imageUrl }"
+                    @input="handleImageUrlInput"
+                  />
+                  <p v-if="errors.imageUrl" class="mt-1 text-sm text-red-600">{{ errors.imageUrl }}</p>
+                  
+                  <!-- Image Preview -->
+                  <div v-if="imagePreview" class="mt-3 rounded-lg overflow-hidden border border-gray-300">
+                    <img
+                      :src="imagePreview"
+                      :alt="t('places.editPlace.imagePreview')"
+                      class="w-full h-48 object-cover"
+                      @error="handleImageError"
+                    />
+                  </div>
+                </div>
+
+                <!-- Rating -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.editPlace.rating') }}
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <div class="flex items-center space-x-2">
+                    <button
+                      v-for="star in 5"
+                      :key="star"
+                      type="button"
+                      @click="formData.rating = star"
+                      class="focus:outline-none transition-transform hover:scale-110"
+                    >
+                      <svg
+                        class="w-8 h-8"
+                        :class="star <= formData.rating ? 'text-yellow-400' : 'text-gray-300'"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </button>
+                    <span class="text-lg font-semibold text-gray-700 ml-2">{{ formData.rating }}/5</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-end space-x-3 flex-shrink-0">
+              <button
+                type="button"
+                @click="closeModal"
+                :disabled="isSubmitting"
+                class="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {{ t('places.editPlace.cancel') }}
+              </button>
+              <button
+                type="submit"
+                @click="handleSubmit"
+                :disabled="isSubmitting || !isFormValid"
+                class="px-5 py-2.5 bg-atipical-blue text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              >
+                <svg v-if="isSubmitting" class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>{{ isSubmitting ? t('places.editPlace.submitting') : t('places.editPlace.submit') }}</span>
+              </button>
+            </div>
+          </div>
+        </Transition>
+      </div>
+    </Transition>
+  </Teleport>
+</template>
+
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import apiClient from '@/utils/axios'
+
+const { t } = useI18n()
+
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true
+  },
+  place: {
+    type: Object,
+    default: null
+  }
+})
+
+const emit = defineEmits(['close', 'success'])
+
+const formData = ref({
+  id: '',
+  name: '',
+  description: '',
+  address: '',
+  latitude: 0,
+  longitude: 0,
+  comment: '',
+  imageUrl: '',
+  rating: 5,
+  status: 'PENDING'
+})
+
+const errors = ref({})
+const isSubmitting = ref(false)
+const imagePreview = ref(null)
+const imageLoadError = ref(false)
+
+// Address autocomplete state
+const addressInput = ref(null)
+const addressSuggestions = ref([])
+const showAddressSuggestions = ref(false)
+const isLoadingAddressSuggestions = ref(false)
+const selectedSuggestionIndex = ref(0)
+let addressDebounceTimer = null
+
+// Watch for place changes to populate form
+watch(() => props.place, (newPlace) => {
+  if (newPlace && props.isOpen) {
+    formData.value = {
+      id: newPlace.id,
+      name: newPlace.name || '',
+      description: newPlace.description || '',
+      address: newPlace.address || '',
+      latitude: newPlace.latitude || 0,
+      longitude: newPlace.longitude || 0,
+      comment: newPlace.comment || '',
+      imageUrl: newPlace.imageUrl || '',
+      rating: newPlace.rating || 5,
+      status: newPlace.status || 'PENDING'
+    }
+    
+    // Set image preview if URL exists
+    if (newPlace.imageUrl && newPlace.imageUrl.trim()) {
+      imagePreview.value = newPlace.imageUrl
+    } else {
+      imagePreview.value = null
+    }
+    imageLoadError.value = false
+  }
+}, { immediate: true })
+
+// Check if coordinates are valid
+const hasValidCoordinates = computed(() => {
+  const lat = formData.value.latitude
+  const lng = formData.value.longitude
+  return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180 && (lat !== 0 || lng !== 0)
+})
+
+// Generate map preview URL
+const mapPreviewUrl = computed(() => {
+  if (!hasValidCoordinates.value) return null
+  const { latitude, longitude } = formData.value
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`
+})
+
+// Generate map link for opening in browser
+const mapPreviewLink = computed(() => {
+  if (!hasValidCoordinates.value) return '#'
+  const { latitude, longitude } = formData.value
+  return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}&zoom=15`
+})
+
+// Form validation
+const isFormValid = computed(() => {
+  return (
+    formData.value.name.trim() !== '' &&
+    formData.value.description.trim() !== '' &&
+    formData.value.address.trim() !== '' &&
+    hasValidCoordinates.value &&
+    formData.value.rating >= 1 &&
+    formData.value.rating <= 5
+  )
+})
+
+// Watch for image URL changes
+watch(() => formData.value.imageUrl, (newUrl) => {
+  if (newUrl && !imageLoadError.value) {
+    imagePreview.value = newUrl
+  } else {
+    imagePreview.value = null
+  }
+  imageLoadError.value = false
+})
+
+// Handle address input with autocomplete
+const handleAddressInput = () => {
+  if (errors.value.address) {
+    delete errors.value.address
+  }
+  
+  if (addressDebounceTimer) {
+    clearTimeout(addressDebounceTimer)
+  }
+  
+  const query = formData.value.address.trim()
+  
+  if (query.length < 3) {
+    addressSuggestions.value = []
+    showAddressSuggestions.value = false
+    return
+  }
+  
+  addressDebounceTimer = setTimeout(async () => {
+    await fetchAddressSuggestions(query)
+  }, 300)
+}
+
+// Fetch address suggestions from Google Places API via proxy
+const fetchAddressSuggestions = async (query) => {
+  if (!query || query.length < 3) return
+  
+  isLoadingAddressSuggestions.value = true
+  selectedSuggestionIndex.value = 0
+  
+  try {
+    const encodedQuery = encodeURIComponent(query)
+    const googleApiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodedQuery}&types=address`
+    const proxyUrl = `https://atipicali.com/maps-proxy/?url=${encodeURIComponent(googleApiUrl)}`
+    
+    const response = await fetch(proxyUrl)
+    const data = await response.json()
+    
+    if (data.status === 'OK' && data.predictions) {
+      addressSuggestions.value = data.predictions
+      showAddressSuggestions.value = true
+    } else {
+      addressSuggestions.value = []
+      showAddressSuggestions.value = false
+    }
+  } catch (error) {
+    console.error('Error fetching address suggestions:', error)
+    addressSuggestions.value = []
+    showAddressSuggestions.value = false
+  } finally {
+    isLoadingAddressSuggestions.value = false
+  }
+}
+
+// Navigate through suggestions with keyboard
+const navigateSuggestions = (direction) => {
+  if (addressSuggestions.value.length === 0) return
+  
+  selectedSuggestionIndex.value += direction
+  
+  if (selectedSuggestionIndex.value < 0) {
+    selectedSuggestionIndex.value = addressSuggestions.value.length - 1
+  } else if (selectedSuggestionIndex.value >= addressSuggestions.value.length) {
+    selectedSuggestionIndex.value = 0
+  }
+}
+
+// Select a suggestion
+const selectSuggestion = async (index) => {
+  if (index < 0 || index >= addressSuggestions.value.length) return
+  
+  const suggestion = addressSuggestions.value[index]
+  formData.value.address = suggestion.description
+  
+  showAddressSuggestions.value = false
+  addressSuggestions.value = []
+  
+  await fetchPlaceDetails(suggestion.place_id)
+}
+
+// Fetch place details to get coordinates
+const fetchPlaceDetails = async (placeId) => {
+  try {
+    const googleApiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=geometry`
+    const proxyUrl = `https://atipicali.com/maps-proxy/?url=${encodeURIComponent(googleApiUrl)}`
+    
+    const response = await fetch(proxyUrl)
+    const data = await response.json()
+    
+    if (data.status === 'OK' && data.result?.geometry?.location) {
+      const location = data.result.geometry.location
+      formData.value.latitude = parseFloat(location.lat.toFixed(6))
+      formData.value.longitude = parseFloat(location.lng.toFixed(6))
+    }
+  } catch (error) {
+    console.error('Error fetching place details:', error)
+  }
+}
+
+// Handle address blur
+const handleAddressBlur = () => {
+  setTimeout(() => {
+    showAddressSuggestions.value = false
+  }, 200)
+}
+
+// Handle image URL input
+const handleImageUrlInput = () => {
+  if (errors.value.imageUrl) {
+    delete errors.value.imageUrl
+  }
+  imageLoadError.value = false
+}
+
+// Handle image load error
+const handleImageError = () => {
+  imageLoadError.value = true
+  imagePreview.value = null
+  errors.value.imageUrl = t('places.editPlace.imageLoadError')
+}
+
+// Validate form
+const validateForm = () => {
+  errors.value = {}
+  
+  if (!formData.value.name.trim()) {
+    errors.value.name = t('places.editPlace.errors.nameRequired')
+  }
+  
+  if (!formData.value.description.trim()) {
+    errors.value.description = t('places.editPlace.errors.descriptionRequired')
+  }
+  
+  if (!formData.value.address.trim()) {
+    errors.value.address = t('places.editPlace.errors.addressRequired')
+  }
+  
+  if (!hasValidCoordinates.value) {
+    errors.value.address = t('places.editPlace.errors.invalidCoordinates')
+  }
+  
+  if (formData.value.rating < 1 || formData.value.rating > 5) {
+    errors.value.rating = t('places.editPlace.errors.ratingInvalid')
+  }
+  
+  return Object.keys(errors.value).length === 0
+}
+
+// Handle form submission
+const handleSubmit = async () => {
+  if (!validateForm()) return
+  
+  isSubmitting.value = true
+  
+  try {
+    const payload = {
+      name: formData.value.name.trim(),
+      description: formData.value.description.trim(),
+      address: formData.value.address.trim(),
+      latitude: formData.value.latitude,
+      longitude: formData.value.longitude,
+      comment: formData.value.comment.trim(),
+      imageUrl: formData.value.imageUrl.trim(),
+      rating: formData.value.rating
+    }
+    
+    const response = await apiClient.put(`/api/places/${formData.value.id}`, payload)
+    
+    // Success!
+    isSubmitting.value = false
+    emit('success', response.data)
+    closeModal()
+  } catch (error) {
+    console.error('Error updating place:', error)
+    
+    if (error.response?.data?.errors) {
+      errors.value = error.response.data.errors
+    } else {
+      errors.value.general = error.response?.data?.message || t('places.editPlace.errors.general')
+    }
+    isSubmitting.value = false
+  }
+}
+
+// Close modal
+const closeModal = () => {
+  if (!isSubmitting.value) {
+    errors.value = {}
+    imageLoadError.value = false
+    addressSuggestions.value = []
+    showAddressSuggestions.value = false
+    emit('close')
+  }
+}
+
+// Close on Escape key
+const handleEscape = (e) => {
+  if (e.key === 'Escape' && props.isOpen && !isSubmitting.value) {
+    closeModal()
+  }
+}
+
+// Add event listener for Escape key
+watch(() => props.isOpen, (isOpen) => {
+  if (isOpen) {
+    document.addEventListener('keydown', handleEscape)
+  } else {
+    document.removeEventListener('keydown', handleEscape)
+  }
+})
+</script>
