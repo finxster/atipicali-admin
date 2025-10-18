@@ -33,6 +33,27 @@
               </div>
             </div>
 
+            <!-- Error State -->
+            <div v-if="error" class="bg-red-50 border-l-4 border-red-500 rounded-lg shadow-sm p-4 mb-6">
+              <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0">
+                  <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-sm font-medium text-red-800">Unable to load dashboard data</h3>
+                  <p class="text-sm text-red-700 mt-1">{{ error }}</p>
+                  <button
+                    @click="fetchDashboardStats"
+                    class="mt-3 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 text-sm font-medium rounded-lg transition-colors"
+                  >
+                    Retry
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <!-- Total Users Card -->
@@ -40,7 +61,8 @@
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Total Users</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ loading ? '...' : dashboardStats.totalUsers }}</p>
+                    <SkeletonLoader v-if="loading" width="80px" height="2rem" custom-class="mb-1" />
+                    <p v-else class="text-2xl font-bold text-gray-900">{{ dashboardStats.totalUsers }}</p>
                     <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
                   <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -56,7 +78,8 @@
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Total Places</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ loading ? '...' : dashboardStats.totalPlaces }}</p>
+                    <SkeletonLoader v-if="loading" width="80px" height="2rem" custom-class="mb-1" />
+                    <p v-else class="text-2xl font-bold text-gray-900">{{ dashboardStats.totalPlaces }}</p>
                     <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
                   <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -274,12 +297,14 @@ import apiClient from '@/utils/axios'
 import Navbar from '@/components/layout/Navbar.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
 import AddPlaceModal from '@/components/AddPlaceModal.vue'
+import SkeletonLoader from '@/components/SkeletonLoader.vue'
 
 const { t } = useI18n()
 const apiUrl = computed(() => import.meta.env.VITE_API_BASE_URL)
 
 // Dashboard statistics
 const loading = ref(true)
+const error = ref(null)
 const dashboardStats = ref({
   totalUsers: 0,
   totalPlaces: 0
@@ -296,11 +321,26 @@ const successMessage = ref('')
 const fetchDashboardStats = async () => {
   try {
     loading.value = true
+    error.value = null
     const response = await apiClient.get('/api/dashboard')
     dashboardStats.value = response.data
-  } catch (error) {
-    console.error('Error fetching dashboard stats:', error)
-    // Keep default values on error
+  } catch (err) {
+    console.error('Error fetching dashboard stats:', err)
+    
+    // Provide user-friendly error messages
+    if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
+      error.value = 'Unable to connect to the server. Please check if the backend is running.'
+    } else if (err.response) {
+      error.value = err.response.data?.message || `Server error: ${err.response.status}`
+    } else {
+      error.value = err.message || 'An unexpected error occurred while loading dashboard data.'
+    }
+    
+    // Keep showing 0 values when there's an error
+    dashboardStats.value = {
+      totalUsers: 0,
+      totalPlaces: 0
+    }
   } finally {
     loading.value = false
   }

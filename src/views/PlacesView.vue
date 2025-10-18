@@ -87,11 +87,71 @@
             </div>
 
             <!-- Loading State -->
-            <div v-if="loading" class="flex items-center justify-center py-12">
-              <div class="flex flex-col items-center space-y-3">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-atipical-blue"></div>
-                <p class="text-sm text-gray-500">{{ t('places.loading') }}</p>
-              </div>
+            <div v-if="loading" class="flex-1 overflow-x-auto overflow-y-auto">
+              <table class="w-full table-fixed">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
+                      {{ t('places.table.name') }}
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">
+                      {{ t('places.table.address') }}
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
+                      {{ t('places.table.status') }}
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
+                      {{ t('places.table.rating') }}
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">
+                      {{ t('places.table.image') }}
+                    </th>
+                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">
+                      {{ t('places.table.actions') }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr v-for="i in 5" :key="`skeleton-${i}`" class="hover:bg-gray-50">
+                    <!-- Name & Description -->
+                    <td class="px-4 py-3">
+                      <div class="space-y-2">
+                        <SkeletonLoader width="120px" height="16px" />
+                        <SkeletonLoader width="180px" height="12px" />
+                      </div>
+                    </td>
+                    
+                    <!-- Address -->
+                    <td class="px-4 py-3">
+                      <SkeletonLoader width="full" height="14px" />
+                    </td>
+                    
+                    <!-- Status -->
+                    <td class="px-4 py-3">
+                      <SkeletonLoader width="70px" height="20px" custom-class="rounded-full" />
+                    </td>
+                    
+                    <!-- Rating -->
+                    <td class="px-4 py-3">
+                      <SkeletonLoader width="60px" height="16px" />
+                    </td>
+                    
+                    <!-- Image -->
+                    <td class="px-4 py-3">
+                      <SkeletonLoader width="48px" height="48px" />
+                    </td>
+                    
+                    <!-- Actions -->
+                    <td class="px-4 py-3">
+                      <div class="flex justify-end space-x-2">
+                        <SkeletonLoader width="32px" height="32px" />
+                        <SkeletonLoader width="32px" height="32px" />
+                        <SkeletonLoader width="32px" height="32px" />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <!-- Error State -->
@@ -448,6 +508,7 @@ import Sidebar from '@/components/layout/Sidebar.vue'
 import AddPlaceModal from '@/components/AddPlaceModal.vue'
 import ViewPlaceModal from '@/components/ViewPlaceModal.vue'
 import EditPlaceModal from '@/components/EditPlaceModal.vue'
+import SkeletonLoader from '@/components/SkeletonLoader.vue'
 import apiClient from '@/utils/axios'
 
 const { t } = useI18n()
