@@ -40,8 +40,8 @@
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Total Users</p>
-                    <p class="text-2xl font-bold text-gray-900">1,234</p>
-                    <p class="text-xs text-green-600 mt-1">↑ 12% from last month</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ loading ? '...' : dashboardStats.totalUsers }}</p>
+                    <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
                   <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg class="w-6 h-6 text-atipical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,17 +51,18 @@
                 </div>
               </div>
 
-              <!-- Active Tasks Card -->
+              <!-- Total Places Card -->
               <div class="bg-gradient-to-r from-green-50 to-white border-l-4 border-atipical-green rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4">
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
-                    <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Active Tasks</p>
-                    <p class="text-2xl font-bold text-gray-900">42</p>
-                    <p class="text-xs text-gray-600 mt-1">8 completed today</p>
+                    <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Total Places</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ loading ? '...' : dashboardStats.totalPlaces }}</p>
+                    <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
                   <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg class="w-6 h-6 text-atipical-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                 </div>
@@ -72,8 +73,8 @@
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Pending Approvals</p>
-                    <p class="text-2xl font-bold text-gray-900">8</p>
-                    <p class="text-xs text-orange-600 mt-1">Requires attention</p>
+                    <p class="text-2xl font-bold text-gray-900">-</p>
+                    <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
                   <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg class="w-6 h-6 text-atipical-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,8 +89,8 @@
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Critical Alerts</p>
-                    <p class="text-2xl font-bold text-gray-900">2</p>
-                    <p class="text-xs text-red-600 mt-1">Immediate action needed</p>
+                    <p class="text-2xl font-bold text-gray-900">-</p>
+                    <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
                   <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg class="w-6 h-6 text-atipical-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,21 +157,21 @@
               <div class="bg-gradient-to-br from-blue-50 to-white rounded-lg shadow-sm p-5 border border-gray-100">
                 <h2 class="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
                 <div class="space-y-2">
-                  <button class="w-full text-left px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:border-atipical-blue hover:shadow-sm transition-all text-sm font-medium text-gray-700 flex items-center justify-between group">
-                    <span>Add New User</span>
+                  <button @click="showAddPlaceModal = true" class="w-full text-left px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:border-atipical-blue hover:shadow-sm transition-all text-sm font-medium text-gray-700 flex items-center justify-between group">
+                    <span>Add New Place</span>
                     <svg class="w-4 h-4 text-gray-400 group-hover:text-atipical-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                   </button>
-                  <button class="w-full text-left px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:border-atipical-blue hover:shadow-sm transition-all text-sm font-medium text-gray-700 flex items-center justify-between group">
+                  <button disabled class="w-full text-left px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg cursor-not-allowed opacity-50 text-sm font-medium text-gray-400 flex items-center justify-between">
                     <span>View Reports</span>
-                    <svg class="w-4 h-4 text-gray-400 group-hover:text-atipical-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </button>
-                  <button class="w-full text-left px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:border-atipical-blue hover:shadow-sm transition-all text-sm font-medium text-gray-700 flex items-center justify-between group">
+                  <button disabled class="w-full text-left px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg cursor-not-allowed opacity-50 text-sm font-medium text-gray-400 flex items-center justify-between">
                     <span>System Settings</span>
-                    <svg class="w-4 h-4 text-gray-400 group-hover:text-atipical-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -224,15 +225,105 @@
         </div>
       </main>
     </div>
+
+    <!-- Add Place Modal -->
+    <AddPlaceModal 
+      :isOpen="showAddPlaceModal"
+      @close="showAddPlaceModal = false"
+      @success="handlePlaceAdded"
+    />
+
+    <!-- Success Toast Notification -->
+    <transition
+      enter-active-class="transition ease-out duration-300"
+      enter-from-class="translate-y-2 opacity-0"
+      enter-to-class="translate-y-0 opacity-100"
+      leave-active-class="transition ease-in duration-200"
+      leave-from-class="translate-y-0 opacity-100"
+      leave-to-class="translate-y-2 opacity-0"
+    >
+      <div
+        v-if="showSuccessMessage"
+        class="fixed bottom-6 right-6 z-50"
+      >
+        <div class="bg-green-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3 max-w-md">
+          <div class="flex-shrink-0">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p class="text-sm font-medium">{{ successMessage }}</p>
+          <button
+            @click="showSuccessMessage = false"
+            class="flex-shrink-0 ml-4 text-white hover:text-green-100 transition-colors"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import apiClient from '@/utils/axios'
 import Navbar from '@/components/layout/Navbar.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
+import AddPlaceModal from '@/components/AddPlaceModal.vue'
 
 const { t } = useI18n()
 const apiUrl = computed(() => import.meta.env.VITE_API_BASE_URL)
+
+// Dashboard statistics
+const loading = ref(true)
+const dashboardStats = ref({
+  totalUsers: 0,
+  totalPlaces: 0
+})
+
+// Add Place Modal
+const showAddPlaceModal = ref(false)
+
+// Success message toast
+const showSuccessMessage = ref(false)
+const successMessage = ref('')
+
+// Fetch dashboard statistics
+const fetchDashboardStats = async () => {
+  try {
+    loading.value = true
+    const response = await apiClient.get('/api/dashboard')
+    dashboardStats.value = response.data
+  } catch (error) {
+    console.error('Error fetching dashboard stats:', error)
+    // Keep default values on error
+  } finally {
+    loading.value = false
+  }
+}
+
+const handlePlaceAdded = (newPlace) => {
+  showAddPlaceModal.value = false
+  
+  // Show success message
+  successMessage.value = t('places.addPlace.successMessage', { name: newPlace.name })
+  showSuccessMessage.value = true
+  
+  // Refresh dashboard stats to reflect the new place
+  fetchDashboardStats()
+  
+  // Auto-hide after 5 seconds
+  setTimeout(() => {
+    showSuccessMessage.value = false
+  }, 5000)
+}
+
+// Load dashboard data on mount
+onMounted(() => {
+  fetchDashboardStats()
+})
 </script>
