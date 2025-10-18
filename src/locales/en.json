@@ -185,6 +185,135 @@
       "showing": "Showing",
       "of": "of",
       "entries": "entries"
+    },
+    "batchImport": {
+      "title": "Batch Import Places",
+      "subtitle": "Upload and import multiple places at once",
+      "button": "Batch Import",
+      "step1": "Upload CSV",
+      "step2": "Review & Edit",
+      "step3": "Confirm Import",
+      "upload": {
+        "title": "Upload CSV File",
+        "dragDrop": "Drag & drop your CSV file here",
+        "or": "or",
+        "browse": "click to browse",
+        "downloadTemplate": "Download CSV Template",
+        "formatRequirements": "CSV Format Requirements",
+        "requiredFields": "Required fields:",
+        "optionalFields": "Optional fields:",
+        "maxFileSize": "Maximum file size: 5MB",
+        "maxRows": "Maximum rows: 1,000 places",
+        "uploadButton": "Upload & Validate",
+        "uploading": "Uploading..."
+      },
+      "review": {
+        "title": "Review & Edit Data",
+        "summary": "Imported {total} places",
+        "validCount": "{count} valid",
+        "warningCount": "{count} warnings",
+        "errorCount": "{count} errors",
+        "filterAll": "Show All",
+        "filterValid": "Valid Only",
+        "filterIssues": "With Issues",
+        "searchPlaceholder": "Search by name or address...",
+        "table": {
+          "row": "Row",
+          "status": "Status",
+          "name": "Name",
+          "address": "Address",
+          "rating": "Rating",
+          "actions": "Actions"
+        },
+        "actions": {
+          "view": "View",
+          "edit": "Edit",
+          "remove": "Remove"
+        },
+        "status": {
+          "valid": "Valid",
+          "warning": "Warning",
+          "error": "Error"
+        },
+        "selection": "{count} places will be imported",
+        "noValidPlaces": "No valid places to import. Please fix errors or upload a different file.",
+        "removeAllInvalid": "Remove All Invalid"
+      },
+      "confirm": {
+        "title": "Confirm Import",
+        "ready": "Ready to Import",
+        "aboutToImport": "You are about to import:",
+        "newPlaces": "{count} new places",
+        "skipped": "{count} rows were skipped (errors)",
+        "warning": "This action cannot be undone",
+        "allPending": "All places will be created with status: PENDING",
+        "importing": "Importing...",
+        "progress": "{current} of {total} imported",
+        "confirmButton": "Import Places"
+      },
+      "results": {
+        "title": "Import Complete",
+        "success": "Success!",
+        "partialSuccess": "Partially Complete",
+        "failed": "Import Failed",
+        "successMessage": "All places were imported successfully!",
+        "partialMessage": "Some places were imported, but others failed.",
+        "failedMessage": "The import failed. Please try again.",
+        "stats": {
+          "total": "Total processed",
+          "imported": "Successfully imported",
+          "failed": "Failed to import",
+          "skipped": "Skipped (errors)"
+        },
+        "actions": {
+          "close": "Close & Refresh",
+          "startNew": "Start New Import",
+          "goBack": "Go Back to Review",
+          "tryAgain": "Try Again"
+        },
+        "failedItems": "Failed Items",
+        "viewDetails": "View Details"
+      },
+      "messages": {
+        "uploadSuccess": "File uploaded successfully",
+        "uploadError": "Failed to upload file",
+        "importSuccess": "Successfully imported {count} places!",
+        "importPartial": "Imported {success} places. {failed} failed.",
+        "importError": "Import failed. Please try again.",
+        "fileTooLarge": "File size exceeds 5MB limit",
+        "invalidFormat": "Only CSV files are accepted",
+        "tooManyRows": "CSV contains more than 1,000 rows",
+        "invalidHeaders": "CSV headers are incorrect. Please download the template.",
+        "networkError": "Network error. Please check your connection."
+      },
+      "errors": {
+        "nameRequired": "Name is required",
+        "descriptionRequired": "Description is required",
+        "addressRequired": "Address is required",
+        "ratingRequired": "Rating is required",
+        "ratingInvalid": "Rating must be between 1.0 and 5.0",
+        "imageUrlInvalid": "Invalid image URL format",
+        "duplicateName": "Duplicate name detected"
+      },
+      "warnings": {
+        "noImage": "No image URL provided",
+        "noComment": "No comment provided",
+        "duplicateAddress": "Address may already exist"
+      },
+      "editRow": {
+        "title": "Edit Row {row}",
+        "subtitle": "Make changes to this place before importing",
+        "save": "Save Changes",
+        "cancel": "Cancel"
+      },
+      "viewRow": {
+        "title": "View Row {row}",
+        "close": "Close"
+      },
+      "cancel": "Cancel",
+      "back": "Back",
+      "next": "Next",
+      "close": "Close"
     }
   },
   "errors": {

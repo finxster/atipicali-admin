@@ -16,15 +16,26 @@
                   <h1 class="text-2xl font-bold text-gray-900">{{ t('places.title') }}</h1>
                   <p class="text-sm text-gray-500 mt-1">{{ t('places.subtitle') }}</p>
                 </div>
-                <button 
-                  @click="openAddPlaceModal"
-                  class="flex items-center space-x-2 px-4 py-2.5 bg-atipical-blue text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm hover:shadow-md"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                  </svg>
-                  <span class="font-medium">{{ t('places.addNew') }}</span>
-                </button>
+                <div class="flex items-center gap-3">
+                  <button 
+                    @click="openBatchImportModal"
+                    class="flex items-center space-x-2 px-4 py-2.5 bg-white border-2 border-atipical-blue text-atipical-blue rounded-lg hover:bg-blue-50 transition-colors shadow-sm hover:shadow-md"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <span class="font-medium">{{ t('places.batchImport.button') }}</span>
+                  </button>
+                  <button 
+                    @click="openAddPlaceModal"
+                    class="flex items-center space-x-2 px-4 py-2.5 bg-atipical-blue text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm hover:shadow-md"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span class="font-medium">{{ t('places.addNew') }}</span>
+                  </button>
+                </div>
               </div>
 
               <!-- Search and Filter Bar -->
@@ -497,6 +508,13 @@
       @close="closeEditPlaceModal"
       @success="handlePlaceUpdated"
     />
+
+    <!-- Batch Import Modal -->
+    <BatchImportModal
+      :is-open="showBatchImportModal"
+      @close="closeBatchImportModal"
+      @import-complete="handleBatchImportComplete"
+    />
   </div>
 </template>
 
@@ -508,6 +526,7 @@ import Sidebar from '@/components/layout/Sidebar.vue'
 import AddPlaceModal from '@/components/AddPlaceModal.vue'
 import ViewPlaceModal from '@/components/ViewPlaceModal.vue'
 import EditPlaceModal from '@/components/EditPlaceModal.vue'
+import BatchImportModal from '@/components/BatchImportModal.vue'
 import SkeletonLoader from '@/components/SkeletonLoader.vue'
 import apiClient from '@/utils/axios'
 
@@ -541,6 +560,9 @@ const showViewPlaceModal = ref(false)
 
 // Edit Place Modal State
 const showEditPlaceModal = ref(false)
+
+// Batch Import Modal State
+const showBatchImportModal = ref(false)
 
 // Selected Place State
 const selectedPlace = ref(null)
@@ -820,6 +842,29 @@ const handlePlaceUpdated = (updatedPlace) => {
   
   // Show success message
   successMessage.value = t('places.editPlace.successMessage', { name: updatedPlace.name })
+  showSuccessMessage.value = true
+  
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    showSuccessMessage.value = false
+  }, 3000)
+}
+
+// Batch Import Modal Functions
+const openBatchImportModal = () => {
+  showBatchImportModal.value = true
+}
+
+const closeBatchImportModal = () => {
+  showBatchImportModal.value = false
+}
+
+const handleBatchImportComplete = () => {
+  // Refresh the places list after batch import
+  fetchPlaces()
+  
+  // Show success message
+  successMessage.value = 'Batch import completed successfully!'
   showSuccessMessage.value = true
   
   // Auto-hide after 3 seconds

@@ -185,6 +185,135 @@
       "showing": "Mostrando",
       "of": "de",
       "entries": "entradas"
+    },
+    "batchImport": {
+      "title": "Importação em Lote",
+      "subtitle": "Carregue e importe vários locais de uma só vez",
+      "button": "Importação em Lote",
+      "step1": "Carregar CSV",
+      "step2": "Revisar e Editar",
+      "step3": "Confirmar Importação",
+      "upload": {
+        "title": "Carregar Arquivo CSV",
+        "dragDrop": "Arraste e solte seu arquivo CSV aqui",
+        "or": "ou",
+        "browse": "clique para procurar",
+        "downloadTemplate": "Baixar Modelo CSV",
+        "formatRequirements": "Requisitos do Formato CSV",
+        "requiredFields": "Campos obrigatórios:",
+        "optionalFields": "Campos opcionais:",
+        "maxFileSize": "Tamanho máximo do arquivo: 5MB",
+        "maxRows": "Máximo de linhas: 1.000 locais",
+        "uploadButton": "Carregar e Validar",
+        "uploading": "Carregando..."
+      },
+      "review": {
+        "title": "Revisar e Editar Dados",
+        "summary": "Importados {total} locais",
+        "validCount": "{count} válidos",
+        "warningCount": "{count} avisos",
+        "errorCount": "{count} erros",
+        "filterAll": "Mostrar Todos",
+        "filterValid": "Apenas Válidos",
+        "filterIssues": "Com Problemas",
+        "searchPlaceholder": "Pesquisar por nome ou endereço...",
+        "table": {
+          "row": "Linha",
+          "status": "Status",
+          "name": "Nome",
+          "address": "Endereço",
+          "rating": "Avaliação",
+          "actions": "Ações"
+        },
+        "actions": {
+          "view": "Ver",
+          "edit": "Editar",
+          "remove": "Remover"
+        },
+        "status": {
+          "valid": "Válido",
+          "warning": "Aviso",
+          "error": "Erro"
+        },
+        "selection": "{count} locais serão importados",
+        "noValidPlaces": "Nenhum local válido para importar. Corrija os erros ou carregue um arquivo diferente.",
+        "removeAllInvalid": "Remover Todos Inválidos"
+      },
+      "confirm": {
+        "title": "Confirmar Importação",
+        "ready": "Pronto para Importar",
+        "aboutToImport": "Você está prestes a importar:",
+        "newPlaces": "{count} novos locais",
+        "skipped": "{count} linhas foram ignoradas (erros)",
+        "warning": "Esta ação não pode ser desfeita",
+        "allPending": "Todos os locais serão criados com status: PENDENTE",
+        "importing": "Importando...",
+        "progress": "{current} de {total} importados",
+        "confirmButton": "Importar Locais"
+      },
+      "results": {
+        "title": "Importação Concluída",
+        "success": "Sucesso!",
+        "partialSuccess": "Parcialmente Concluído",
+        "failed": "Importação Falhou",
+        "successMessage": "Todos os locais foram importados com sucesso!",
+        "partialMessage": "Alguns locais foram importados, mas outros falharam.",
+        "failedMessage": "A importação falhou. Tente novamente.",
+        "stats": {
+          "total": "Total processado",
+          "imported": "Importados com sucesso",
+          "failed": "Falha ao importar",
+          "skipped": "Ignorados (erros)"
+        },
+        "actions": {
+          "close": "Fechar e Atualizar",
+          "startNew": "Nova Importação",
+          "goBack": "Voltar para Revisão",
+          "tryAgain": "Tentar Novamente"
+        },
+        "failedItems": "Itens com Falha",
+        "viewDetails": "Ver Detalhes"
+      },
+      "messages": {
+        "uploadSuccess": "Arquivo carregado com sucesso",
+        "uploadError": "Falha ao carregar arquivo",
+        "importSuccess": "{count} locais importados com sucesso!",
+        "importPartial": "{success} locais importados. {failed} falharam.",
+        "importError": "Importação falhou. Tente novamente.",
+        "fileTooLarge": "O arquivo excede o limite de 5MB",
+        "invalidFormat": "Apenas arquivos CSV são aceitos",
+        "tooManyRows": "O CSV contém mais de 1.000 linhas",
+        "invalidHeaders": "Os cabeçalhos do CSV estão incorretos. Por favor, baixe o modelo.",
+        "networkError": "Erro de rede. Verifique sua conexão."
+      },
+      "errors": {
+        "nameRequired": "Nome é obrigatório",
+        "descriptionRequired": "Descrição é obrigatória",
+        "addressRequired": "Endereço é obrigatório",
+        "ratingRequired": "Avaliação é obrigatória",
+        "ratingInvalid": "Avaliação deve estar entre 1.0 e 5.0",
+        "imageUrlInvalid": "Formato de URL da imagem inválido",
+        "duplicateName": "Nome duplicado detectado"
+      },
+      "warnings": {
+        "noImage": "Nenhuma URL de imagem fornecida",
+        "noComment": "Nenhum comentário fornecido",
+        "duplicateAddress": "Endereço pode já existir"
+      },
+      "editRow": {
+        "title": "Editar Linha {row}",
+        "subtitle": "Faça alterações neste local antes de importar",
+        "save": "Salvar Alterações",
+        "cancel": "Cancelar"
+      },
+      "viewRow": {
+        "title": "Ver Linha {row}",
+        "close": "Fechar"
+      },
+      "cancel": "Cancelar",
+      "back": "Voltar",
+      "next": "Próximo",
+      "close": "Fechar"
     }
   },
   "errors": {
