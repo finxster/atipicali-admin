@@ -901,7 +901,7 @@
                 <button
                   v-if="currentStep === 2"
                   @click="goToConfirm"
-                  :disabled="!parsedData || parsedData.validRows === 0"
+                  :disabled="!parsedData || validPlacesCount === 0"
                   class="px-6 py-2 bg-atipical-blue text-white rounded-lg hover:bg-blue-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed font-medium"
                 >
                   {{ t('places.batchImport.next') }} →
