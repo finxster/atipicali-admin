@@ -186,10 +186,10 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                   </button>
-                  <button disabled class="w-full text-left px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg cursor-not-allowed opacity-50 text-sm font-medium text-gray-400 flex items-center justify-between">
-                    <span>View Reports</span>
-                    <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  <button @click="showAddServiceTypeModal = true" class="w-full text-left px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:border-atipical-blue hover:shadow-sm transition-all text-sm font-medium text-gray-700 flex items-center justify-between group">
+                    <span>Add Service Type</span>
+                    <svg class="w-4 h-4 text-gray-400 group-hover:text-atipical-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                     </svg>
                   </button>
                   <button disabled class="w-full text-left px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg cursor-not-allowed opacity-50 text-sm font-medium text-gray-400 flex items-center justify-between">
@@ -256,6 +256,13 @@
       @success="handlePlaceAdded"
     />
 
+    <!-- Add Service Type Modal -->
+    <AddServiceTypeModal
+      :is-open="showAddServiceTypeModal"
+      @close="showAddServiceTypeModal = false"
+      @success="handleServiceTypeAdded"
+    />
+
     <!-- Success Toast Notification -->
     <transition
       enter-active-class="transition ease-out duration-300"
@@ -297,6 +304,7 @@ import apiClient from '@/utils/axios'
 import Navbar from '@/components/layout/Navbar.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
 import AddPlaceModal from '@/components/AddPlaceModal.vue'
+import AddServiceTypeModal from '@/components/AddServiceTypeModal.vue'
 import SkeletonLoader from '@/components/SkeletonLoader.vue'
 
 const { t } = useI18n()
@@ -312,6 +320,9 @@ const dashboardStats = ref({
 
 // Add Place Modal
 const showAddPlaceModal = ref(false)
+
+// Add Service Type Modal
+const showAddServiceTypeModal = ref(false)
 
 // Success message toast
 const showSuccessMessage = ref(false)
@@ -355,6 +366,19 @@ const handlePlaceAdded = (newPlace) => {
   
   // Refresh dashboard stats to reflect the new place
   fetchDashboardStats()
+  
+  // Auto-hide after 5 seconds
+  setTimeout(() => {
+    showSuccessMessage.value = false
+  }, 5000)
+}
+
+const handleServiceTypeAdded = (newServiceType) => {
+  showAddServiceTypeModal.value = false
+  
+  // Show success message
+  successMessage.value = t('serviceTypes.add.successMessage', { name: newServiceType.namePt })
+  showSuccessMessage.value = true
   
   // Auto-hide after 5 seconds
   setTimeout(() => {

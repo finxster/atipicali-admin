@@ -28,6 +28,7 @@
   "nav": {
     "dashboard": "Painel",
     "places": "Locais",
+    "serviceTypes": "Tipos de Serviço",
     "profile": "Perfil",
     "settings": "Configurações"
   },
@@ -343,6 +344,85 @@
       "back": "Voltar",
       "next": "Próximo",
       "close": "Fechar"
+    }
+  },
+  "serviceTypes": {
+    "title": "Tipos de Serviço",
+    "subtitle": "Gerencie categorias de tipos de serviço",
+    "addNew": "Adicionar Tipo de Serviço",
+    "searchPlaceholder": "Pesquisar tipos de serviço por nome...",
+    "ascending": "Ordem Crescente",
+    "descending": "Ordem Decrescente",
+    "sortBy": {
+      "namePt": "Ordenar por Nome em Português",
+      "nameEn": "Ordenar por Nome em Inglês",
+      "date": "Ordenar por Data"
+    },
+    "table": {
+      "namePt": "Nome em Português",
+      "nameEn": "Nome em Inglês",
+      "id": "ID",
+      "actions": "Ações"
+    },
+    "actions": {
+      "edit": "Editar Tipo de Serviço",
+      "delete": "Excluir Tipo de Serviço"
+    },
+    "delete": {
+      "title": "Excluir Tipo de Serviço",
+      "message": "Tem certeza de que deseja excluir este tipo de serviço? Esta ação não pode ser desfeita.",
+      "confirm": "Excluir",
+      "cancel": "Cancelar",
+      "deleting": "Excluindo...",
+      "success": "Tipo de serviço '{name}' excluído com sucesso"
+    },
+    "add": {
+      "title": "Adicionar Tipo de Serviço",
+      "subtitle": "Criar uma nova categoria de tipo de serviço",
+      "namePt": "Nome em Português",
+      "namePtPlaceholder": "Digite o nome em português",
+      "nameEn": "Nome em Inglês",
+      "nameEnPlaceholder": "Digite o nome em inglês",
+      "cancel": "Cancelar",
+      "submit": "Criar Tipo de Serviço",
+      "submitting": "Criando...",
+      "successMessage": "Tipo de serviço '{name}' criado com sucesso!",
+      "errors": {
+        "namePtRequired": "Nome em português é obrigatório",
+        "nameEnRequired": "Nome em inglês é obrigatório",
+        "general": "Falha ao criar tipo de serviço. Tente novamente."
+      }
+    },
+    "edit": {
+      "title": "Editar Tipo de Serviço",
+      "subtitle": "Atualizar informações do tipo de serviço",
+      "id": "ID do Tipo de Serviço",
+      "namePt": "Nome em Português",
+      "namePtPlaceholder": "Digite o nome em português",
+      "nameEn": "Nome em Inglês",
+      "nameEnPlaceholder": "Digite o nome em inglês",
+      "cancel": "Cancelar",
+      "submit": "Salvar Alterações",
+      "submitting": "Salvando...",
+      "successMessage": "Tipo de serviço '{name}' atualizado com sucesso!",
+      "errors": {
+        "namePtRequired": "Nome em português é obrigatório",
+        "nameEnRequired": "Nome em inglês é obrigatório",
+        "general": "Falha ao atualizar tipo de serviço. Tente novamente."
+      }
+    },
+    "empty": {
+      "title": "Nenhum tipo de serviço encontrado",
+      "description": "Comece adicionando seu primeiro tipo de serviço"
+    },
+    "pagination": {
+      "showing": "Mostrando",
+      "of": "de",
+      "entries": "entradas"
+    },
+    "error": {
+      "title": "Erro ao carregar tipos de serviço",
+      "retry": "Tentar Novamente"
     }
   },
   "errors": {
