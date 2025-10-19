@@ -456,21 +456,32 @@ const imagePreview = ref(null)
 const imageLoadError = ref(false)
 const selectedServiceType = ref('')
 
-// Service types configuration with both English and Portuguese names
-const serviceTypesConfig = [
-  { nameEn: 'Multidisciplinary Clinic', namePt: 'Clínica Multidisciplinar' },
-  { nameEn: 'ABA', namePt: 'ABA' },
-  { nameEn: 'Speech Therapy', namePt: 'Fonoaudiologia' },
-  { nameEn: 'Occupational Therapy', namePt: 'Terapia Ocupacional' },
-  { nameEn: 'Psychology', namePt: 'Psicologia' }
-]
+// Service types - fetched from API
+const serviceTypes = ref([])
+const loadingServiceTypes = ref(false)
+
+// Fetch service types from API
+const fetchServiceTypes = async () => {
+  loadingServiceTypes.value = true
+  try {
+    const response = await apiClient.get('/api/admin/service-types')
+    serviceTypes.value = response.data
+  } catch (err) {
+    console.error('Error fetching service types:', err)
+    // Fallback to empty array if fetch fails
+    serviceTypes.value = []
+  } finally {
+    loadingServiceTypes.value = false
+  }
+}
 
 // Computed property for available service types based on current locale
 const availableServiceTypes = computed(() => {
   const isEnglish = locale.value === 'en'
-  return serviceTypesConfig.map(st => ({
+  return serviceTypes.value.map(st => ({
     value: isEnglish ? st.nameEn : st.namePt,
-    label: isEnglish ? st.nameEn : st.namePt
+    label: isEnglish ? st.nameEn : st.namePt,
+    id: st.id
   }))
 })
 
@@ -516,6 +527,9 @@ let addressDebounceTimer = null
 // Watch for place changes to populate form
 watch([() => props.place, () => props.isOpen], ([newPlace, isOpen]) => {
   if (newPlace && isOpen) {
+    // Fetch service types when modal opens
+    fetchServiceTypes()
+    
     // Extract service type names based on current locale from serviceTypes objects
     const isEnglish = locale.value === 'en'
     const serviceTypeNames = newPlace.serviceTypes 
