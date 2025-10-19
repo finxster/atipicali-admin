@@ -239,6 +239,137 @@
                     <span class="text-lg font-semibold text-gray-700 ml-2">{{ formData.rating }}/5</span>
                   </div>
                 </div>
+
+                <!-- Contact Info (Phone) -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.addPlace.contactInfo') }}
+                    <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.addPlace.optional') }}</span>
+                  </label>
+                  <input
+                    v-model="formData.contactInfo"
+                    type="tel"
+                    :placeholder="t('places.addPlace.contactInfoPlaceholder')"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                  />
+                  <p class="mt-1 text-xs text-gray-500">{{ t('places.addPlace.contactInfoHint') }}</p>
+                </div>
+
+                <!-- Website -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.addPlace.site') }}
+                    <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.addPlace.optional') }}</span>
+                  </label>
+                  <input
+                    v-model="formData.site"
+                    type="url"
+                    :placeholder="t('places.addPlace.sitePlaceholder')"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                    :class="{ 'border-red-500': errors.site }"
+                  />
+                  <p v-if="errors.site" class="mt-1 text-sm text-red-600">{{ errors.site }}</p>
+                </div>
+
+                <!-- Social Links -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.addPlace.socialLinks') }}
+                    <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.addPlace.optional') }}</span>
+                  </label>
+                  <div class="space-y-3">
+                    <div 
+                      v-for="(link, index) in formData.socialLinks" 
+                      :key="index"
+                      class="flex items-start space-x-2"
+                    >
+                      <select
+                        v-model="link.platform"
+                        class="px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                      >
+                        <option value="INSTAGRAM">Instagram</option>
+                        <option value="FACEBOOK">Facebook</option>
+                      </select>
+                      <div class="flex-1 relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">@</span>
+                        <input
+                          v-model="link.account"
+                          type="text"
+                          :placeholder="t('places.addPlace.socialAccountPlaceholder')"
+                          class="w-full pl-8 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        @click="removeSocialLink(index)"
+                        class="p-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        :title="t('places.addPlace.removeSocialLink')"
+                      >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      @click="addSocialLink"
+                      class="w-full px-4 py-2.5 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-atipical-blue hover:text-atipical-blue transition-colors flex items-center justify-center space-x-2"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                      </svg>
+                      <span>{{ t('places.addPlace.addSocialLink') }}</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Service Types -->
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ t('places.addPlace.serviceTypes') }}
+                    <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.addPlace.optional') }}</span>
+                  </label>
+                  
+                  <!-- Selected Service Types (Tags) -->
+                  <div v-if="formData.serviceTypes.length > 0" class="flex flex-wrap gap-2 mb-3">
+                    <span
+                      v-for="(serviceType, index) in formData.serviceTypes"
+                      :key="index"
+                      class="inline-flex items-center px-3 py-1.5 bg-atipical-blue text-white rounded-full text-sm font-medium"
+                    >
+                      <span>{{ getServiceTypeLabel(serviceType) }}</span>
+                      <button
+                        type="button"
+                        @click="removeServiceType(index)"
+                        class="ml-2 hover:bg-blue-600 rounded-full p-0.5 transition-colors"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </span>
+                  </div>
+                  
+                  <!-- Service Type Selector -->
+                  <div class="relative">
+                    <select
+                      v-model="selectedServiceType"
+                      @change="addServiceType"
+                      class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                    >
+                      <option value="">{{ t('places.addPlace.selectServiceType') }}</option>
+                      <option
+                        v-for="option in availableServiceTypes"
+                        :key="option.value"
+                        :value="option.value"
+                        :disabled="formData.serviceTypes.includes(option.value)"
+                      >
+                        {{ option.label }}
+                      </option>
+                    </select>
+                  </div>
+                  <p class="mt-1 text-xs text-gray-500">{{ t('places.addPlace.serviceTypesHint') }}</p>
+                </div>
               </form>
             </div>
 
@@ -277,7 +408,7 @@ import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import apiClient from '@/utils/axios'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const props = defineProps({
   isOpen: {
@@ -296,13 +427,67 @@ const formData = ref({
   longitude: 0,
   comment: '',
   imageUrl: '',
-  rating: 5
+  rating: 5,
+  contactInfo: '',
+  site: '',
+  socialLinks: [],
+  serviceTypes: []
 })
 
 const errors = ref({})
 const isSubmitting = ref(false)
 const imagePreview = ref(null)
 const imageLoadError = ref(false)
+const selectedServiceType = ref('')
+
+// Service types configuration with both English and Portuguese names
+const serviceTypesConfig = [
+  { nameEn: 'Multidisciplinary Clinic', namePt: 'Clínica Multidisciplinar' },
+  { nameEn: 'ABA', namePt: 'ABA' },
+  { nameEn: 'Speech Therapy', namePt: 'Fonoaudiologia' },
+  { nameEn: 'Occupational Therapy', namePt: 'Terapia Ocupacional' },
+  { nameEn: 'Psychology', namePt: 'Psicologia' }
+]
+
+// Computed property for available service types based on current locale
+const availableServiceTypes = computed(() => {
+  const isEnglish = locale.value === 'en'
+  return serviceTypesConfig.map(st => ({
+    value: isEnglish ? st.nameEn : st.namePt,
+    label: isEnglish ? st.nameEn : st.namePt
+  }))
+})
+
+// Get service type label for display (it's already the name string)
+const getServiceTypeLabel = (name) => {
+  return name
+}
+
+// Add social link
+const addSocialLink = () => {
+  formData.value.socialLinks.push({
+    platform: 'INSTAGRAM',
+    account: ''
+  })
+}
+
+// Remove social link
+const removeSocialLink = (index) => {
+  formData.value.socialLinks.splice(index, 1)
+}
+
+// Add service type
+const addServiceType = () => {
+  if (selectedServiceType.value && !formData.value.serviceTypes.includes(selectedServiceType.value)) {
+    formData.value.serviceTypes.push(selectedServiceType.value)
+  }
+  selectedServiceType.value = ''
+}
+
+// Remove service type
+const removeServiceType = (index) => {
+  formData.value.serviceTypes.splice(index, 1)
+}
 
 // Address autocomplete state
 const addressInput = ref(null)
@@ -527,7 +712,16 @@ const handleSubmit = async () => {
       longitude: formData.value.longitude,
       comment: formData.value.comment.trim(),
       imageUrl: formData.value.imageUrl.trim(),
-      rating: formData.value.rating
+      rating: formData.value.rating,
+      contactInfo: formData.value.contactInfo.trim(),
+      site: formData.value.site.trim(),
+      socialLinks: formData.value.socialLinks
+        .filter(link => link.account.trim() !== '')
+        .map(link => ({
+          platform: link.platform,
+          account: link.account.trim()
+        })),
+      serviceTypes: formData.value.serviceTypes
     }
     
     const response = await apiClient.post('/api/places', payload)
@@ -559,11 +753,16 @@ const resetForm = () => {
     longitude: 0,
     comment: '',
     imageUrl: '',
-    rating: 5
+    rating: 5,
+    contactInfo: '',
+    site: '',
+    socialLinks: [],
+    serviceTypes: []
   }
   errors.value = {}
   imagePreview.value = null
   imageLoadError.value = false
+  selectedServiceType.value = ''
 }
 
 // Close modal

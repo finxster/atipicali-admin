@@ -52,6 +52,10 @@ The **Batch Import** feature allows administrators to upload a CSV file containi
 │  • rating (1-5, required)              │
 │  • comment (optional)                  │
 │  • imageUrl (optional)                 │
+│  • contactInfo (optional)              │
+│  • site (optional)                     │
+│  • socialLinks (optional)              │
+│  • serviceTypes (optional)             │
 │                                        │
 │              [Cancel]  [Upload →]      │
 └────────────────────────────────────────┘
@@ -349,7 +353,7 @@ Content-Type: text/csv
   "success": false,
   "error": {
     "status": 400,
-    "message": "CSV is missing required headers. Expected: name, description, address, rating, comment, imageUrl",
+    "message": "CSV is missing required headers. Expected: name, description, address, rating (optional: comment, imageUrl, contactInfo, site, socialLinks, serviceTypes)",
     "code": "INVALID_CSV_HEADERS"
   },
   "timestamp": "2025-10-18T10:30:45.123Z"
@@ -411,6 +415,10 @@ Content-Type: text/csv
 | `places[].rating` | number | Yes | Rating (1.0-5.0) |
 | `places[].comment` | string | No | Additional comments |
 | `places[].imageUrl` | string | No | Image URL |
+| `places[].contactInfo` | string | No | Phone number |
+| `places[].site` | string | No | Website URL |
+| `places[].socialLinks` | string | No | Comma-separated social media URLs |
+| `places[].serviceTypes` | string | No | Comma-separated service type names |
 
 **Response (Success):**
 
@@ -563,6 +571,39 @@ name,description,address,rating,comment,imageUrl
 ```
 
 **Alternative:** Frontend can generate this template locally without backend API call.
+
+---
+
+### 4. CSV Field Formats for New Fields
+
+#### contactInfo (Phone Number)
+- **Format:** String, any phone format accepted
+- **Example:** `"+1-305-555-0123"` or `"(11) 98765-4321"`
+- **CSV Column:** `contactInfo`
+
+#### site (Website URL)
+- **Format:** String, full URL
+- **Example:** `"https://sunsetbeachbar.com"`
+- **CSV Column:** `site`
+
+#### socialLinks (Social Media URLs)
+- **Format:** Comma-separated full URLs inside quotes
+- **Supported Platforms:** Instagram, Facebook (automatically detected from URL)
+- **Example:** `"https://www.instagram.com/little_tea_sp/,https://www.facebook.com/little_tea_sp/"`
+- **CSV Column:** `socialLinks`
+- **Sent to Backend:** As comma-separated string (backend will parse and extract platform/account)
+
+#### serviceTypes (Service Type Names)
+- **Format:** Comma-separated service type names in quotes
+- **Example:** `"Clínica multidisciplinar, ABA, Fonoaudiologia, Terapia Ocupacional, Psicologia"`
+- **CSV Column:** `serviceTypes`
+- **Sent to Backend:** As comma-separated string (backend will parse, trim whitespace, and match to database)
+
+**CSV Example with New Fields:**
+```csv
+name,description,address,rating,comment,imageUrl,contactInfo,site,socialLinks,serviceTypes
+"Little Tea SP","Wonderful tea house","Rua Augusta 123, São Paulo",4.8,"Great atmosphere","https://example.com/tea.jpg","+55 11 98765-4321","https://littletea.com","https://www.instagram.com/little_tea_sp/,https://www.facebook.com/little_tea_sp/","Cafeteria, Restaurante, Espaço Kids"
+```
 
 ---
 

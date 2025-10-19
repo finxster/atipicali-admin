@@ -816,10 +816,14 @@ const closeViewPlaceModal = () => {
 }
 
 const handleEditFromView = (place) => {
-  // Close view modal and open edit modal
+  // Close view modal
   showViewPlaceModal.value = false
-  selectedPlace.value = place
-  showEditPlaceModal.value = true
+  // Use nextTick to ensure the view modal is fully closed before opening edit modal
+  // This ensures the EditPlaceModal's watch triggers properly with the new place data
+  setTimeout(() => {
+    selectedPlace.value = place
+    showEditPlaceModal.value = true
+  }, 0)
 }
 
 // Edit Place Modal Functions

@@ -193,9 +193,11 @@
                   <h4 class="font-semibold text-gray-900 mb-3">{{ t('places.batchImport.upload.formatRequirements') }}</h4>
                   <div class="space-y-2 text-sm text-gray-700">
                     <p><strong>{{ t('places.batchImport.upload.requiredFields') }}</strong> name, description, address, rating</p>
-                    <p><strong>{{ t('places.batchImport.upload.optionalFields') }}</strong> comment, imageUrl</p>
+                    <p><strong>{{ t('places.batchImport.upload.optionalFields') }}</strong> comment, imageUrl, contactInfo, site, socialLinks, serviceTypes</p>
                     <p class="text-gray-600">• {{ t('places.batchImport.upload.maxFileSize') }}</p>
                     <p class="text-gray-600">• {{ t('places.batchImport.upload.maxRows') }}</p>
+                    <p class="text-gray-600 text-xs mt-2">• <strong>socialLinks:</strong> Comma-separated URLs (Instagram, Facebook)</p>
+                    <p class="text-gray-600 text-xs">• <strong>serviceTypes:</strong> Comma-separated service type names in quotes</p>
                   </div>
                 </div>
               </div>
@@ -500,6 +502,159 @@
                                           <span class="opacity-0 group-hover:opacity-100 text-blue-600 text-xs ml-2">✏️</span>
                                         </div>
                                       </div>
+                                      
+                                      <!-- Contact Info -->
+                                      <div 
+                                        class="cursor-pointer hover:bg-blue-50 p-2 rounded transition-colors group"
+                                        @click="startEditing(place.rowNumber, 'contactInfo')"
+                                      >
+                                        <label class="text-xs text-gray-500 block mb-1">{{ t('places.addPlace.contactInfo') }}:</label>
+                                        <div v-if="editingCell.row === place.rowNumber && editingCell.field === 'contactInfo'">
+                                          <input
+                                            v-model="editingCell.value"
+                                            type="tel"
+                                            @blur="saveEdit(place)"
+                                            @keyup.enter="saveEdit(place)"
+                                            @keyup.esc="cancelEdit"
+                                            class="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                            ref="editInput"
+                                          />
+                                        </div>
+                                        <div v-else class="flex items-center justify-between">
+                                          <span class="text-sm text-gray-900">{{ place.data.contactInfo || '(empty)' }}</span>
+                                          <span class="opacity-0 group-hover:opacity-100 text-blue-600 text-xs ml-2">✏️</span>
+                                        </div>
+                                      </div>
+                                      
+                                      <!-- Site -->
+                                      <div 
+                                        class="cursor-pointer hover:bg-blue-50 p-2 rounded transition-colors group"
+                                        @click="startEditing(place.rowNumber, 'site')"
+                                      >
+                                        <label class="text-xs text-gray-500 block mb-1">{{ t('places.addPlace.site') }}:</label>
+                                        <div v-if="editingCell.row === place.rowNumber && editingCell.field === 'site'">
+                                          <input
+                                            v-model="editingCell.value"
+                                            type="url"
+                                            @blur="saveEdit(place)"
+                                            @keyup.enter="saveEdit(place)"
+                                            @keyup.esc="cancelEdit"
+                                            class="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                            ref="editInput"
+                                          />
+                                        </div>
+                                        <div v-else class="flex items-center justify-between">
+                                          <span class="text-sm text-gray-900 break-all">{{ place.data.site || '(empty)' }}</span>
+                                          <span class="opacity-0 group-hover:opacity-100 text-blue-600 text-xs ml-2">✏️</span>
+                                        </div>
+                                      </div>
+                                      
+                                      <!-- Social Links with Icons -->
+                                      <div class="col-span-2">
+                                        <label class="text-xs text-gray-500 block mb-2">{{ t('places.addPlace.socialLinks') }}:</label>
+                                        <div v-if="editingCell.row === place.rowNumber && editingCell.field === 'socialLinks'">
+                                          <input
+                                            v-model="editingCell.value"
+                                            type="text"
+                                            @blur="saveEdit(place)"
+                                            @keyup.enter="saveEdit(place)"
+                                            @keyup.esc="cancelEdit"
+                                            class="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                            ref="editInput"
+                                            placeholder="https://instagram.com/account,https://facebook.com/account"
+                                          />
+                                        </div>
+                                        <div v-else-if="place.data.socialLinks && place.data.socialLinks.length > 0" class="flex flex-wrap gap-2">
+                                          <!-- Parse and display social links with icons -->
+                                          <template v-for="(link, idx) in (Array.isArray(place.data.socialLinks) ? place.data.socialLinks : place.data.socialLinks.split(','))" :key="idx">
+                                            <a 
+                                              v-if="link && link.trim()"
+                                              :href="link.trim()" 
+                                              target="_blank"
+                                              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all hover:scale-105"
+                                              :class="link.includes('instagram') ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' : 'bg-blue-600 text-white'"
+                                              @click.stop
+                                            >
+                                              <!-- Instagram Icon -->
+                                              <svg v-if="link.includes('instagram')" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                              </svg>
+                                              <!-- Facebook Icon -->
+                                              <svg v-else-if="link.includes('facebook')" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                              </svg>
+                                              <span>{{ link.includes('instagram') ? 'Instagram' : 'Facebook' }}</span>
+                                              <svg class="w-3 h-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                              </svg>
+                                            </a>
+                                          </template>
+                                          <button
+                                            @click="startEditing(place.rowNumber, 'socialLinks')"
+                                            class="inline-flex items-center gap-1 px-2 py-1 text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
+                                          >
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                            </svg>
+                                            Edit
+                                          </button>
+                                        </div>
+                                        <div v-else class="flex items-center gap-2">
+                                          <span class="text-sm text-gray-400">(empty)</span>
+                                          <button
+                                            @click="startEditing(place.rowNumber, 'socialLinks')"
+                                            class="text-xs text-blue-600 hover:text-blue-700"
+                                          >
+                                            + Add
+                                          </button>
+                                        </div>
+                                      </div>
+                                      
+                                      <!-- Service Types with Tags -->
+                                      <div class="col-span-2">
+                                        <label class="text-xs text-gray-500 block mb-2">{{ t('places.addPlace.serviceTypes') }}:</label>
+                                        <div v-if="editingCell.row === place.rowNumber && editingCell.field === 'serviceTypes'">
+                                          <input
+                                            v-model="editingCell.value"
+                                            type="text"
+                                            @blur="saveEdit(place)"
+                                            @keyup.enter="saveEdit(place)"
+                                            @keyup.esc="cancelEdit"
+                                            class="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                            ref="editInput"
+                                            placeholder="ABA, Fonoaudiologia, Psicologia"
+                                          />
+                                        </div>
+                                        <div v-else-if="place.data.serviceTypes && place.data.serviceTypes.length > 0" class="flex flex-wrap gap-2">
+                                          <!-- Parse and display service types as tags -->
+                                          <template v-for="(type, idx) in (Array.isArray(place.data.serviceTypes) ? place.data.serviceTypes : place.data.serviceTypes.split(','))" :key="idx">
+                                            <span 
+                                              v-if="type && type.trim()"
+                                              class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-atipical-blue to-blue-600 text-white"
+                                            >
+                                              {{ type.trim() }}
+                                            </span>
+                                          </template>
+                                          <button
+                                            @click="startEditing(place.rowNumber, 'serviceTypes')"
+                                            class="inline-flex items-center gap-1 px-2 py-1 text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
+                                          >
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                            </svg>
+                                            Edit
+                                          </button>
+                                        </div>
+                                        <div v-else class="flex items-center gap-2">
+                                          <span class="text-sm text-gray-400">(empty)</span>
+                                          <button
+                                            @click="startEditing(place.rowNumber, 'serviceTypes')"
+                                            class="text-xs text-blue-600 hover:text-blue-700"
+                                          >
+                                            + Add
+                                          </button>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -670,7 +825,7 @@
                         class="bg-white rounded p-3 text-sm"
                       >
                         <p class="font-medium text-gray-900">Row {{ item.rowNumber }}: {{ item.name }}</p>
-                        <p class="text-red-600 text-xs mt-1">{{ item.error || item.message }}</p>
+                        <p class="text-red-600 text-xs mt-1">{{ item.error }}</p>
                       </div>
                     </div>
                   </div>
@@ -934,10 +1089,10 @@ const formatFileSize = (bytes) => {
 const downloadTemplate = () => {
   // Generate CSV template client-side
   const csvContent = [
-    'name,description,address,rating,comment,imageUrl',
-    '"Sunset Beach Bar","Beautiful beachside bar with ocean views","123 Ocean Drive, Miami, FL",4.5,"Great sunset views","https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800"',
-    '"Mountain Cafe","Cozy mountain retreat","456 Summit Road, Denver, CO",5.0,"Excellent coffee","https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800"',
-    '"Art Gallery","Contemporary art space","789 Main Street, New York, NY",4.0,"Monthly exhibitions",""'
+    'name,description,address,rating,comment,imageUrl,contactInfo,site,socialLinks,serviceTypes',
+    '"Sunset Beach Bar","Beautiful beachside bar with ocean views","123 Ocean Drive, Miami, FL",4.5,"Great sunset views","https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800","+1-305-555-0123","https://sunsetbeachbar.com","https://www.instagram.com/sunsetbeachbar,https://www.facebook.com/sunsetbeachbar","Bar, Restaurante, Música ao vivo"',
+    '"Mountain Cafe","Cozy mountain retreat","456 Summit Road, Denver, CO",5.0,"Excellent coffee","https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800","+1-970-555-0456","https://mountaincafe.com","https://www.instagram.com/mountaincafe","Cafeteria, Padaria"',
+    '"Art Gallery","Contemporary art space","789 Main Street, New York, NY",4.0,"Monthly exhibitions","","+1-212-555-0789","https://artgallery.com","https://www.instagram.com/artgallery,https://www.facebook.com/artgallery","Galeria de Arte"'
   ].join('\n');
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1121,7 +1276,21 @@ const confirmImport = async () => {
   // Prepare payload - only valid and warning rows
   const placesToImport = parsedData.value.places
     .filter(p => p.status === 'valid' || p.status === 'warning')
-    .map(p => p.data);
+    .map(p => {
+      const placeData = { ...p.data };
+      
+      // Convert socialLinks array back to comma-separated string
+      if (Array.isArray(placeData.socialLinks)) {
+        placeData.socialLinks = placeData.socialLinks.join(',');
+      }
+      
+      // Convert serviceTypes array back to comma-separated string
+      if (Array.isArray(placeData.serviceTypes)) {
+        placeData.serviceTypes = placeData.serviceTypes.join(', ');
+      }
+      
+      return placeData;
+    });
 
   importProgress.value = { current: 0, total: placesToImport.length };
 
@@ -1139,11 +1308,15 @@ const confirmImport = async () => {
         total: placesToImport.length,
         imported: imported,
         failed: failed || 0,
-        failedItems: results?.filter(r => !r.success).map(r => ({
-          rowNumber: r.rowNumber,
-          name: r.name || 'Unknown',
-          error: r.message || r.error
-        })) || []
+        failedItems: results?.filter(r => !r.success).map(r => {
+          // Find the original place data by rowNumber to get the name
+          const originalPlace = parsedData.value.places.find(p => p.rowNumber === r.rowNumber);
+          return {
+            rowNumber: r.rowNumber,
+            name: originalPlace?.data?.name || r.name || 'Unknown',
+            error: r.error || r.message || 'Unknown error'
+          };
+        }) || []
       };
       
       // Go to results step
