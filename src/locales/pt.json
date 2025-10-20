@@ -29,6 +29,7 @@
     "dashboard": "Painel",
     "places": "Locais",
     "serviceTypes": "Tipos de Serviço",
+    "news": "Notícias",
     "profile": "Perfil",
     "settings": "Configurações"
   },
@@ -424,6 +425,95 @@
       "title": "Erro ao carregar tipos de serviço",
       "retry": "Tentar Novamente"
     }
+  },
+  "news": {
+    "title": "Notícias",
+    "subtitle": "Gerencie artigos de notícias e anúncios",
+    "addNew": "Adicionar Notícia",
+    "searchPlaceholder": "Pesquisar notícias por título, autor ou conteúdo...",
+    "emptyState": {
+      "title": "Ainda não há notícias",
+      "description": "Comece criando seu primeiro artigo de notícias"
+    },
+    "error": {
+      "title": "Erro ao carregar notícias",
+      "retry": "Tentar Novamente"
+    },
+    "pagination": {
+      "showing": "Mostrando",
+      "of": "de",
+      "entries": "entradas"
+    },
+    "table": {
+      "title": "Título",
+      "author": "Autor",
+      "readingTime": "Tempo de Leitura",
+      "createdAt": "Criado",
+      "actions": "Ações"
+    },
+    "actions": {
+      "view": "Visualizar",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "addModal": {
+      "title": "Adicionar Notícia"
+    },
+    "editModal": {
+      "title": "Editar Notícia"
+    },
+    "viewModal": {
+      "title": "Visualizar Artigo"
+    },
+    "form": {
+      "title": "Título",
+      "titlePlaceholder": "Digite o título do artigo",
+      "author": "Autor",
+      "authorPlaceholder": "Digite o nome do autor",
+      "readingTime": "Tempo de Leitura",
+      "readingTimePlaceholder": "ex: 5 min",
+      "readingTimeHint": "Tempo estimado de leitura (ex: '5 min', '10 minutos')",
+      "summary": "Resumo",
+      "summaryPlaceholder": "<p>Digite um breve resumo do artigo...</p>",
+      "content": "Conteúdo",
+      "contentPlaceholder": "<h2>Título do Artigo</h2>\n<p>Comece a escrever o conteúdo do seu artigo aqui...</p>",
+      "htmlHint": "Você pode usar tags HTML para formatação",
+      "showPreview": "Mostrar Pré-visualização",
+      "hidePreview": "Ocultar Pré-visualização",
+      "previewTitle": "Pré-visualização do Título do Artigo",
+      "previewAuthor": "Nome do Autor",
+      "previewSummary": "Resumo aparecerá aqui",
+      "previewContent": "Conteúdo aparecerá aqui",
+      "id": "ID",
+      "createdAt": "Criado Em",
+      "updatedAt": "Última Atualização"
+    },
+    "addSuccess": "Notícia criada com sucesso!",
+    "updateSuccess": "Notícia atualizada com sucesso!",
+    "deleteSuccess": "Notícia excluída com sucesso!",
+    "confirmDelete": "Tem certeza de que deseja excluir \"{title}\"? Esta ação não pode ser desfeita.",
+    "delete": {
+      "title": "Excluir Notícia",
+      "message": "Tem certeza de que deseja excluir este artigo? Esta ação não pode ser desfeita.",
+      "cancel": "Cancelar",
+      "confirm": "Excluir",
+      "deleting": "Excluindo...",
+      "success": "Artigo excluído com sucesso!"
+    },
+    "errors": {
+      "fetchFailed": "Falha ao carregar notícias. Tente novamente.",
+      "createFailed": "Falha ao criar notícia. Tente novamente.",
+      "updateFailed": "Falha ao atualizar notícia. Tente novamente.",
+      "deleteFailed": "Falha ao excluir notícia. Tente novamente."
+    }
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "saveChanges": "Salvar Alterações",
+    "saving": "Salvando...",
+    "close": "Fechar",
+    "edit": "Editar"
   },
   "errors": {
     "required": "Este campo é obrigatório",
