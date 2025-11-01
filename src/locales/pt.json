@@ -58,7 +58,6 @@
     },
     "sortBy": {
       "name": "Ordenar por Nome",
-      "rating": "Ordenar por Avaliação",
       "status": "Ordenar por Status",
       "date": "Ordenar por Data"
     },
@@ -66,7 +65,6 @@
       "name": "Nome",
       "address": "Endereço",
       "status": "Status",
-      "rating": "Avaliação",
       "image": "Imagem",
       "actions": "Ações"
     },
@@ -94,11 +92,8 @@
       "addressPlaceholder": "Digite o endereço completo",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "comment": "Comentário",
-      "commentPlaceholder": "Adicione notas adicionais...",
       "imageUrl": "URL da Imagem",
       "imageUrlPlaceholder": "https://exemplo.com/imagem.jpg",
-      "rating": "Avaliação",
       "optional": "(opcional)",
       "contactInfo": "Telefone",
       "contactInfoPlaceholder": "ex: (11) 98765-4321",
@@ -130,8 +125,7 @@
         "descriptionRequired": "A descrição é obrigatória",
         "addressRequired": "O endereço é obrigatório",
         "invalidCoordinates": "Por favor, selecione um endereço válido das sugestões",
-        "ratingInvalid": "A avaliação deve estar entre 1 e 5",
-        "general": "Falha ao criar local. Tente novamente."
+        "general": "Falha ao criar local. Por favor, tente novamente."
       }
     },
     "viewPlace": {
@@ -143,9 +137,7 @@
       "address": "Endereço",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "comment": "Comentário",
       "image": "Imagem",
-      "rating": "Avaliação",
       "status": "Status",
       "locationInfo": "Informações de Localização",
       "openMap": "Abrir no Mapa",
@@ -172,11 +164,8 @@
       "addressPlaceholder": "Digite o endereço completo",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "comment": "Comentário",
-      "commentPlaceholder": "Adicione notas adicionais...",
       "imageUrl": "URL da Imagem",
       "imageUrlPlaceholder": "https://exemplo.com/imagem.jpg",
-      "rating": "Avaliação",
       "optional": "(opcional)",
       "contactInfo": "Telefone",
       "contactInfoPlaceholder": "ex: (11) 98765-4321 ou (555) 123-4567",
@@ -204,8 +193,7 @@
         "descriptionRequired": "A descrição é obrigatória",
         "addressRequired": "O endereço é obrigatório",
         "invalidCoordinates": "Por favor, selecione um endereço válido das sugestões",
-        "ratingInvalid": "A avaliação deve estar entre 1 e 5",
-        "general": "Falha ao atualizar local. Tente novamente."
+        "general": "Falha ao atualizar local. Por favor, tente novamente."
       }
     },
     "empty": {
@@ -253,7 +241,6 @@
           "status": "Status",
           "name": "Nome",
           "address": "Endereço",
-          "rating": "Avaliação",
           "actions": "Ações"
         },
         "actions": {
@@ -321,14 +308,11 @@
         "nameRequired": "Nome é obrigatório",
         "descriptionRequired": "Descrição é obrigatória",
         "addressRequired": "Endereço é obrigatório",
-        "ratingRequired": "Avaliação é obrigatória",
-        "ratingInvalid": "Avaliação deve estar entre 1.0 e 5.0",
-        "imageUrlInvalid": "Formato de URL da imagem inválido",
+        "imageUrlInvalid": "Formato de URL de imagem inválido",
         "duplicateName": "Nome duplicado detectado"
       },
       "warnings": {
         "noImage": "Nenhuma URL de imagem fornecida",
-        "noComment": "Nenhum comentário fornecido",
         "duplicateAddress": "Endereço pode já existir"
       },
       "editRow": {

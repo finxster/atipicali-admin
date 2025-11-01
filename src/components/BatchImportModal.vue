@@ -192,8 +192,8 @@
                 <div class="mt-6 bg-gray-50 rounded-lg p-4">
                   <h4 class="font-semibold text-gray-900 mb-3">{{ t('places.batchImport.upload.formatRequirements') }}</h4>
                   <div class="space-y-2 text-sm text-gray-700">
-                    <p><strong>{{ t('places.batchImport.upload.requiredFields') }}</strong> name, description, address, rating</p>
-                    <p><strong>{{ t('places.batchImport.upload.optionalFields') }}</strong> comment, imageUrl, contactInfo, site, socialLinks, serviceTypes</p>
+                    <p><strong>{{ t('places.batchImport.upload.requiredFields') }}</strong> name, description, address</p>
+                    <p><strong>{{ t('places.batchImport.upload.optionalFields') }}</strong> imageUrl, contactInfo, site, socialLinks, serviceTypes</p>
                     <p class="text-gray-600">• {{ t('places.batchImport.upload.maxFileSize') }}</p>
                     <p class="text-gray-600">• {{ t('places.batchImport.upload.maxRows') }}</p>
                     <p class="text-gray-600 text-xs mt-2">• <strong>socialLinks:</strong> Comma-separated URLs (Instagram, Facebook)</p>
@@ -276,9 +276,6 @@
                               {{ t('places.batchImport.review.table.address') }}
                             </th>
                             <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                              {{ t('places.batchImport.review.table.rating') }}
-                            </th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
                               {{ t('places.batchImport.review.table.actions') }}
                             </th>
                           </tr>
@@ -346,29 +343,6 @@
                                 </div>
                                 <div v-else class="flex items-center justify-between">
                                   <span>{{ truncate(place.data.address, 40) }}</span>
-                                  <span class="opacity-0 group-hover:opacity-100 text-blue-600 text-xs ml-2">✏️</span>
-                                </div>
-                              </td>
-                              <td 
-                                class="px-4 py-3 text-sm text-gray-900 cursor-pointer hover:bg-blue-50 transition-colors group"
-                                @click="startEditing(place.rowNumber, 'rating')"
-                              >
-                                <div v-if="editingCell.row === place.rowNumber && editingCell.field === 'rating'">
-                                  <input
-                                    v-model.number="editingCell.value"
-                                    type="number"
-                                    min="1"
-                                    max="5"
-                                    step="0.1"
-                                    @blur="saveEdit(place)"
-                                    @keyup.enter="saveEdit(place)"
-                                    @keyup.esc="cancelEdit"
-                                    class="w-20 px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    ref="editInput"
-                                  />
-                                </div>
-                                <div v-else class="flex items-center justify-between">
-                                  <span>{{ place.data.rating || '-' }}</span>
                                   <span class="opacity-0 group-hover:opacity-100 text-blue-600 text-xs ml-2">✏️</span>
                                 </div>
                               </td>
@@ -455,28 +429,6 @@
                                         </div>
                                         <div v-else class="flex items-start justify-between">
                                           <span class="text-sm text-gray-900">{{ place.data.description || '(empty)' }}</span>
-                                          <span class="opacity-0 group-hover:opacity-100 text-blue-600 text-xs ml-2">✏️</span>
-                                        </div>
-                                      </div>
-                                      
-                                      <!-- Comment -->
-                                      <div 
-                                        class="cursor-pointer hover:bg-blue-50 p-2 rounded transition-colors group"
-                                        @click="startEditing(place.rowNumber, 'comment')"
-                                      >
-                                        <label class="text-xs text-gray-500 block mb-1">Comment:</label>
-                                        <div v-if="editingCell.row === place.rowNumber && editingCell.field === 'comment'">
-                                          <textarea
-                                            v-model="editingCell.value"
-                                            @blur="saveEdit(place)"
-                                            @keyup.esc="cancelEdit"
-                                            class="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                            rows="2"
-                                            ref="editInput"
-                                          ></textarea>
-                                        </div>
-                                        <div v-else class="flex items-start justify-between">
-                                          <span class="text-sm text-gray-900">{{ place.data.comment || '(empty)' }}</span>
                                           <span class="opacity-0 group-hover:opacity-100 text-blue-600 text-xs ml-2">✏️</span>
                                         </div>
                                       </div>
@@ -1111,10 +1063,11 @@ const formatFileSize = (bytes) => {
 const downloadTemplate = () => {
   // Generate CSV template client-side
   const csvContent = [
-    'name,description,address,rating,comment,imageUrl,contactInfo,site,socialLinks,serviceTypes',
-    '"Sunset Beach Bar","Beautiful beachside bar with ocean views","123 Ocean Drive, Miami, FL",4.5,"Great sunset views","https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800","+1-305-555-0123","https://sunsetbeachbar.com","https://www.instagram.com/sunsetbeachbar,https://www.facebook.com/sunsetbeachbar","Bar, Restaurante, Música ao vivo"',
-    '"Mountain Cafe","Cozy mountain retreat","456 Summit Road, Denver, CO",5.0,"Excellent coffee","https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800","+1-970-555-0456","https://mountaincafe.com","https://www.instagram.com/mountaincafe","Cafeteria, Padaria"',
-    '"Art Gallery","Contemporary art space","789 Main Street, New York, NY",4.0,"Monthly exhibitions","","+1-212-555-0789","https://artgallery.com","https://www.instagram.com/artgallery,https://www.facebook.com/artgallery","Galeria de Arte"'
+    'name,description,address,imageUrl,contactInfo,site,socialLinks,serviceTypes',
+    '"Sunset Beach Bar","Beautiful beachside bar with ocean views","123 Ocean Drive, Miami, FL","https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800","+1-305-555-0123","https://sunsetbeachbar.com","https://www.instagram.com/sunsetbeachbar,https://www.facebook.com/sunsetbeachbar",""',
+    '"Mountain Cafe","Cozy mountain retreat","456 Summit Road, Denver, CO","https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800","+1-970-555-0456","https://mountaincafe.com","https://www.instagram.com/mountaincafe",""',
+    '"Aba Stuff","Some ABA place","100 North Point, San Francisco, CA","https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800","+1-970-555-0456","https://aba.com","https://www.instagram.com/aba","ABA"',
+    '"Art Gallery","Contemporary art space","789 Main Street, New York, NY","","+1-212-555-0789","https://artgallery.com","https://www.instagram.com/artgallery,https://www.facebook.com/artgallery",""'
   ].join('\n');
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1234,7 +1187,7 @@ const viewRow = (place) => {
   selectedRowForView.value = place;
   // For now, just console log - will add modal later
   console.log('View row:', place);
-  alert(`Row ${place.rowNumber}:\n\nName: ${place.data.name}\nAddress: ${place.data.address}\nRating: ${place.data.rating}`);
+  alert(`Row ${place.rowNumber}:\n\nName: ${place.data.name}\nAddress: ${place.data.address}`);
 };
 
 const editRow = (place) => {

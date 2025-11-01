@@ -58,7 +58,6 @@
     },
     "sortBy": {
       "name": "Sort by Name",
-      "rating": "Sort by Rating",
       "status": "Sort by Status",
       "date": "Sort by Date"
     },
@@ -66,7 +65,6 @@
       "name": "Name",
       "address": "Address",
       "status": "Status",
-      "rating": "Rating",
       "image": "Image",
       "actions": "Actions"
     },
@@ -94,11 +92,8 @@
       "addressPlaceholder": "Enter the full address",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "comment": "Comment",
-      "commentPlaceholder": "Add any additional notes...",
       "imageUrl": "Image URL",
       "imageUrlPlaceholder": "https://example.com/image.jpg",
-      "rating": "Rating",
       "optional": "(optional)",
       "contactInfo": "Phone Number",
       "contactInfoPlaceholder": "e.g., (555) 123-4567",
@@ -130,7 +125,6 @@
         "descriptionRequired": "Description is required",
         "addressRequired": "Address is required",
         "invalidCoordinates": "Please select a valid address from the suggestions",
-        "ratingInvalid": "Rating must be between 1 and 5",
         "general": "Failed to create place. Please try again."
       }
     },
@@ -143,9 +137,7 @@
       "address": "Address",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "comment": "Comment",
       "image": "Image",
-      "rating": "Rating",
       "status": "Status",
       "locationInfo": "Location Information",
       "openMap": "Open in Maps",
@@ -172,11 +164,8 @@
       "addressPlaceholder": "Enter the full address",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "comment": "Comment",
-      "commentPlaceholder": "Add any additional notes...",
       "imageUrl": "Image URL",
       "imageUrlPlaceholder": "https://example.com/image.jpg",
-      "rating": "Rating",
       "optional": "(optional)",
       "contactInfo": "Phone Number",
       "contactInfoPlaceholder": "e.g., (11) 98765-4321 or (555) 123-4567",
@@ -204,7 +193,6 @@
         "descriptionRequired": "Description is required",
         "addressRequired": "Address is required",
         "invalidCoordinates": "Please select a valid address from the suggestions",
-        "ratingInvalid": "Rating must be between 1 and 5",
         "general": "Failed to update place. Please try again."
       }
     },
@@ -253,7 +241,6 @@
           "status": "Status",
           "name": "Name",
           "address": "Address",
-          "rating": "Rating",
           "actions": "Actions"
         },
         "actions": {
@@ -321,14 +308,11 @@
         "nameRequired": "Name is required",
         "descriptionRequired": "Description is required",
         "addressRequired": "Address is required",
-        "ratingRequired": "Rating is required",
-        "ratingInvalid": "Rating must be between 1.0 and 5.0",
         "imageUrlInvalid": "Invalid image URL format",
         "duplicateName": "Duplicate name detected"
       },
       "warnings": {
         "noImage": "No image URL provided",
-        "noComment": "No comment provided",
         "duplicateAddress": "Address may already exist"
       },
       "editRow": {
