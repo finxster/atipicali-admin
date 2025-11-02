@@ -73,7 +73,6 @@
                   class="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all bg-white"
                 >
                   <option value="name">{{ t('places.sortBy.name') }}</option>
-                  <option value="rating">{{ t('places.sortBy.rating') }}</option>
                   <option value="status">{{ t('places.sortBy.status') }}</option>
                   <option value="date">{{ t('places.sortBy.date') }}</option>
                 </select>
@@ -111,9 +110,6 @@
                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
                       {{ t('places.table.status') }}
                     </th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
-                      {{ t('places.table.rating') }}
-                    </th>
                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">
                       {{ t('places.table.image') }}
                     </th>
@@ -140,11 +136,6 @@
                     <!-- Status -->
                     <td class="px-4 py-3">
                       <SkeletonLoader width="70px" height="20px" custom-class="rounded-full" />
-                    </td>
-                    
-                    <!-- Rating -->
-                    <td class="px-4 py-3">
-                      <SkeletonLoader width="60px" height="16px" />
                     </td>
                     
                     <!-- Image -->
@@ -200,9 +191,6 @@
                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
                       {{ t('places.table.status') }}
                     </th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
-                      {{ t('places.table.rating') }}
-                    </th>
                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">
                       {{ t('places.table.image') }}
                     </th>
@@ -244,23 +232,6 @@
                         ></span>
                         {{ t(`places.status.${place.status}`) }}
                       </span>
-                    </td>
-
-                    <!-- Rating -->
-                    <td class="px-4 py-3">
-                      <div class="flex items-center space-x-0.5">
-                        <svg
-                          v-for="star in 5"
-                          :key="star"
-                          class="w-4 h-4"
-                          :class="star <= place.rating ? 'text-yellow-400' : 'text-gray-300'"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span class="text-sm font-medium text-gray-700 ml-1">{{ place.rating }}</span>
-                      </div>
                     </td>
 
                     <!-- Image -->
@@ -658,10 +629,9 @@ const filteredPlaces = computed(() => {
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
     result = result.filter(place =>
-      place.name.toLowerCase().includes(query) ||
-      place.description.toLowerCase().includes(query) ||
-      place.address.toLowerCase().includes(query) ||
-      place.comment.toLowerCase().includes(query)
+      (place.name && place.name.toLowerCase().includes(query)) ||
+      (place.description && place.description.toLowerCase().includes(query)) ||
+      (place.address && place.address.toLowerCase().includes(query))
     )
   }
 
@@ -677,9 +647,6 @@ const filteredPlaces = computed(() => {
     switch (sortBy.value) {
       case 'name':
         comparison = a.name.localeCompare(b.name)
-        break
-      case 'rating':
-        comparison = a.rating - b.rating
         break
       case 'status':
         comparison = a.status.localeCompare(b.status)
