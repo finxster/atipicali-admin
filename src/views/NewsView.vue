@@ -131,6 +131,9 @@
                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       {{ t('news.table.createdAt') }}
                     </th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                      {{ t('news.table.image') }}
+                    </th>
                     <th class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       {{ t('news.table.actions') }}
                     </th>
@@ -150,6 +153,31 @@
                     </td>
                     <td class="px-6 py-4">
                       <div class="text-sm text-gray-600">{{ formatDate(article.createdAt) }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center justify-center">
+                        <span
+                          v-if="article.imageUrl && article.imageUrl.trim()"
+                          class="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-green-100 text-green-800"
+                          :title="t('news.hasImage')"
+                        >
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <span class="text-xs font-medium">{{ t('news.hasImageLabel') }}</span>
+                        </span>
+                        <span
+                          v-else
+                          class="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-gray-100 text-gray-500"
+                          :title="t('news.noImage')"
+                        >
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <span class="text-xs font-medium">{{ t('news.noImageLabel') }}</span>
+                        </span>
+                      </div>
                     </td>
                     <td class="px-6 py-4">
                       <div class="flex justify-end gap-2">

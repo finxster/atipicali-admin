@@ -415,6 +415,10 @@
     "subtitle": "Manage news articles and announcements",
     "addNew": "Add News Article",
     "searchPlaceholder": "Search news by title, author, or content...",
+    "hasImage": "Has Image",
+    "hasImageLabel": "Image",
+    "noImage": "No Image",
+    "noImageLabel": "No image",
     "emptyState": {
       "title": "No news articles yet",
       "description": "Get started by creating your first news article"
@@ -433,6 +437,7 @@
       "author": "Author",
       "readingTime": "Reading Time",
       "createdAt": "Created",
+      "image": "Image",
       "actions": "Actions"
     },
     "actions": {
@@ -447,7 +452,8 @@
       "title": "Edit News Article"
     },
     "viewModal": {
-      "title": "View Article"
+      "title": "View Article",
+      "imageLoadError": "Failed to load image"
     },
     "form": {
       "title": "Title",
@@ -462,6 +468,11 @@
       "content": "Content",
       "contentPlaceholder": "<h2>Article Title</h2>\n<p>Start writing your article content here...</p>",
       "htmlHint": "You can use HTML tags for formatting",
+      "imageUrl": "Image URL",
+      "imageUrlPlaceholder": "https://example.com/image.jpg",
+      "imagePreview": "Image Preview",
+      "imageLoadError": "Failed to load image. Please check the URL and try again.",
+      "optional": "(optional)",
       "showPreview": "Show Preview",
       "hidePreview": "Hide Preview",
       "previewTitle": "Article Title Preview",

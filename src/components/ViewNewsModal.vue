@@ -16,6 +16,22 @@
 
       <!-- Article Content -->
       <div class="flex-1 overflow-y-auto px-6 py-6">
+        <!-- Header Image -->
+        <div v-if="article.imageUrl && article.imageUrl.trim()" class="mb-6 rounded-lg overflow-hidden border border-gray-300">
+          <img
+            :src="article.imageUrl"
+            :alt="article.title"
+            class="w-full h-64 object-cover"
+            @error="imageLoadError = true"
+          />
+          <div v-if="imageLoadError" class="mt-2 text-sm text-red-600 flex items-center space-x-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ t('news.viewModal.imageLoadError') }}</span>
+          </div>
+        </div>
+
         <!-- Title -->
         <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ article.title }}</h1>
 
@@ -91,6 +107,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -105,6 +122,9 @@ defineProps({
 
 // Emits
 defineEmits(['close', 'edit'])
+
+// State
+const imageLoadError = ref(false)
 
 // Methods
 const formatDate = (dateString) => {

@@ -415,6 +415,10 @@
     "subtitle": "Gerencie artigos de notícias e anúncios",
     "addNew": "Adicionar Notícia",
     "searchPlaceholder": "Pesquisar notícias por título, autor ou conteúdo...",
+    "hasImage": "Tem Imagem",
+    "hasImageLabel": "Imagem",
+    "noImage": "Sem Imagem",
+    "noImageLabel": "Sem imagem",
     "emptyState": {
       "title": "Ainda não há notícias",
       "description": "Comece criando seu primeiro artigo de notícias"
@@ -433,6 +437,7 @@
       "author": "Autor",
       "readingTime": "Tempo de Leitura",
       "createdAt": "Criado",
+      "image": "Imagem",
       "actions": "Ações"
     },
     "actions": {
@@ -447,7 +452,8 @@
       "title": "Editar Notícia"
     },
     "viewModal": {
-      "title": "Visualizar Artigo"
+      "title": "Visualizar Artigo",
+      "imageLoadError": "Falha ao carregar imagem"
     },
     "form": {
       "title": "Título",
@@ -462,6 +468,11 @@
       "content": "Conteúdo",
       "contentPlaceholder": "<h2>Título do Artigo</h2>\n<p>Comece a escrever o conteúdo do seu artigo aqui...</p>",
       "htmlHint": "Você pode usar tags HTML para formatação",
+      "imageUrl": "URL da Imagem",
+      "imageUrlPlaceholder": "https://exemplo.com/imagem.jpg",
+      "imagePreview": "Pré-visualização da Imagem",
+      "imageLoadError": "Falha ao carregar imagem. Verifique a URL e tente novamente.",
+      "optional": "(opcional)",
       "showPreview": "Mostrar Pré-visualização",
       "hidePreview": "Ocultar Pré-visualização",
       "previewTitle": "Pré-visualização do Título do Artigo",

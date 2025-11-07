@@ -90,6 +90,33 @@
             <p class="mt-1 text-xs text-gray-500">{{ t('news.form.htmlHint') }}</p>
           </div>
 
+          <!-- Image URL -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              {{ t('news.form.imageUrl') }}
+              <span class="text-gray-400 text-xs font-normal ml-1">{{ t('news.form.optional') }}</span>
+            </label>
+            <input
+              v-model="form.imageUrl"
+              type="url"
+              :placeholder="t('news.form.imageUrlPlaceholder')"
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+              :class="{ 'border-red-500': errors.imageUrl }"
+              @input="handleImageUrlInput"
+            />
+            <p v-if="errors.imageUrl" class="mt-1 text-sm text-red-600">{{ errors.imageUrl }}</p>
+            
+            <!-- Image Preview -->
+            <div v-if="imagePreview" class="mt-3 rounded-lg overflow-hidden border border-gray-300">
+              <img
+                :src="imagePreview"
+                :alt="t('news.form.imagePreview')"
+                class="w-full h-48 object-cover"
+                @error="handleImageError"
+              />
+            </div>
+          </div>
+
           <!-- Preview Section -->
           <div class="border-t pt-4">
             <button
@@ -146,7 +173,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import api from '@/utils/axios'
 
@@ -158,12 +185,15 @@ const emit = defineEmits(['close', 'news-added', 'error'])
 // State
 const loading = ref(false)
 const showPreview = ref(false)
+const imagePreview = ref('')
+const errors = ref({})
 const form = ref({
   title: '',
   summary: '',
   content: '',
   readingTime: '',
-  author: ''
+  author: '',
+  imageUrl: ''
 })
 
 // Methods
@@ -179,6 +209,25 @@ const handleSubmit = async () => {
     loading.value = false
   }
 }
+
+const handleImageUrlInput = () => {
+  if (errors.value.imageUrl) {
+    delete errors.value.imageUrl
+  }
+}
+
+const handleImageError = () => {
+  errors.value.imageUrl = t('news.form.imageLoadError')
+}
+
+// Watchers
+watch(() => form.value.imageUrl, (newUrl) => {
+  if (newUrl && newUrl.trim()) {
+    imagePreview.value = newUrl
+  } else {
+    imagePreview.value = ''
+  }
+})
 </script>
 
 <style scoped>
