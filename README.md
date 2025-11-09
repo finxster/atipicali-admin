@@ -38,7 +38,6 @@ The application is built with a focus on developer experience, featuring:
 
 ### Authentication
 - ✅ User login with email and password
-- ✅ User registration with password confirmation
 - ✅ JWT token management
 - ✅ Automatic token injection in API requests
 - ✅ Session persistence via localStorage
@@ -104,7 +103,6 @@ atipicali-admin/
 │   │   └── LanguageSwitcher.vue # Language toggle component
 │   ├── views/                   # Page-level components
 │   │   ├── LoginView.vue       # Login page
-│   │   ├── RegisterView.vue    # Registration page
 │   │   └── DashboardView.vue   # Main dashboard
 │   ├── router/
 │   │   └── index.js            # Vue Router configuration

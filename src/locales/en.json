@@ -5,20 +5,13 @@
   },
   "auth": {
     "login": "Login",
-    "register": "Sign Up",
     "logout": "Logout",
     "email": "Email",
     "password": "Password",
-    "confirmPassword": "Confirm Password",
     "forgotPassword": "Forgot password?",
-    "noAccount": "Don't have an account?",
-    "hasAccount": "Already have an account?",
     "signIn": "Sign in",
-    "signUp": "Create account",
     "welcome": "Welcome back",
-    "createAccount": "Create your account",
-    "loginSubtitle": "Sign in to access your admin panel",
-    "registerSubtitle": "Get started with AtipicALI"
+    "loginSubtitle": "Sign in to access your admin panel"
   },
   "dashboard": {
     "title": "Dashboard",

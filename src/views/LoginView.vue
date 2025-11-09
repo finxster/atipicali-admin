@@ -58,15 +58,6 @@
           </button>
         </form>
 
-        <div class="mt-6 text-center">
-          <p class="text-sm text-gray-600">
-            {{ t('auth.noAccount') }}
-            <router-link to="/register" class="text-atipical-blue font-medium hover:underline">
-              {{ t('auth.register') }}
-            </router-link>
-          </p>
-        </div>
-
         <div class="mt-6">
           <LanguageSwitcher />
         </div>

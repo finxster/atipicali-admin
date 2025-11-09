@@ -5,20 +5,13 @@
   },
   "auth": {
     "login": "Entrar",
-    "register": "Cadastrar",
     "logout": "Sair",
     "email": "Email",
     "password": "Senha",
-    "confirmPassword": "Confirmar Senha",
     "forgotPassword": "Esqueceu a senha?",
-    "noAccount": "Não tem uma conta?",
-    "hasAccount": "Já tem uma conta?",
     "signIn": "Entrar",
-    "signUp": "Criar conta",
     "welcome": "Bem-vindo de volta",
-    "createAccount": "Crie sua conta",
-    "loginSubtitle": "Entre para acessar seu painel administrativo",
-    "registerSubtitle": "Comece com AtipicALI"
+    "loginSubtitle": "Entre para acessar seu painel administrativo"
   },
   "dashboard": {
     "title": "Painel",
