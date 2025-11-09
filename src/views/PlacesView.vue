@@ -113,6 +113,9 @@
                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">
                       {{ t('places.table.image') }}
                     </th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-24">
+                      {{ t('places.table.location') }}
+                    </th>
                     <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">
                       {{ t('places.table.actions') }}
                     </th>
@@ -141,6 +144,11 @@
                     <!-- Image -->
                     <td class="px-4 py-3">
                       <SkeletonLoader width="48px" height="48px" />
+                    </td>
+                    
+                    <!-- Location -->
+                    <td class="px-4 py-3">
+                      <SkeletonLoader width="56px" height="24px" />
                     </td>
                     
                     <!-- Actions -->
@@ -193,6 +201,9 @@
                     </th>
                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">
                       {{ t('places.table.image') }}
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-24">
+                      {{ t('places.table.location') }}
                     </th>
                     <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">
                       {{ t('places.table.actions') }}
@@ -257,6 +268,33 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                           <span class="text-xs font-medium">{{ t('places.noImageLabel') }}</span>
+                        </span>
+                      </div>
+                    </td>
+
+                    <!-- Location -->
+                    <td class="px-4 py-3">
+                      <div class="flex items-center justify-center">
+                        <span
+                          v-if="hasValidLocation(place)"
+                          class="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-blue-100 text-blue-800"
+                          :title="t('places.hasLocation')"
+                        >
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          <span class="text-xs font-medium">{{ t('places.hasLocationLabel') }}</span>
+                        </span>
+                        <span
+                          v-else
+                          class="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-gray-100 text-gray-500"
+                          :title="t('places.noLocation')"
+                        >
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          <span class="text-xs font-medium">{{ t('places.noLocationLabel') }}</span>
                         </span>
                       </div>
                     </td>
@@ -743,6 +781,13 @@ const getStatusDotClass = (status) => {
     REJECTED: 'bg-red-500'
   }
   return classes[status] || 'bg-gray-500'
+}
+
+// Check if place has valid location (coordinates)
+const hasValidLocation = (place) => {
+  const lat = place.latitude
+  const lng = place.longitude
+  return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180 && (lat !== 0 || lng !== 0)
 }
 
 // Add Place Modal Functions

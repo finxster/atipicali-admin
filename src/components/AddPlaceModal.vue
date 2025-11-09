@@ -199,35 +199,64 @@
                   </div>
                 </div>
 
-                <!-- Contact Info (Phone) -->
+                <!-- Contact Info -->
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">
                     {{ t('places.addPlace.contactInfo') }}
                     <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.addPlace.optional') }}</span>
                   </label>
-                  <input
-                    v-model="formData.contactInfo"
-                    type="tel"
-                    :placeholder="t('places.addPlace.contactInfoPlaceholder')"
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
-                  />
-                  <p class="mt-1 text-xs text-gray-500">{{ t('places.addPlace.contactInfoHint') }}</p>
-                </div>
-
-                <!-- Website -->
-                <div>
-                  <label class="block text-sm font-semibold text-gray-700 mb-2">
-                    {{ t('places.addPlace.site') }}
-                    <span class="text-gray-400 text-xs font-normal ml-1">{{ t('places.addPlace.optional') }}</span>
-                  </label>
-                  <input
-                    v-model="formData.site"
-                    type="url"
-                    :placeholder="t('places.addPlace.sitePlaceholder')"
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
-                    :class="{ 'border-red-500': errors.site }"
-                  />
-                  <p v-if="errors.site" class="mt-1 text-sm text-red-600">{{ errors.site }}</p>
+                  <div class="space-y-3">
+                    <div 
+                      v-for="(contact, index) in formData.contactInfo" 
+                      :key="index"
+                      class="flex items-start space-x-2"
+                    >
+                      <select
+                        v-model="contact.type"
+                        class="px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                      >
+                        <option value="PHONE">{{ t('places.contactType.PHONE') }}</option>
+                        <option value="EMAIL">{{ t('places.contactType.EMAIL') }}</option>
+                        <option value="WHATSAPP">{{ t('places.contactType.WHATSAPP') }}</option>
+                        <option value="SITE">{{ t('places.contactType.SITE') }}</option>
+                      </select>
+                      <input
+                        v-model="contact.contactValue"
+                        :type="contact.type === 'EMAIL' ? 'email' : contact.type === 'SITE' ? 'url' : 'text'"
+                        :placeholder="getContactPlaceholder(contact.type)"
+                        class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                      />
+                      <label class="flex items-center space-x-1 px-3 py-2.5 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                        <input
+                          type="checkbox"
+                          v-model="contact.isPrimary"
+                          @change="handlePrimaryChange(index)"
+                          class="w-4 h-4 text-atipical-blue rounded focus:ring-atipical-blue"
+                        />
+                        <span class="text-sm text-gray-700">{{ t('places.addPlace.primary') }}</span>
+                      </label>
+                      <button
+                        type="button"
+                        @click="removeContactInfo(index)"
+                        class="p-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        :title="t('places.addPlace.removeContact')"
+                      >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      @click="addContactInfo"
+                      class="w-full px-4 py-2.5 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-atipical-blue hover:text-atipical-blue transition-colors flex items-center justify-center space-x-2"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                      </svg>
+                      <span>{{ t('places.addPlace.addContact') }}</span>
+                    </button>
+                  </div>
                 </div>
 
                 <!-- Social Links -->
@@ -385,8 +414,7 @@ const formData = ref({
   latitude: 0,
   longitude: 0,
   imageUrl: '',
-  contactInfo: '',
-  site: '',
+  contactInfo: [],
   socialLinks: [],
   serviceTypes: []
 })
@@ -429,6 +457,49 @@ const availableServiceTypes = computed(() => {
 // Get service type label for display (it's already the name string)
 const getServiceTypeLabel = (name) => {
   return name
+}
+
+// Get contact placeholder based on type
+const getContactPlaceholder = (type) => {
+  const placeholders = {
+    'PHONE': t('places.addPlace.contactPlaceholder.phone'),
+    'EMAIL': t('places.addPlace.contactPlaceholder.email'),
+    'WHATSAPP': t('places.addPlace.contactPlaceholder.whatsapp'),
+    'SITE': t('places.addPlace.contactPlaceholder.site')
+  }
+  return placeholders[type] || ''
+}
+
+// Add contact info
+const addContactInfo = () => {
+  formData.value.contactInfo.push({
+    type: 'PHONE',
+    contactValue: '',
+    isPrimary: formData.value.contactInfo.length === 0
+  })
+}
+
+// Remove contact info
+const removeContactInfo = (index) => {
+  const wasPrimary = formData.value.contactInfo[index].isPrimary
+  formData.value.contactInfo.splice(index, 1)
+  
+  // If we removed the primary contact and there are still contacts, make the first one primary
+  if (wasPrimary && formData.value.contactInfo.length > 0) {
+    formData.value.contactInfo[0].isPrimary = true
+  }
+}
+
+// Handle primary checkbox change
+const handlePrimaryChange = (index) => {
+  // If this contact is being set as primary, unset all others
+  if (formData.value.contactInfo[index].isPrimary) {
+    formData.value.contactInfo.forEach((contact, i) => {
+      if (i !== index) {
+        contact.isPrimary = false
+      }
+    })
+  }
 }
 
 // Add social link
@@ -673,8 +744,13 @@ const handleSubmit = async () => {
       latitude: formData.value.latitude,
       longitude: formData.value.longitude,
       imageUrl: formData.value.imageUrl.trim(),
-      contactInfo: formData.value.contactInfo.trim(),
-      site: formData.value.site.trim(),
+      contactInfo: formData.value.contactInfo
+        .filter(contact => contact.contactValue.trim() !== '')
+        .map(contact => ({
+          type: contact.type,
+          contactValue: contact.contactValue.trim(),
+          isPrimary: contact.isPrimary
+        })),
       socialLinks: formData.value.socialLinks
         .filter(link => link.account.trim() !== '')
         .map(link => ({
@@ -712,8 +788,7 @@ const resetForm = () => {
     latitude: 0,
     longitude: 0,
     imageUrl: '',
-    contactInfo: '',
-    site: '',
+    contactInfo: [],
     socialLinks: [],
     serviceTypes: []
   }

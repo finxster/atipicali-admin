@@ -45,7 +45,17 @@
     "hasImageLabel": "Imagem",
     "noImage": "Sem Imagem",
     "noImageLabel": "Sem imagem",
+    "hasLocation": "Tem Localização Válida",
+    "hasLocationLabel": "Localizado",
+    "noLocation": "Sem Localização",
+    "noLocationLabel": "Sem coords",
     "loading": "Carregando locais...",
+    "contactType": {
+      "PHONE": "Telefone",
+      "EMAIL": "Email",
+      "WHATSAPP": "WhatsApp",
+      "SITE": "Site"
+    },
     "status": {
       "PENDING": "Pendente",
       "CHANGES_REQUESTED": "Alterações Solicitadas",
@@ -66,6 +76,7 @@
       "address": "Endereço",
       "status": "Status",
       "image": "Imagem",
+      "location": "Localização",
       "actions": "Ações"
     },
     "actions": {
@@ -95,9 +106,16 @@
       "imageUrl": "URL da Imagem",
       "imageUrlPlaceholder": "https://exemplo.com/imagem.jpg",
       "optional": "(opcional)",
-      "contactInfo": "Telefone",
-      "contactInfoPlaceholder": "ex: (11) 98765-4321",
-      "contactInfoHint": "Digite o telefone (Brasil: (##) #####-####",
+      "contactInfo": "Informações de Contato",
+      "addContact": "Adicionar Contato",
+      "removeContact": "Remover Contato",
+      "primary": "Principal",
+      "contactPlaceholder": {
+        "phone": "ex: (11) 98765-4321",
+        "email": "ex: contato@exemplo.com",
+        "whatsapp": "ex: +55 11 98765-4321",
+        "site": "https://exemplo.com"
+      },
       "site": "Site",
       "sitePlaceholder": "https://exemplo.com",
       "socialLinks": "Redes Sociais",
@@ -147,6 +165,7 @@
       "editButton": "Editar Local",
       "close": "Fechar",
       "contactInfo": "Contato e Links",
+      "primary": "Principal",
       "phone": "Telefone",
       "website": "Site",
       "socialMedia": "Redes Sociais",
@@ -167,9 +186,16 @@
       "imageUrl": "URL da Imagem",
       "imageUrlPlaceholder": "https://exemplo.com/imagem.jpg",
       "optional": "(opcional)",
-      "contactInfo": "Telefone",
-      "contactInfoPlaceholder": "ex: (11) 98765-4321 ou (555) 123-4567",
-      "contactInfoHint": "Digite o telefone (Brasil: (##) #####-#### ou EUA: (###) ###-####)",
+      "contactInfo": "Informações de Contato",
+      "addContact": "Adicionar Contato",
+      "removeContact": "Remover Contato",
+      "primary": "Principal",
+      "contactPlaceholder": {
+        "phone": "ex: (11) 98765-4321",
+        "email": "ex: contato@exemplo.com",
+        "whatsapp": "ex: +55 11 98765-4321",
+        "site": "https://exemplo.com"
+      },
       "site": "Site",
       "sitePlaceholder": "https://exemplo.com",
       "socialLinks": "Redes Sociais",

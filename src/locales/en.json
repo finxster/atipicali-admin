@@ -45,7 +45,17 @@
     "hasImageLabel": "Image",
     "noImage": "No Image",
     "noImageLabel": "No image",
+    "hasLocation": "Has Valid Location",
+    "hasLocationLabel": "Located",
+    "noLocation": "No Location",
+    "noLocationLabel": "No coords",
     "loading": "Loading places...",
+    "contactType": {
+      "PHONE": "Phone",
+      "EMAIL": "Email",
+      "WHATSAPP": "WhatsApp",
+      "SITE": "Website"
+    },
     "status": {
       "PENDING": "Pending",
       "CHANGES_REQUESTED": "Changes Requested",
@@ -66,6 +76,7 @@
       "address": "Address",
       "status": "Status",
       "image": "Image",
+      "location": "Location",
       "actions": "Actions"
     },
     "actions": {
@@ -95,9 +106,16 @@
       "imageUrl": "Image URL",
       "imageUrlPlaceholder": "https://example.com/image.jpg",
       "optional": "(optional)",
-      "contactInfo": "Phone Number",
-      "contactInfoPlaceholder": "e.g., (555) 123-4567",
-      "contactInfoHint": "Enter phone number (US: (###) ###-####)",
+      "contactInfo": "Contact Information",
+      "addContact": "Add Contact",
+      "removeContact": "Remove Contact",
+      "primary": "Primary",
+      "contactPlaceholder": {
+        "phone": "e.g., (555) 123-4567",
+        "email": "e.g., contact@example.com",
+        "whatsapp": "e.g., +1 555 123 4567",
+        "site": "https://example.com"
+      },
       "site": "Website",
       "sitePlaceholder": "https://example.com",
       "socialLinks": "Social Media",
@@ -147,6 +165,7 @@
       "editButton": "Edit Place",
       "close": "Close",
       "contactInfo": "Contact & Links",
+      "primary": "Primary",
       "phone": "Phone",
       "website": "Website",
       "socialMedia": "Social Media",
@@ -167,9 +186,16 @@
       "imageUrl": "Image URL",
       "imageUrlPlaceholder": "https://example.com/image.jpg",
       "optional": "(optional)",
-      "contactInfo": "Phone Number",
-      "contactInfoPlaceholder": "e.g., (11) 98765-4321 or (555) 123-4567",
-      "contactInfoHint": "Enter phone number (Brazil: (##) #####-#### or US: (###) ###-####)",
+      "contactInfo": "Contact Information",
+      "addContact": "Add Contact",
+      "removeContact": "Remove Contact",
+      "primary": "Primary",
+      "contactPlaceholder": {
+        "phone": "e.g., (11) 98765-4321",
+        "email": "e.g., contact@example.com",
+        "whatsapp": "e.g., +55 11 98765-4321",
+        "site": "https://example.com"
+      },
       "site": "Website",
       "sitePlaceholder": "https://example.com",
       "socialLinks": "Social Media",
