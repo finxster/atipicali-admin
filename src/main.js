@@ -19,6 +19,10 @@ const i18n = createI18n({
   messages: {
     en,
     pt
+  },
+  missing: (locale, key) => {
+    console.warn(`Missing translation key: ${key} for locale: ${locale}`)
+    return key
   }
 })
 

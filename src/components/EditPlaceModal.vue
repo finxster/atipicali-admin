@@ -578,6 +578,27 @@ watch([() => props.place, () => props.isOpen], ([newPlace, isOpen]) => {
         ? newPlace.serviceTypes.map(st => isEnglish ? st.nameEn : st.namePt)
         : []
       
+      // Sanitize contact info to ensure valid types and safe values
+      let sanitizedContactInfo = []
+      if (newPlace.contactInfo) {
+        const validTypes = ['PHONE', 'EMAIL', 'WHATSAPP', 'SITE']
+        sanitizedContactInfo = newPlace.contactInfo.map(contact => ({
+          type: validTypes.includes(contact.type) ? contact.type : 'PHONE',
+          contactValue: String(contact.contactValue || '').substring(0, 500), // Limit length
+          isPrimary: Boolean(contact.isPrimary)
+        }))
+      }
+      
+      // Sanitize social links
+      let sanitizedSocialLinks = []
+      if (newPlace.socialLinks) {
+        const validPlatforms = ['INSTAGRAM', 'FACEBOOK', 'TWITTER', 'LINKEDIN', 'TIKTOK', 'YOUTUBE']
+        sanitizedSocialLinks = newPlace.socialLinks.map(link => ({
+          platform: validPlatforms.includes(link.platform) ? link.platform : 'INSTAGRAM',
+          account: String(link.account || '').substring(0, 200) // Limit length
+        }))
+      }
+      
       formData.value = {
         id: newPlace.id,
         name: newPlace.name || '',
@@ -587,8 +608,8 @@ watch([() => props.place, () => props.isOpen], ([newPlace, isOpen]) => {
         longitude: newPlace.longitude || 0,
         imageUrl: newPlace.imageUrl || '',
         status: newPlace.status || 'PENDING',
-        contactInfo: newPlace.contactInfo ? [...newPlace.contactInfo] : [],
-        socialLinks: newPlace.socialLinks ? [...newPlace.socialLinks] : [],
+        contactInfo: sanitizedContactInfo,
+        socialLinks: sanitizedSocialLinks,
         serviceTypes: serviceTypeNames
       }
       
@@ -816,6 +837,9 @@ const handleSubmit = async () => {
   isSubmitting.value = true
   
   try {
+    const validContactTypes = ['PHONE', 'EMAIL', 'WHATSAPP', 'SITE']
+    const validPlatforms = ['INSTAGRAM', 'FACEBOOK', 'TWITTER', 'LINKEDIN', 'TIKTOK', 'YOUTUBE']
+    
     const payload = {
       name: formData.value.name.trim(),
       description: formData.value.description.trim(),
@@ -824,17 +848,17 @@ const handleSubmit = async () => {
       longitude: formData.value.longitude,
       imageUrl: formData.value.imageUrl.trim(),
       contactInfo: formData.value.contactInfo
-        .filter(contact => contact.contactValue.trim() !== '')
+        .filter(contact => contact.contactValue.trim() !== '' && validContactTypes.includes(contact.type))
         .map(contact => ({
           type: contact.type,
-          contactValue: contact.contactValue.trim(),
+          contactValue: contact.contactValue.trim().substring(0, 500),
           isPrimary: contact.isPrimary
         })),
       socialLinks: formData.value.socialLinks
-        .filter(link => link.account.trim() !== '')
+        .filter(link => link.account.trim() !== '' && validPlatforms.includes(link.platform))
         .map(link => ({
           platform: link.platform,
-          account: link.account.trim()
+          account: link.account.trim().substring(0, 200)
         })),
       serviceTypes: formData.value.serviceTypes
     }
