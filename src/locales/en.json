@@ -43,12 +43,6 @@
     "noLocation": "No Location",
     "noLocationLabel": "No coords",
     "loading": "Loading places...",
-    "contactType": {
-      "PHONE": "Phone",
-      "EMAIL": "Email",
-      "WHATSAPP": "WhatsApp",
-      "SITE": "Website"
-    },
     "status": {
       "PENDING": "Pending",
       "CHANGES_REQUESTED": "Changes Requested",
@@ -103,12 +97,6 @@
       "addContact": "Add Contact",
       "removeContact": "Remove Contact",
       "primary": "Primary",
-      "contactPlaceholder": {
-        "phone": "e.g., (555) 123-4567",
-        "email": "e.g., contact@example.com",
-        "whatsapp": "e.g., +1 555 123 4567",
-        "site": "https://example.com"
-      },
       "site": "Website",
       "sitePlaceholder": "https://example.com",
       "socialLinks": "Social Media",
@@ -183,12 +171,6 @@
       "addContact": "Add Contact",
       "removeContact": "Remove Contact",
       "primary": "Primary",
-      "contactPlaceholder": {
-        "phone": "e.g., (11) 98765-4321",
-        "email": "e.g., contact@example.com",
-        "whatsapp": "e.g., +55 11 98765-4321",
-        "site": "https://example.com"
-      },
       "site": "Website",
       "sitePlaceholder": "https://example.com",
       "socialLinks": "Social Media",

@@ -238,10 +238,10 @@
                         v-model="contact.type"
                         class="px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
                       >
-                        <option value="PHONE">{{ t('places.contactType.PHONE') }}</option>
-                        <option value="EMAIL">{{ t('places.contactType.EMAIL') }}</option>
-                        <option value="WHATSAPP">{{ t('places.contactType.WHATSAPP') }}</option>
-                        <option value="SITE">{{ t('places.contactType.SITE') }}</option>
+                        <option value="PHONE">Phone</option>
+                        <option value="EMAIL">Email</option>
+                        <option value="WHATSAPP">WhatsApp</option>
+                        <option value="SITE">Website</option>
                       </select>
                       <input
                         v-model="contact.contactValue"
@@ -489,25 +489,15 @@ const getServiceTypeLabel = (name) => {
 }
 
 // Get contact placeholder based on type
+// Get contact placeholder based on type - using hardcoded values to avoid i18n issues
 const getContactPlaceholder = (type) => {
-  try {
-    // Validate type is one of the allowed values to prevent Vue I18n parser errors
-    const validTypes = ['PHONE', 'EMAIL', 'WHATSAPP', 'SITE']
-    if (!validTypes.includes(type)) {
-      return ''
-    }
-    
-    const placeholders = {
-      'PHONE': t('places.editPlace.contactPlaceholder.phone'),
-      'EMAIL': t('places.editPlace.contactPlaceholder.email'),
-      'WHATSAPP': t('places.editPlace.contactPlaceholder.whatsapp'),
-      'SITE': t('places.editPlace.contactPlaceholder.site')
-    }
-    return placeholders[type] || ''
-  } catch (error) {
-    console.error('Error getting contact placeholder:', error, 'Type:', type)
-    return ''
+  const placeholders = {
+    'PHONE': 'e.g., (555) 123-4567',
+    'EMAIL': 'e.g., contact@example.com',
+    'WHATSAPP': 'e.g., +1 555 123 4567',
+    'SITE': 'https://example.com'
   }
+  return placeholders[type] || ''
 }
 
 // Add contact info

@@ -43,12 +43,6 @@
     "noLocation": "Sem Localização",
     "noLocationLabel": "Sem coords",
     "loading": "Carregando locais...",
-    "contactType": {
-      "PHONE": "Telefone",
-      "EMAIL": "Email",
-      "WHATSAPP": "WhatsApp",
-      "SITE": "Site"
-    },
     "status": {
       "PENDING": "Pendente",
       "CHANGES_REQUESTED": "Alterações Solicitadas",
@@ -103,12 +97,6 @@
       "addContact": "Adicionar Contato",
       "removeContact": "Remover Contato",
       "primary": "Principal",
-      "contactPlaceholder": {
-        "phone": "ex: (11) 98765-4321",
-        "email": "ex: contato@exemplo.com",
-        "whatsapp": "ex: +55 11 98765-4321",
-        "site": "https://exemplo.com"
-      },
       "site": "Site",
       "sitePlaceholder": "https://exemplo.com",
       "socialLinks": "Redes Sociais",
@@ -183,12 +171,6 @@
       "addContact": "Adicionar Contato",
       "removeContact": "Remover Contato",
       "primary": "Principal",
-      "contactPlaceholder": {
-        "phone": "ex: (11) 98765-4321",
-        "email": "ex: contato@exemplo.com",
-        "whatsapp": "ex: +55 11 98765-4321",
-        "site": "https://exemplo.com"
-      },
       "site": "Site",
       "sitePlaceholder": "https://exemplo.com",
       "socialLinks": "Redes Sociais",
