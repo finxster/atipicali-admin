@@ -490,13 +490,24 @@ const getServiceTypeLabel = (name) => {
 
 // Get contact placeholder based on type
 const getContactPlaceholder = (type) => {
-  const placeholders = {
-    'PHONE': t('places.editPlace.contactPlaceholder.phone'),
-    'EMAIL': t('places.editPlace.contactPlaceholder.email'),
-    'WHATSAPP': t('places.editPlace.contactPlaceholder.whatsapp'),
-    'SITE': t('places.editPlace.contactPlaceholder.site')
+  try {
+    // Validate type is one of the allowed values to prevent Vue I18n parser errors
+    const validTypes = ['PHONE', 'EMAIL', 'WHATSAPP', 'SITE']
+    if (!validTypes.includes(type)) {
+      return ''
+    }
+    
+    const placeholders = {
+      'PHONE': t('places.editPlace.contactPlaceholder.phone'),
+      'EMAIL': t('places.editPlace.contactPlaceholder.email'),
+      'WHATSAPP': t('places.editPlace.contactPlaceholder.whatsapp'),
+      'SITE': t('places.editPlace.contactPlaceholder.site')
+    }
+    return placeholders[type] || ''
+  } catch (error) {
+    console.error('Error getting contact placeholder:', error, 'Type:', type)
+    return ''
   }
-  return placeholders[type] || ''
 }
 
 // Add contact info
