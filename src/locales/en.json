@@ -83,7 +83,7 @@
       "confirm": "Delete",
       "cancel": "Cancel",
       "deleting": "Deleting...",
-      "success": "Place '{name}' deleted successfully"
+      "success": "Place {name} deleted successfully"
     },
     "addPlace": {
       "title": "Add New Place",
@@ -130,7 +130,7 @@
       "cancel": "Cancel",
       "submit": "Create Place",
       "submitting": "Creating...",
-      "successMessage": "Place '{name}' created successfully!",
+      "successMessage": "Place {name} created successfully!",
       "errors": {
         "nameRequired": "Place name is required",
         "descriptionRequired": "Description is required",
@@ -206,7 +206,7 @@
       "cancel": "Cancel",
       "submit": "Save Changes",
       "submitting": "Saving...",
-      "successMessage": "Place '{name}' updated successfully!",
+      "successMessage": "Place {name} updated successfully!",
       "errors": {
         "nameRequired": "Place name is required",
         "descriptionRequired": "Description is required",
@@ -390,7 +390,7 @@
       "cancel": "Cancel",
       "submit": "Create Service Type",
       "submitting": "Creating...",
-      "successMessage": "Service type '{name}' created successfully!",
+      "successMessage": "Service type {name} created successfully!",
       "errors": {
         "namePtRequired": "Portuguese name is required",
         "nameEnRequired": "English name is required",
@@ -408,7 +408,7 @@
       "cancel": "Cancel",
       "submit": "Save Changes",
       "submitting": "Saving...",
-      "successMessage": "Service type '{name}' updated successfully!",
+      "successMessage": "Service type {name} updated successfully!",
       "errors": {
         "namePtRequired": "Portuguese name is required",
         "nameEnRequired": "English name is required",

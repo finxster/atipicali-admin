@@ -554,38 +554,42 @@ let addressDebounceTimer = null
 
 // Watch for place changes to populate form
 watch([() => props.place, () => props.isOpen], ([newPlace, isOpen]) => {
-  if (newPlace && isOpen) {
-    // Fetch service types when modal opens
-    fetchServiceTypes()
-    
-    // Extract service type names based on current locale from serviceTypes objects
-    const isEnglish = locale.value === 'en'
-    const serviceTypeNames = newPlace.serviceTypes 
-      ? newPlace.serviceTypes.map(st => isEnglish ? st.nameEn : st.namePt)
-      : []
-    
-    formData.value = {
-      id: newPlace.id,
-      name: newPlace.name || '',
-      description: newPlace.description || '',
-      address: newPlace.address || '',
-      latitude: newPlace.latitude || 0,
-      longitude: newPlace.longitude || 0,
-      imageUrl: newPlace.imageUrl || '',
-      status: newPlace.status || 'PENDING',
-      contactInfo: newPlace.contactInfo ? [...newPlace.contactInfo] : [],
-      socialLinks: newPlace.socialLinks ? [...newPlace.socialLinks] : [],
-      serviceTypes: serviceTypeNames
+  try {
+    if (newPlace && isOpen) {
+      // Fetch service types when modal opens
+      fetchServiceTypes()
+      
+      // Extract service type names based on current locale from serviceTypes objects
+      const isEnglish = locale.value === 'en'
+      const serviceTypeNames = newPlace.serviceTypes 
+        ? newPlace.serviceTypes.map(st => isEnglish ? st.nameEn : st.namePt)
+        : []
+      
+      formData.value = {
+        id: newPlace.id,
+        name: newPlace.name || '',
+        description: newPlace.description || '',
+        address: newPlace.address || '',
+        latitude: newPlace.latitude || 0,
+        longitude: newPlace.longitude || 0,
+        imageUrl: newPlace.imageUrl || '',
+        status: newPlace.status || 'PENDING',
+        contactInfo: newPlace.contactInfo ? [...newPlace.contactInfo] : [],
+        socialLinks: newPlace.socialLinks ? [...newPlace.socialLinks] : [],
+        serviceTypes: serviceTypeNames
+      }
+      
+      // Set image preview if URL exists
+      if (newPlace.imageUrl && newPlace.imageUrl.trim()) {
+        imagePreview.value = newPlace.imageUrl
+      } else {
+        imagePreview.value = null
+      }
+      imageLoadError.value = false
+      selectedServiceType.value = ''
     }
-    
-    // Set image preview if URL exists
-    if (newPlace.imageUrl && newPlace.imageUrl.trim()) {
-      imagePreview.value = newPlace.imageUrl
-    } else {
-      imagePreview.value = null
-    }
-    imageLoadError.value = false
-    selectedServiceType.value = ''
+  } catch (error) {
+    console.error('Error loading place data:', error)
   }
 }, { immediate: true })
 
@@ -746,9 +750,13 @@ const handleImageUrlInput = () => {
 
 // Handle image load error
 const handleImageError = () => {
-  imageLoadError.value = true
-  imagePreview.value = null
-  errors.value.imageUrl = t('places.editPlace.imageLoadError')
+  try {
+    imageLoadError.value = true
+    imagePreview.value = null
+    errors.value.imageUrl = t('places.editPlace.imageLoadError')
+  } catch (error) {
+    console.error('Error handling image load error:', error)
+  }
 }
 
 // Validate form

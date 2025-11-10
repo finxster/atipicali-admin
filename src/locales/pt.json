@@ -83,7 +83,7 @@
       "confirm": "Excluir",
       "cancel": "Cancelar",
       "deleting": "Excluindo...",
-      "success": "Local '{name}' excluído com sucesso"
+      "success": "Local {name} excluído com sucesso"
     },
     "addPlace": {
       "title": "Adicionar Novo Local",
@@ -130,7 +130,7 @@
       "cancel": "Cancelar",
       "submit": "Criar Local",
       "submitting": "Criando...",
-      "successMessage": "Local '{name}' criado com sucesso!",
+      "successMessage": "Local {name} criado com sucesso!",
       "errors": {
         "nameRequired": "O nome do local é obrigatório",
         "descriptionRequired": "A descrição é obrigatória",
@@ -206,7 +206,7 @@
       "cancel": "Cancelar",
       "submit": "Salvar Alterações",
       "submitting": "Salvando...",
-      "successMessage": "Local '{name}' atualizado com sucesso!",
+      "successMessage": "Local {name} atualizado com sucesso!",
       "errors": {
         "nameRequired": "O nome do local é obrigatório",
         "descriptionRequired": "A descrição é obrigatória",
@@ -390,7 +390,7 @@
       "cancel": "Cancelar",
       "submit": "Criar Tipo de Serviço",
       "submitting": "Criando...",
-      "successMessage": "Tipo de serviço '{name}' criado com sucesso!",
+      "successMessage": "Tipo de serviço {name} criado com sucesso!",
       "errors": {
         "namePtRequired": "Nome em português é obrigatório",
         "nameEnRequired": "Nome em inglês é obrigatório",
@@ -408,7 +408,7 @@
       "cancel": "Cancelar",
       "submit": "Salvar Alterações",
       "submitting": "Salvando...",
-      "successMessage": "Tipo de serviço '{name}' atualizado com sucesso!",
+      "successMessage": "Tipo de serviço {name} atualizado com sucesso!",
       "errors": {
         "namePtRequired": "Nome em português é obrigatório",
         "nameEnRequired": "Nome em inglês é obrigatório",
