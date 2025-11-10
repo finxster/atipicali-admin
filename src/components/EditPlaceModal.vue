@@ -199,13 +199,26 @@
                   <p v-if="errors.imageUrl" class="mt-1 text-sm text-red-600">{{ errors.imageUrl }}</p>
                   
                   <!-- Image Preview -->
-                  <div v-if="imagePreview" class="mt-3 rounded-lg overflow-hidden border border-gray-300">
+                  <div v-if="imagePreview && !imageLoadError" class="mt-3 rounded-lg overflow-hidden border border-gray-300 bg-gray-50">
                     <img
                       :src="imagePreview"
                       :alt="t('places.editPlace.imagePreview')"
                       class="w-full h-48 object-cover"
                       @error="handleImageError"
+                      @load="() => {}"
+                      loading="lazy"
                     />
+                  </div>
+                  
+                  <!-- Error message if image failed to load -->
+                  <div v-if="imageLoadError" class="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p class="text-sm font-medium text-red-800">{{ t('places.editPlace.imageLoadError') }}</p>
+                      <p class="text-xs text-red-600 mt-1">The image URL is invalid or inaccessible. You can still save the place without the image.</p>
+                    </div>
                   </div>
                 </div>
 
@@ -624,14 +637,28 @@ const isFormValid = computed(() => {
   )
 })
 
-// Watch for image URL changes
+// Watch for image URL changes - validate URL before attempting to load
 watch(() => formData.value.imageUrl, (newUrl) => {
-  if (newUrl && !imageLoadError.value) {
-    imagePreview.value = newUrl
-  } else {
+  try {
+    if (newUrl && newUrl.trim()) {
+      // Validate URL format
+      try {
+        new URL(newUrl)
+        imagePreview.value = newUrl
+        imageLoadError.value = false
+      } catch (e) {
+        // Invalid URL format
+        imagePreview.value = null
+        imageLoadError.value = true
+      }
+    } else {
+      imagePreview.value = null
+      imageLoadError.value = false
+    }
+  } catch (error) {
+    console.error('Error processing image URL:', error)
     imagePreview.value = null
   }
-  imageLoadError.value = false
 })
 
 // Handle address input with autocomplete
