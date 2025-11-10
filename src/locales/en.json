@@ -378,7 +378,7 @@
       "confirm": "Delete",
       "cancel": "Cancel",
       "deleting": "Deleting...",
-      "success": "Service type '{name}' deleted successfully"
+      "success": "Service type {name} deleted successfully"
     },
     "add": {
       "title": "Add Service Type",

@@ -378,7 +378,7 @@
       "confirm": "Excluir",
       "cancel": "Cancelar",
       "deleting": "Excluindo...",
-      "success": "Tipo de serviço '{name}' excluído com sucesso"
+      "success": "Tipo de serviço {name} excluído com sucesso"
     },
     "add": {
       "title": "Adicionar Tipo de Serviço",
