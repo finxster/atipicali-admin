@@ -96,7 +96,8 @@
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Pending Approvals</p>
-                    <p class="text-2xl font-bold text-gray-900">-</p>
+                    <SkeletonLoader v-if="loading" width="80px" height="2rem" custom-class="mb-1" />
+                    <p v-else class="text-2xl font-bold text-gray-900">{{ dashboardStats.totalPlacesPendingApproval || 0 }}</p>
                     <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
                   <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -315,7 +316,8 @@ const loading = ref(true)
 const error = ref(null)
 const dashboardStats = ref({
   totalUsers: 0,
-  totalPlaces: 0
+  totalPlaces: 0,
+  totalPlacesPendingApproval: 0
 })
 
 // Add Place Modal
@@ -350,7 +352,8 @@ const fetchDashboardStats = async () => {
     // Keep showing 0 values when there's an error
     dashboardStats.value = {
       totalUsers: 0,
-      totalPlaces: 0
+      totalPlaces: 0,
+      totalPlacesPendingApproval: 0
     }
   } finally {
     loading.value = false
