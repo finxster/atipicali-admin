@@ -21,6 +21,7 @@
   "nav": {
     "dashboard": "Painel",
     "places": "Locais",
+    "pendingPlaces": "Locais Pendentes",
     "serviceTypes": "Tipos de Serviço",
     "news": "Notícias",
     "profile": "Perfil",
@@ -330,6 +331,55 @@
       "back": "Voltar",
       "next": "Próximo",
       "close": "Fechar"
+    }
+  },
+  "pendingPlaces": {
+    "title": "Revisão de Locais Pendentes",
+    "description": "Revise e aprove locais submetidos para inclusão",
+    "errorTitle": "Não foi possível carregar locais pendentes",
+    "retry": "Tentar Novamente",
+    "networkError": "Não foi possível conectar ao servidor. Verifique se o backend está em execução.",
+    "serverError": "Erro do servidor",
+    "unexpectedError": "Ocorreu um erro inesperado ao carregar locais pendentes.",
+    "emptyTitle": "Tudo em dia!",
+    "emptyDescription": "Não há locais pendentes de aprovação no momento.",
+    "reviewButton": "Revisar"
+  },
+  "reviewPlace": {
+    "title": "Revisar Local",
+    "tabs": {
+      "details": "Detalhes do Local",
+      "history": "Histórico de Revisão"
+    },
+    "fields": {
+      "name": "Nome",
+      "status": "Status",
+      "description": "Descrição",
+      "address": "Endereço",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "serviceTypes": "Tipos de Serviço",
+      "contactInfo": "Informações de Contato",
+      "socialLinks": "Redes Sociais",
+      "createdBy": "Criado Por",
+      "lastReviewedBy": "Última Revisão Por"
+    },
+    "noHistory": "Nenhum histórico de revisão disponível para este local.",
+    "historyError": "Falha ao carregar histórico de revisão",
+    "actionsTitle": "Ações de Revisão",
+    "commentsLabel": "Comentários",
+    "commentsPlaceholder": "Adicione comentários ou feedback sobre este local...",
+    "commentsRequired": "Comentários são obrigatórios para solicitar alterações ou rejeitar um local.",
+    "actions": {
+      "approve": "Aprovar",
+      "requestChanges": "Solicitar Alterações",
+      "reject": "Rejeitar"
+    },
+    "actionError": "Falha ao executar ação. Tente novamente.",
+    "success": {
+      "approve": "Local aprovado com sucesso!",
+      "request-changes": "Alterações solicitadas com sucesso!",
+      "reject": "Local rejeitado com sucesso!"
     }
   },
   "serviceTypes": {

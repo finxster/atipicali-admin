@@ -21,6 +21,7 @@
   "nav": {
     "dashboard": "Dashboard",
     "places": "Places",
+    "pendingPlaces": "Pending Places",
     "serviceTypes": "Service Types",
     "news": "News",
     "profile": "Profile",
@@ -330,6 +331,55 @@
       "back": "Back",
       "next": "Next",
       "close": "Close"
+    }
+  },
+  "pendingPlaces": {
+    "title": "Pending Places Review",
+    "description": "Review and approve places submitted for inclusion",
+    "errorTitle": "Unable to load pending places",
+    "retry": "Try Again",
+    "networkError": "Unable to connect to the server. Please check if the backend is running.",
+    "serverError": "Server error",
+    "unexpectedError": "An unexpected error occurred while loading pending places.",
+    "emptyTitle": "All caught up!",
+    "emptyDescription": "There are no places pending approval at this time.",
+    "reviewButton": "Review"
+  },
+  "reviewPlace": {
+    "title": "Review Place",
+    "tabs": {
+      "details": "Place Details",
+      "history": "Review History"
+    },
+    "fields": {
+      "name": "Name",
+      "status": "Status",
+      "description": "Description",
+      "address": "Address",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "serviceTypes": "Service Types",
+      "contactInfo": "Contact Information",
+      "socialLinks": "Social Media",
+      "createdBy": "Created By",
+      "lastReviewedBy": "Last Reviewed By"
+    },
+    "noHistory": "No review history available for this place.",
+    "historyError": "Failed to load review history",
+    "actionsTitle": "Review Actions",
+    "commentsLabel": "Comments",
+    "commentsPlaceholder": "Add any comments or feedback about this place...",
+    "commentsRequired": "Comments are required for requesting changes or rejecting a place.",
+    "actions": {
+      "approve": "Approve",
+      "requestChanges": "Request Changes",
+      "reject": "Reject"
+    },
+    "actionError": "Failed to perform action. Please try again.",
+    "success": {
+      "approve": "Place approved successfully!",
+      "request-changes": "Changes requested successfully!",
+      "reject": "Place rejected successfully!"
     }
   },
   "serviceTypes": {

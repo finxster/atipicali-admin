@@ -21,6 +21,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/pending-places',
+    name: 'PendingPlaces',
+    component: () => import('@/views/PendingPlacesView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/service-types',
     name: 'ServiceTypes',
     component: () => import('@/views/ServiceTypesView.vue'),
