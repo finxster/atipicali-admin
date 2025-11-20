@@ -14,7 +14,7 @@
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4">
+        <div class="flex min-h-full items-center justify-center p-0 sm:p-4">
           <TransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -24,9 +24,9 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white shadow-xl transition-all">
+            <DialogPanel class="w-full h-full sm:h-auto sm:max-w-3xl transform overflow-hidden sm:rounded-2xl bg-white shadow-xl transition-all">
               <!-- Modal Header -->
-              <div class="bg-gradient-to-r from-red-600 to-red-700 px-6 py-4">
+              <div class="bg-gradient-to-r from-red-600 to-red-700 px-4 sm:px-6 py-3 sm:py-4">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -34,7 +34,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                       </svg>
                     </div>
-                    <DialogTitle class="text-xl font-bold text-white">
+                    <DialogTitle class="text-lg sm:text-xl font-bold text-white">
                       {{ t('viewReport.title') }}
                     </DialogTitle>
                   </div>
@@ -42,7 +42,7 @@
                     @click="handleClose"
                     class="text-white hover:text-gray-200 transition-colors"
                   >
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -50,9 +50,9 @@
               </div>
 
               <!-- Modal Content -->
-              <div class="px-6 py-6 max-h-[calc(100vh-250px)] overflow-y-auto">
+              <div class="px-4 sm:px-6 py-4 sm:py-6 max-h-[calc(100vh-250px)] overflow-y-auto">
                 <!-- Report Details -->
-                <div class="space-y-6">
+                <div class="space-y-4 sm:space-y-6">
                   <!-- Status Badge -->
                   <div class="flex items-center justify-between">
                     <span

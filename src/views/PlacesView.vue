@@ -1,36 +1,37 @@
 <template>
   <div class="flex flex-col min-h-screen bg-gray-50">
-    <Navbar />
+    <Navbar @toggle-sidebar="sidebarOpen = !sidebarOpen" />
     
     <div class="flex flex-1">
-      <Sidebar />
+      <Sidebar :is-open="sidebarOpen" @close="sidebarOpen = false" />
       
-      <main class="flex-1 p-6 flex flex-col">
+      <main class="flex-1 p-3 sm:p-4 lg:p-6 flex flex-col">
         <div class="flex-1 flex flex-col">
           <!-- Main content card wrapper -->
-          <div class="h-full bg-white rounded-xl shadow-lg flex flex-col">
+          <div class="h-full bg-white rounded-lg sm:rounded-xl shadow-lg flex flex-col">
             <!-- Header Section -->
-            <div class="border-b border-gray-200 p-6 flex-shrink-0">
-              <div class="flex items-center justify-between mb-4">
+            <div class="border-b border-gray-200 p-3 sm:p-4 lg:p-6 flex-shrink-0">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 sm:mb-4">
                 <div>
-                  <h1 class="text-2xl font-bold text-gray-900">{{ t('places.title') }}</h1>
+                  <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{{ t('places.title') }}</h1>
                   <p class="text-sm text-gray-500 mt-1">{{ t('places.subtitle') }}</p>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
                   <button 
                     @click="openBatchImportModal"
-                    class="flex items-center space-x-2 px-4 py-2.5 bg-white border-2 border-atipical-blue text-atipical-blue rounded-lg hover:bg-blue-50 transition-colors shadow-sm hover:shadow-md"
+                    class="flex items-center space-x-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-white border-2 border-atipical-blue text-atipical-blue rounded-lg hover:bg-blue-50 transition-colors shadow-sm hover:shadow-md text-sm"
                   >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
-                    <span class="font-medium">{{ t('places.batchImport.button') }}</span>
+                    <span class="font-medium hidden sm:inline">{{ t('places.batchImport.button') }}</span>
+                    <span class="font-medium sm:hidden">Import</span>
                   </button>
                   <button 
                     @click="openAddPlaceModal"
-                    class="flex items-center space-x-2 px-4 py-2.5 bg-atipical-blue text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm hover:shadow-md"
+                    class="flex items-center space-x-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-atipical-blue text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm hover:shadow-md text-sm"
                   >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                     <span class="font-medium">{{ t('places.addNew') }}</span>
@@ -39,7 +40,7 @@
               </div>
 
               <!-- Search and Filter Bar -->
-              <div class="flex flex-col md:flex-row gap-3">
+              <div class="flex flex-col gap-2 sm:gap-3">
                 <!-- Search Input -->
                 <div class="flex-1 relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -51,48 +52,51 @@
                     v-model="searchQuery"
                     type="text"
                     :placeholder="t('places.searchPlaceholder')"
-                    class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
+                    class="w-full pl-10 pr-4 py-2 sm:py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
                   />
                 </div>
 
-                <!-- Status Filter -->
-                <select
-                  v-model="statusFilter"
-                  class="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all bg-white"
-                >
-                  <option value="">{{ t('places.allStatuses') }}</option>
-                  <option value="PENDING">{{ t('places.status.PENDING') }}</option>
-                  <option value="CHANGES_REQUESTED">{{ t('places.status.CHANGES_REQUESTED') }}</option>
-                  <option value="APPROVED">{{ t('places.status.APPROVED') }}</option>
-                  <option value="REJECTED">{{ t('places.status.REJECTED') }}</option>
-                </select>
-
-                <!-- Sort By -->
-                <select
-                  v-model="sortBy"
-                  class="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all bg-white"
-                >
-                  <option value="name">{{ t('places.sortBy.name') }}</option>
-                  <option value="status">{{ t('places.sortBy.status') }}</option>
-                  <option value="date">{{ t('places.sortBy.date') }}</option>
-                </select>
-
-                <!-- Sort Direction -->
-                <button
-                  @click="toggleSortDirection"
-                  class="px-4 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors bg-white"
-                  :title="sortDirection === 'asc' ? t('places.ascending') : t('places.descending')"
-                >
-                  <svg
-                    class="w-5 h-5 text-gray-600 transition-transform"
-                    :class="{ 'rotate-180': sortDirection === 'desc' }"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <!-- Filters Row -->
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  <!-- Status Filter -->
+                  <select
+                    v-model="statusFilter"
+                    class="px-3 sm:px-4 py-2 sm:py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all bg-white"
                   >
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                  </svg>
-                </button>
+                    <option value="">{{ t('places.allStatuses') }}</option>
+                    <option value="PENDING">{{ t('places.status.PENDING') }}</option>
+                    <option value="CHANGES_REQUESTED">{{ t('places.status.CHANGES_REQUESTED') }}</option>
+                    <option value="APPROVED">{{ t('places.status.APPROVED') }}</option>
+                    <option value="REJECTED">{{ t('places.status.REJECTED') }}</option>
+                  </select>
+
+                  <!-- Sort By -->
+                  <select
+                    v-model="sortBy"
+                    class="px-3 sm:px-4 py-2 sm:py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all bg-white"
+                  >
+                    <option value="name">{{ t('places.sortBy.name') }}</option>
+                    <option value="status">{{ t('places.sortBy.status') }}</option>
+                    <option value="date">{{ t('places.sortBy.date') }}</option>
+                  </select>
+
+                  <!-- Sort Direction -->
+                  <button
+                    @click="toggleSortDirection"
+                    class="px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors bg-white shrink-0"
+                    :title="sortDirection === 'asc' ? t('places.ascending') : t('places.descending')"
+                  >
+                    <svg
+                      class="w-5 h-5 text-gray-600 transition-transform mx-auto"
+                      :class="{ 'rotate-180': sortDirection === 'desc' }"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -540,6 +544,9 @@ import SkeletonLoader from '@/components/SkeletonLoader.vue'
 import apiClient from '@/utils/axios'
 
 const { t } = useI18n()
+
+// Sidebar state for mobile
+const sidebarOpen = ref(false)
 
 // Search and Filter State
 const searchQuery = ref('')

@@ -8,7 +8,7 @@
     >
       <div
         v-if="isOpen"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+        class="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-black bg-opacity-50"
         @click.self="handleBackdropClick"
       >
         <Transition
@@ -19,19 +19,19 @@
         >
           <div
             v-if="isOpen"
-            class="bg-white rounded-xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col"
+            class="bg-white sm:rounded-xl shadow-2xl w-full h-full sm:h-auto sm:max-w-6xl sm:max-h-[90vh] overflow-hidden flex flex-col"
           >
             <!-- Header -->
-            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
+            <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
               <div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ t('places.batchImport.title') }}</h2>
-                <p class="text-sm text-gray-500 mt-1">{{ t('places.batchImport.subtitle') }}</p>
+                <h2 class="text-lg sm:text-2xl font-bold text-gray-900">{{ t('places.batchImport.title') }}</h2>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ t('places.batchImport.subtitle') }}</p>
               </div>
               <button
                 @click="closeModal"
                 class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -135,7 +135,7 @@
             </div>
 
             <!-- Step Content -->
-            <div class="flex-1 overflow-y-auto p-6">
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6">
               <!-- Step 1: Upload -->
               <div v-if="currentStep === 1">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ t('places.batchImport.upload.title') }}</h3>

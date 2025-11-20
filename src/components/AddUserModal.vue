@@ -14,7 +14,7 @@
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4">
+        <div class="flex min-h-full items-center justify-center p-0 sm:p-4">
           <TransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -24,11 +24,11 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white shadow-xl transition-all">
+            <DialogPanel class="w-full h-full sm:h-auto sm:max-w-md transform overflow-hidden sm:rounded-2xl bg-white shadow-xl transition-all">
               <!-- Modal Header -->
-              <div class="bg-gradient-to-r from-atipical-blue to-blue-600 px-6 py-4">
+              <div class="bg-gradient-to-r from-atipical-blue to-blue-600 px-4 sm:px-6 py-3 sm:py-4">
                 <div class="flex items-center justify-between">
-                  <DialogTitle class="text-xl font-bold text-white flex items-center gap-2">
+                  <DialogTitle class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                     </svg>
@@ -38,7 +38,7 @@
                     @click="handleClose"
                     class="text-white hover:text-gray-200 transition-colors"
                   >
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -46,7 +46,7 @@
               </div>
 
               <!-- Modal Content -->
-              <form @submit.prevent="submitForm" class="px-6 py-6 space-y-4">
+              <form @submit.prevent="submitForm" class="px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
                 <!-- Name -->
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">

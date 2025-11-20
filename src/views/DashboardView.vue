@@ -1,41 +1,41 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <Navbar />
+    <Navbar @toggle-sidebar="sidebarOpen = !sidebarOpen" />
     
     <div class="flex">
-      <Sidebar />
+      <Sidebar :is-open="sidebarOpen" @close="sidebarOpen = false" />
       
-      <main class="flex-1 p-6">
+      <main class="flex-1 p-3 sm:p-4 lg:p-6">
         <div class="flex-1">
           <!-- Main content card wrapper for depth effect -->
-          <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6">
             <!-- Header -->
-            <div class="mb-6">
-              <h1 class="text-2xl font-bold text-gray-900">{{ t('dashboard.title') }}</h1>
+            <div class="mb-4 sm:mb-6">
+              <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{{ t('dashboard.title') }}</h1>
               <p class="text-sm text-gray-500 mt-1">{{ t('dashboard.welcome') }}</p>
             </div>
 
             <!-- Welcome Message Card -->
-            <div class="bg-gradient-to-r from-blue-50 to-white border-l-4 border-atipical-blue rounded-lg shadow-sm p-4 mb-6">
-              <div class="flex items-start space-x-3">
+            <div class="bg-gradient-to-r from-blue-50 to-white border-l-4 border-atipical-blue rounded-lg shadow-sm p-3 sm:p-4 mb-4 sm:mb-6">
+              <div class="flex items-start space-x-2 sm:space-x-3">
                 <div class="flex-shrink-0">
                   <svg class="w-5 h-5 text-atipical-blue mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <div class="flex-1">
+                <div class="flex-1 min-w-0">
                   <p class="text-sm text-gray-700 font-medium">Admin User!</p>
-                  <p class="text-xs text-gray-600 mt-1">
+                  <p class="text-xs text-gray-600 mt-1 break-all">
                     This is your main administrative panel. API URL: 
-                    <code class="bg-blue-100 text-atipical-blue px-2 py-0.5 rounded text-xs font-mono">{{ apiUrl }}</code>
+                    <code class="bg-blue-100 text-atipical-blue px-2 py-0.5 rounded text-xs font-mono break-all">{{ apiUrl }}</code>
                   </p>
                 </div>
               </div>
             </div>
 
             <!-- Error State -->
-            <div v-if="error" class="bg-red-50 border-l-4 border-red-500 rounded-lg shadow-sm p-4 mb-6">
-              <div class="flex items-start space-x-3">
+            <div v-if="error" class="bg-red-50 border-l-4 border-red-500 rounded-lg shadow-sm p-3 sm:p-4 mb-4 sm:mb-6">
+              <div class="flex items-start space-x-2 sm:space-x-3">
                 <div class="flex-shrink-0">
                   <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
               <!-- Total Users Card -->
               <router-link 
                 to="/users"
@@ -139,11 +139,11 @@
             </div>
 
             <!-- Content Grid - More space for future content -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-              <!-- Recent Activity Section - Takes 3 columns (75%) -->
-              <div class="lg:col-span-3 bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4">
+              <!-- Recent Activity Section - Takes 3 columns (75%) on desktop, full width on mobile -->
+              <div class="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 sm:p-5 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
-                  <h2 class="text-lg font-bold text-gray-900">{{ t('dashboard.recentActivity') }}</h2>
+                  <h2 class="text-base sm:text-lg font-bold text-gray-900">{{ t('dashboard.recentActivity') }}</h2>
                   <div class="flex items-center space-x-2" v-if="recentActivity.length > 5">
                     <button
                       @click="activityPage = Math.max(1, activityPage - 1)"
@@ -154,7 +154,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                       </svg>
                     </button>
-                    <span class="text-sm text-gray-600">{{ activityPage }} / {{ totalActivityPages }}</span>
+                    <span class="text-xs sm:text-sm text-gray-600">{{ activityPage }} / {{ totalActivityPages }}</span>
                     <button
                       @click="activityPage = Math.min(totalActivityPages, activityPage + 1)"
                       :disabled="activityPage === totalActivityPages"
@@ -179,17 +179,17 @@
                 </div>
 
                 <!-- Activity Items -->
-                <div v-else-if="paginatedActivity.length > 0" class="space-y-3">
+                <div v-else-if="paginatedActivity.length > 0" class="space-y-2 sm:space-y-3">
                   <div
                     v-for="(activity, index) in paginatedActivity"
                     :key="`activity-${index}`"
-                    class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    class="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                   >
                     <div
-                      class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                      class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0"
                       :class="getActivityIconBg(activity.type)"
                     >
-                      <svg class="w-5 h-5" :class="getActivityIconColor(activity.type)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg class="w-4 h-4 sm:w-5 sm:h-5" :class="getActivityIconColor(activity.type)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path v-if="activity.type === 'USER'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         <path v-else-if="activity.type === 'PLACE'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path v-else-if="activity.type === 'REPORT'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -197,7 +197,7 @@
                       </svg>
                     </div>
                     <div class="flex-1 min-w-0">
-                      <p class="text-sm font-medium text-gray-900 truncate">{{ activity.title }}</p>
+                      <p class="text-xs sm:text-sm font-medium text-gray-900 truncate">{{ activity.title }}</p>
                       <p class="text-xs text-gray-500">{{ activity.subtitle }} • {{ formatTimeAgo(activity.createdAt) }}</p>
                     </div>
                   </div>
@@ -355,6 +355,9 @@ import SkeletonLoader from '@/components/SkeletonLoader.vue'
 
 const { t } = useI18n()
 const apiUrl = computed(() => import.meta.env.VITE_API_BASE_URL)
+
+// Sidebar state for mobile
+const sidebarOpen = ref(false)
 
 // Dashboard statistics
 const loading = ref(true)

@@ -9,7 +9,7 @@
   >
     <div
       v-if="isOpen"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-0 sm:p-4"
       @click.self="handleClose"
     >
       <transition
@@ -22,20 +22,20 @@
       >
         <div
           v-if="isOpen"
-          class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
+          class="bg-white sm:rounded-xl shadow-2xl max-w-2xl w-full h-full sm:h-auto sm:max-h-[90vh] overflow-hidden"
         >
           <!-- Modal Header -->
-          <div class="border-b border-gray-200 px-6 py-5">
+          <div class="border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-5">
             <div class="flex items-center justify-between">
               <div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ t('serviceTypes.edit.title') }}</h2>
-                <p class="text-sm text-gray-500 mt-1">{{ t('serviceTypes.edit.subtitle') }}</p>
+                <h2 class="text-lg sm:text-2xl font-bold text-gray-900">{{ t('serviceTypes.edit.title') }}</h2>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ t('serviceTypes.edit.subtitle') }}</p>
               </div>
               <button
                 @click="handleClose"
                 class="text-gray-400 hover:text-gray-600 transition-colors"
               >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -43,8 +43,8 @@
           </div>
 
           <!-- Modal Body -->
-          <div class="px-6 py-5 overflow-y-auto max-h-[calc(90vh-180px)]">
-            <form @submit.prevent="handleSubmit" class="space-y-6">
+          <div class="px-4 sm:px-6 py-4 sm:py-5 overflow-y-auto max-h-[calc(90vh-180px)]">
+            <form @submit.prevent="handleSubmit" class="space-y-4 sm:space-y-6">
               <!-- Service Type ID (Read-only) -->
               <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">

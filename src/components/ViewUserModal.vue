@@ -14,7 +14,7 @@
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4">
+        <div class="flex min-h-full items-center justify-center p-0 sm:p-4">
           <TransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -24,11 +24,11 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <DialogPanel class="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white shadow-xl transition-all">
+            <DialogPanel class="w-full h-full sm:h-auto sm:max-w-2xl transform overflow-hidden sm:rounded-2xl bg-white shadow-xl transition-all">
               <!-- Modal Header -->
-              <div class="bg-gradient-to-r from-atipical-blue to-blue-600 px-6 py-4">
+              <div class="bg-gradient-to-r from-atipical-blue to-blue-600 px-4 sm:px-6 py-3 sm:py-4">
                 <div class="flex items-center justify-between">
-                  <DialogTitle class="text-xl font-bold text-white flex items-center gap-2">
+                  <DialogTitle class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
                     <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -40,7 +40,7 @@
                     @click="handleClose"
                     class="text-white hover:text-gray-200 transition-colors"
                   >
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -48,7 +48,7 @@
               </div>
 
               <!-- Modal Content -->
-              <div class="px-6 py-6">
+              <div class="px-4 sm:px-6 py-4 sm:py-6">
                 <!-- User Avatar and Basic Info -->
                 <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-200">
                   <div class="flex-shrink-0 h-20 w-20 bg-atipical-blue rounded-full flex items-center justify-center">
@@ -79,7 +79,7 @@
                 </div>
 
                 <!-- User Details Grid -->
-                <div class="space-y-6">
+                <div class="space-y-4 sm:space-y-6">
                   <!-- Account Information -->
                   <div>
                     <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">

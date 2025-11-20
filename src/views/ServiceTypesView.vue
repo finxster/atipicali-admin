@@ -1,19 +1,19 @@
 <template>
   <div class="flex flex-col min-h-screen bg-gray-50">
-    <Navbar />
+    <Navbar @toggle-sidebar="sidebarOpen = !sidebarOpen" />
     
     <div class="flex flex-1">
-      <Sidebar />
+      <Sidebar :is-open="sidebarOpen" @close="sidebarOpen = false" />
       
-      <main class="flex-1 p-6 flex flex-col">
+      <main class="flex-1 p-3 sm:p-4 lg:p-6 flex flex-col">
         <div class="flex-1 flex flex-col">
           <!-- Main content card wrapper -->
           <div class="h-full bg-white rounded-xl shadow-lg flex flex-col">
             <!-- Header Section -->
-            <div class="border-b border-gray-200 p-6 flex-shrink-0">
-              <div class="flex items-center justify-between mb-4">
+            <div class="border-b border-gray-200 p-3 sm:p-4 lg:p-6 flex-shrink-0">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                 <div>
-                  <h1 class="text-2xl font-bold text-gray-900">{{ t('serviceTypes.title') }}</h1>
+                  <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{{ t('serviceTypes.title') }}</h1>
                   <p class="text-sm text-gray-500 mt-1">{{ t('serviceTypes.subtitle') }}</p>
                 </div>
                 <div class="flex items-center gap-3">
@@ -24,7 +24,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
-                    <span class="font-medium">{{ t('serviceTypes.addNew') }}</span>
+                    <span class="font-medium hidden sm:inline">{{ t('serviceTypes.addNew') }}</span>
                   </button>
                 </div>
               </div>
@@ -397,6 +397,9 @@ import SkeletonLoader from '@/components/SkeletonLoader.vue'
 import apiClient from '@/utils/axios'
 
 const { t } = useI18n()
+
+// Sidebar state
+const sidebarOpen = ref(false)
 
 // Search and Filter State
 const searchQuery = ref('')

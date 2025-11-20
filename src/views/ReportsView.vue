@@ -1,15 +1,15 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <Navbar />
+    <Navbar @toggle-sidebar="sidebarOpen = !sidebarOpen" />
     
     <div class="flex">
-      <Sidebar />
+      <Sidebar :is-open="sidebarOpen" @close="sidebarOpen = false" />
       
-      <main class="flex-1 p-6">
-        <div class="bg-white rounded-xl shadow-lg p-6">
+      <main class="flex-1 p-3 sm:p-4 lg:p-6">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-4 lg:p-6">
           <!-- Header -->
           <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-900">{{ t('reports.title') }}</h1>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{{ t('reports.title') }}</h1>
             <p class="text-sm text-gray-500 mt-1">{{ t('reports.description') }}</p>
           </div>
 
@@ -235,6 +235,9 @@ import ViewReportModal from '@/components/ViewReportModal.vue'
 import apiClient from '@/utils/axios'
 
 const { t, locale } = useI18n()
+
+// Sidebar state
+const sidebarOpen = ref(false)
 
 const reports = ref([])
 const loading = ref(false)
