@@ -195,8 +195,42 @@
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent transition-all"
                     :class="{ 'border-red-500': errors.imageUrl }"
                     @input="handleImageUrlInput"
+                    @blur="validateImageSize"
                   />
                   <p v-if="errors.imageUrl" class="mt-1 text-sm text-red-600">{{ errors.imageUrl }}</p>
+                  
+                  <!-- Image Size Warning -->
+                  <div v-if="imageSize" class="mt-2 p-3 rounded-lg" :class="{
+                    'bg-yellow-50 border border-yellow-200': imageSize.percentage > 80 && imageSize.percentage <= 100,
+                    'bg-red-50 border border-red-200': imageSize.percentage > 100,
+                    'bg-green-50 border border-green-200': imageSize.percentage <= 80
+                  }">
+                    <div class="flex items-start space-x-2">
+                      <svg v-if="imageSize.percentage > 80" class="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <svg v-else-if="imageSize.percentage <= 80" class="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <div class="flex-1">
+                        <p class="text-sm font-medium" :class="{
+                          'text-yellow-800': imageSize.percentage > 80 && imageSize.percentage <= 100,
+                          'text-red-800': imageSize.percentage > 100,
+                          'text-green-800': imageSize.percentage <= 80
+                        }">
+                          {{ imageSize.percentage > 100 ? t('places.editPlace.imageSizeTooLarge') : imageSize.percentage > 80 ? t('places.editPlace.imageSizeLarge') : t('places.editPlace.imageSizeOK') }}
+                        </p>
+                        <p class="text-xs mt-1" :class="{
+                          'text-yellow-700': imageSize.percentage > 80 && imageSize.percentage <= 100,
+                          'text-red-700': imageSize.percentage > 100,
+                          'text-green-700': imageSize.percentage <= 80
+                        }">
+                          {{ imageSize.size }} {{ t('places.editPlace.imageSizeOf') }} {{ imageSize.maxSize }} {{ t('places.editPlace.imageSizeMax') }}
+                          <span v-if="imageSize.percentage > 80" class="block mt-1">{{ t('places.editPlace.imageSizeWarning') }}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                   
                   <!-- Image Preview -->
                   <div v-if="imagePreview && !imageLoadError" class="mt-3 rounded-lg overflow-hidden border border-gray-300 bg-gray-50">
@@ -418,6 +452,7 @@
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import apiClient from '@/utils/axios'
+import { getImageFileSize, checkImageSize } from '@/utils/imageOptimization'
 
 const { t, locale } = useI18n()
 
@@ -453,6 +488,8 @@ const isSubmitting = ref(false)
 const imagePreview = ref(null)
 const imageLoadError = ref(false)
 const selectedServiceType = ref('')
+const imageSize = ref(null)
+const isCheckingImageSize = ref(false)
 
 // Service types - fetched from API
 const serviceTypes = ref([])
@@ -795,6 +832,30 @@ const handleImageUrlInput = () => {
     delete errors.value.imageUrl
   }
   imageLoadError.value = false
+  imageSize.value = null
+}
+
+// Validate image size by checking HEAD request
+const validateImageSize = async () => {
+  if (!formData.value.imageUrl || !formData.value.imageUrl.trim()) {
+    imageSize.value = null
+    return
+  }
+
+  isCheckingImageSize.value = true
+  try {
+    const bytes = await getImageFileSize(formData.value.imageUrl)
+    if (bytes) {
+      imageSize.value = checkImageSize(bytes, 5) // 5MB max
+    } else {
+      imageSize.value = null
+    }
+  } catch (error) {
+    console.warn('Could not check image size:', error)
+    imageSize.value = null
+  } finally {
+    isCheckingImageSize.value = false
+  }
 }
 
 // Handle image load error
