@@ -39,6 +39,18 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/reports',
+    name: 'Reports',
+    component: () => import('@/views/ReportsView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: () => import('@/views/UsersView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/',
     redirect: '/dashboard'
   }

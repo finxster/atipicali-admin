@@ -57,127 +57,164 @@
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <!-- Total Users Card -->
-              <div class="bg-gradient-to-r from-blue-50 to-white border-l-4 border-atipical-blue rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4">
+              <router-link 
+                to="/users"
+                class="bg-gradient-to-r from-blue-50 to-white border-l-4 border-atipical-blue rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 cursor-pointer group"
+              >
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Total Users</p>
                     <SkeletonLoader v-if="loading" width="80px" height="2rem" custom-class="mb-1" />
-                    <p v-else class="text-2xl font-bold text-gray-900">{{ dashboardStats.totalUsers }}</p>
+                    <p v-else class="text-2xl font-bold text-gray-900 group-hover:text-atipical-blue transition-colors">{{ dashboardStats.totalUsers }}</p>
                     <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
-                  <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-atipical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-atipical-blue transition-colors">
+                    <svg class="w-6 h-6 text-atipical-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                   </div>
                 </div>
-              </div>
+              </router-link>
 
               <!-- Total Places Card -->
-              <div class="bg-gradient-to-r from-green-50 to-white border-l-4 border-atipical-green rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4">
+              <router-link 
+                to="/places"
+                class="bg-gradient-to-r from-green-50 to-white border-l-4 border-atipical-green rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 cursor-pointer group"
+              >
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Total Places</p>
                     <SkeletonLoader v-if="loading" width="80px" height="2rem" custom-class="mb-1" />
-                    <p v-else class="text-2xl font-bold text-gray-900">{{ dashboardStats.totalPlaces }}</p>
+                    <p v-else class="text-2xl font-bold text-gray-900 group-hover:text-atipical-green transition-colors">{{ dashboardStats.totalPlaces }}</p>
                     <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
-                  <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-atipical-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-atipical-green transition-colors">
+                    <svg class="w-6 h-6 text-atipical-green group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                 </div>
-              </div>
+              </router-link>
 
               <!-- Pending Approvals Card -->
-              <div class="bg-gradient-to-r from-yellow-50 to-white border-l-4 border-atipical-yellow rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4">
+              <router-link 
+                to="/pending-places"
+                class="bg-gradient-to-r from-yellow-50 to-white border-l-4 border-atipical-yellow rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 cursor-pointer group"
+              >
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Pending Approvals</p>
                     <SkeletonLoader v-if="loading" width="80px" height="2rem" custom-class="mb-1" />
-                    <p v-else class="text-2xl font-bold text-gray-900">{{ dashboardStats.totalPlacesPendingApproval || 0 }}</p>
+                    <p v-else class="text-2xl font-bold text-gray-900 group-hover:text-atipical-yellow transition-colors">{{ dashboardStats.totalPlacesPendingApproval || 0 }}</p>
                     <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
-                  <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-atipical-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-atipical-yellow transition-colors">
+                    <svg class="w-6 h-6 text-atipical-yellow group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                 </div>
-              </div>
+              </router-link>
 
               <!-- Critical Alerts Card -->
-              <div class="bg-gradient-to-r from-red-50 to-white border-l-4 border-atipical-red rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4">
+              <router-link 
+                to="/reports"
+                class="bg-gradient-to-r from-red-50 to-white border-l-4 border-atipical-red rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 cursor-pointer group"
+              >
                 <div class="flex items-center justify-between">
                   <div class="flex-1">
                     <p class="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Critical Alerts</p>
-                    <p class="text-2xl font-bold text-gray-900">-</p>
+                    <SkeletonLoader v-if="loading" width="80px" height="2rem" custom-class="mb-1" />
+                    <p v-else class="text-2xl font-bold text-gray-900 group-hover:text-atipical-red transition-colors">{{ dashboardStats.criticalAlerts || 0 }}</p>
                     <p class="text-xs text-gray-500 mt-1">&nbsp;</p>
                   </div>
-                  <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-atipical-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-atipical-red transition-colors">
+                    <svg class="w-6 h-6 text-atipical-red group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                   </div>
                 </div>
-              </div>
+              </router-link>
             </div>
 
             <!-- Content Grid - More space for future content -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <!-- Next Steps Card - Takes 2 columns -->
-              <div class="lg:col-span-2 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-sm p-5 border border-gray-100">
-                <div class="flex items-center space-x-2 mb-4">
-                  <div class="w-8 h-8 bg-atipical-blue rounded-lg flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+              <!-- Recent Activity Section - Takes 3 columns (75%) -->
+              <div class="lg:col-span-3 bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                  <h2 class="text-lg font-bold text-gray-900">{{ t('dashboard.recentActivity') }}</h2>
+                  <div class="flex items-center space-x-2" v-if="recentActivity.length > 5">
+                    <button
+                      @click="activityPage = Math.max(1, activityPage - 1)"
+                      :disabled="activityPage === 1"
+                      class="p-1 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <span class="text-sm text-gray-600">{{ activityPage }} / {{ totalActivityPages }}</span>
+                    <button
+                      @click="activityPage = Math.min(totalActivityPages, activityPage + 1)"
+                      :disabled="activityPage === totalActivityPages"
+                      class="p-1 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Loading State -->
+                <div v-if="loading" class="space-y-3">
+                  <div v-for="i in 5" :key="`skeleton-${i}`" class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <SkeletonLoader width="40px" height="40px" custom-class="rounded-full" />
+                    <div class="flex-1 space-y-2">
+                      <SkeletonLoader width="60%" height="14px" />
+                      <SkeletonLoader width="40%" height="12px" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Activity Items -->
+                <div v-else-if="paginatedActivity.length > 0" class="space-y-3">
+                  <div
+                    v-for="(activity, index) in paginatedActivity"
+                    :key="`activity-${index}`"
+                    class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <div
+                      class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                      :class="getActivityIconBg(activity.type)"
+                    >
+                      <svg class="w-5 h-5" :class="getActivityIconColor(activity.type)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path v-if="activity.type === 'USER'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <path v-else-if="activity.type === 'PLACE'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path v-else-if="activity.type === 'REPORT'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        <path v-else-if="activity.type === 'REVIEW'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                      </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 truncate">{{ activity.title }}</p>
+                      <p class="text-xs text-gray-500">{{ activity.subtitle }} • {{ formatTimeAgo(activity.createdAt) }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Empty State -->
+                <div v-else class="text-center py-8">
+                  <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h2 class="text-lg font-bold text-gray-900">Next Steps</h2>
+                  <p class="text-sm text-gray-500">{{ t('dashboard.noActivity') }}</p>
                 </div>
-                
-                <ul class="space-y-2">
-                  <li class="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-atipical-blue hover:shadow-sm transition-all">
-                    <div class="flex-shrink-0 w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
-                      <span class="text-atipical-blue text-xs font-bold">1</span>
-                    </div>
-                    <div class="flex-1">
-                      <p class="text-sm text-gray-700">
-                        The authentication logic is <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">**mocked**</code> in 
-                        <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">src/store/auth.js</code>. 
-                        Replace it with real API calls using <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">apiClient</code>.
-                      </p>
-                    </div>
-                  </li>
-                  
-                  <li class="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-atipical-blue hover:shadow-sm transition-all">
-                    <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
-                      <span class="text-atipical-green text-xs font-bold">2</span>
-                    </div>
-                    <div class="flex-1">
-                      <p class="text-sm text-gray-700">
-                        Implement actual API logic in <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">src/utils/axios.js</code> 
-                        for interceptors, like refreshing the token on 401.
-                      </p>
-                    </div>
-                  </li>
-                  
-                  <li class="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-atipical-blue hover:shadow-sm transition-all">
-                    <div class="flex-shrink-0 w-5 h-5 bg-yellow-100 rounded-full flex items-center justify-center mt-0.5">
-                      <span class="text-atipical-yellow text-xs font-bold">3</span>
-                    </div>
-                    <div class="flex-1">
-                      <p class="text-sm text-gray-700">
-                        Expand the sidebar and add more routes to <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">src/router/index.js</code>.
-                      </p>
-                    </div>
-                  </li>
-                </ul>
               </div>
 
-              <!-- Quick Actions Card - Takes 1 column -->
+              <!-- Quick Actions Card - Takes 1 column (25%) -->
               <div class="bg-gradient-to-br from-blue-50 to-white rounded-lg shadow-sm p-5 border border-gray-100">
                 <h2 class="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
                 <div class="space-y-2">
@@ -204,46 +241,54 @@
               </div>
             </div>
 
-            <!-- Recent Activity Section -->
-            <div class="mt-4 bg-white rounded-lg shadow-sm p-5 border border-gray-100">
-              <h2 class="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
-              <div class="space-y-3">
-                <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 text-atipical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 truncate">New user registered</p>
-                    <p class="text-xs text-gray-500">john.doe@example.com • 5 minutes ago</p>
-                  </div>
+            <!-- Next Steps Card - Full width below -->
+            <div class="mt-4 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-sm p-5 border border-gray-100">
+              <div class="flex items-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-atipical-blue rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
                 </div>
-                
-                <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 text-atipical-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 truncate">Task completed</p>
-                    <p class="text-xs text-gray-500">Project review • 15 minutes ago</p>
-                  </div>
-                </div>
-                
-                <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 text-atipical-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 truncate">Pending approval</p>
-                    <p class="text-xs text-gray-500">Budget request #4521 • 1 hour ago</p>
-                  </div>
-                </div>
+                <h2 class="text-lg font-bold text-gray-900">Next Steps</h2>
               </div>
+              
+              <ul class="space-y-2">
+                <li class="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-atipical-blue hover:shadow-sm transition-all">
+                  <div class="flex-shrink-0 w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
+                    <span class="text-atipical-blue text-xs font-bold">1</span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm text-gray-700">
+                      The authentication logic is <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">**mocked**</code> in 
+                      <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">src/store/auth.js</code>. 
+                      Replace it with real API calls using <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">apiClient</code>.
+                    </p>
+                  </div>
+                </li>
+                
+                <li class="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-atipical-blue hover:shadow-sm transition-all">
+                  <div class="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
+                    <span class="text-atipical-green text-xs font-bold">2</span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm text-gray-700">
+                      Implement actual API logic in <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">src/utils/axios.js</code> 
+                      for interceptors, like refreshing the token on 401.
+                    </p>
+                  </div>
+                </li>
+                
+                <li class="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-atipical-blue hover:shadow-sm transition-all">
+                  <div class="flex-shrink-0 w-5 h-5 bg-yellow-100 rounded-full flex items-center justify-center mt-0.5">
+                    <span class="text-atipical-yellow text-xs font-bold">3</span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm text-gray-700">
+                      Expand the sidebar and add more routes to <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">src/router/index.js</code>.
+                    </p>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -317,7 +362,23 @@ const error = ref(null)
 const dashboardStats = ref({
   totalUsers: 0,
   totalPlaces: 0,
-  totalPlacesPendingApproval: 0
+  totalPlacesPendingApproval: 0,
+  criticalAlerts: 0
+})
+const recentActivity = ref([])
+
+// Activity pagination
+const activityPage = ref(1)
+const itemsPerPage = 5
+
+const paginatedActivity = computed(() => {
+  const start = (activityPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return recentActivity.value.slice(start, end)
+})
+
+const totalActivityPages = computed(() => {
+  return Math.ceil(recentActivity.value.length / itemsPerPage)
 })
 
 // Add Place Modal
@@ -337,6 +398,7 @@ const fetchDashboardStats = async () => {
     error.value = null
     const response = await apiClient.get('/api/dashboard')
     dashboardStats.value = response.data
+    recentActivity.value = response.data.recentActivity || []
   } catch (err) {
     console.error('Error fetching dashboard stats:', err)
     
@@ -353,8 +415,10 @@ const fetchDashboardStats = async () => {
     dashboardStats.value = {
       totalUsers: 0,
       totalPlaces: 0,
-      totalPlacesPendingApproval: 0
+      totalPlacesPendingApproval: 0,
+      criticalAlerts: 0
     }
+    recentActivity.value = []
   } finally {
     loading.value = false
   }
@@ -387,6 +451,45 @@ const handleServiceTypeAdded = (newServiceType) => {
   setTimeout(() => {
     showSuccessMessage.value = false
   }, 5000)
+}
+
+// Activity helpers
+const getActivityIconBg = (type) => {
+  switch (type) {
+    case 'USER': return 'bg-blue-100'
+    case 'PLACE': return 'bg-green-100'
+    case 'REPORT': return 'bg-red-100'
+    case 'REVIEW': return 'bg-yellow-100'
+    default: return 'bg-gray-100'
+  }
+}
+
+const getActivityIconColor = (type) => {
+  switch (type) {
+    case 'USER': return 'text-atipical-blue'
+    case 'PLACE': return 'text-atipical-green'
+    case 'REPORT': return 'text-atipical-red'
+    case 'REVIEW': return 'text-atipical-yellow'
+    default: return 'text-gray-600'
+  }
+}
+
+const formatTimeAgo = (dateString) => {
+  const now = new Date()
+  const date = new Date(dateString)
+  const seconds = Math.floor((now - date) / 1000)
+  
+  if (seconds < 60) return 'just now'
+  const minutes = Math.floor(seconds / 60)
+  if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`
+  const days = Math.floor(hours / 24)
+  if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`
+  const weeks = Math.floor(days / 7)
+  if (weeks < 4) return `${weeks} week${weeks > 1 ? 's' : ''} ago`
+  const months = Math.floor(days / 30)
+  return `${months} month${months > 1 ? 's' : ''} ago`
 }
 
 // Load dashboard data on mount
