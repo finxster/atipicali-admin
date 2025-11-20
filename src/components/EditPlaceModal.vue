@@ -39,6 +39,21 @@
 
             <!-- Form Content -->
             <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+              <!-- General Error Banner -->
+              <div v-if="errors.general" class="mb-4 sm:mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-3">
+                <svg class="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div class="flex-1">
+                  <p class="text-sm text-red-800 font-medium">{{ errors.general }}</p>
+                </div>
+                <button @click="errors.general = null" class="text-red-400 hover:text-red-600">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
               <form @submit.prevent="handleSubmit" class="space-y-4 sm:space-y-6">
                 <!-- ID (Read-only) -->
                 <div>
@@ -933,13 +948,22 @@ const handleSubmit = async () => {
     closeModal()
   } catch (error) {
     console.error('Error updating place:', error)
+    isSubmitting.value = false
     
-    if (error.response?.data?.errors) {
+    // Handle different types of errors
+    if (!error.response) {
+      // Network error - no response from server
+      errors.value.general = t('places.editPlace.errors.network') || 'Network error. Please check your connection and try again.'
+    } else if (error.response.status === 401 || error.response.status === 403) {
+      // Authentication error - session expired (interceptor will handle redirect)
+      errors.value.general = t('places.editPlace.errors.sessionExpired') || 'Your session has expired. Please log in again.'
+    } else if (error.response?.data?.errors) {
+      // Validation errors from backend
       errors.value = error.response.data.errors
     } else {
+      // Generic error with message from backend or fallback
       errors.value.general = error.response?.data?.message || t('places.editPlace.errors.general')
     }
-    isSubmitting.value = false
   }
 }
 

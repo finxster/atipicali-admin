@@ -11,7 +11,9 @@
     "forgotPassword": "Forgot password?",
     "signIn": "Sign in",
     "welcome": "Welcome back",
-    "loginSubtitle": "Sign in to access your admin panel"
+    "loginSubtitle": "Sign in to access your admin panel",
+    "sessionExpired": "Your session has expired. Please log in again to continue.",
+    "unauthorized": "You are not authorized to perform this action. Please log in."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -141,7 +143,9 @@
         "descriptionRequired": "Description is required",
         "addressRequired": "Address is required",
         "invalidCoordinates": "Please select a valid address from the suggestions",
-        "general": "Failed to create place. Please try again."
+        "general": "Failed to create place. Please try again.",
+        "network": "Network error. Please check your connection and try again.",
+        "sessionExpired": "Your session has expired. Please log in again."
       }
     },
     "viewPlace": {
@@ -223,7 +227,9 @@
         "descriptionRequired": "Description is required",
         "addressRequired": "Address is required",
         "invalidCoordinates": "Please select a valid address from the suggestions",
-        "general": "Failed to update place. Please try again."
+        "general": "Failed to update place. Please try again.",
+        "network": "Network error. Please check your connection and try again.",
+        "sessionExpired": "Your session has expired. Please log in again."
       }
     },
     "contactType": {

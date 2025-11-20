@@ -11,7 +11,9 @@
     "forgotPassword": "Esqueceu a senha?",
     "signIn": "Entrar",
     "welcome": "Bem-vindo de volta",
-    "loginSubtitle": "Entre para acessar seu painel administrativo"
+    "loginSubtitle": "Entre para acessar seu painel administrativo",
+    "sessionExpired": "Sua sessão expirou. Por favor, faça login novamente para continuar.",
+    "unauthorized": "Você não está autorizado a realizar esta ação. Por favor, faça login."
   },
   "dashboard": {
     "title": "Painel",
@@ -137,11 +139,13 @@
       "submitting": "Criando...",
       "successMessage": "Local {name} criado com sucesso!",
       "errors": {
-        "nameRequired": "O nome do local é obrigatório",
-        "descriptionRequired": "A descrição é obrigatória",
-        "addressRequired": "O endereço é obrigatório",
+        "nameRequired": "Nome do local é obrigatório",
+        "descriptionRequired": "Descrição é obrigatória",
+        "addressRequired": "Endereço é obrigatório",
         "invalidCoordinates": "Por favor, selecione um endereço válido das sugestões",
-        "general": "Falha ao criar local. Por favor, tente novamente."
+        "general": "Falha ao criar local. Por favor, tente novamente.",
+        "network": "Erro de rede. Por favor, verifique sua conexão e tente novamente.",
+        "sessionExpired": "Sua sessão expirou. Por favor, faça login novamente."
       }
     },
     "viewPlace": {
@@ -219,11 +223,13 @@
       "submitting": "Salvando...",
       "successMessage": "Local {name} atualizado com sucesso!",
       "errors": {
-        "nameRequired": "O nome do local é obrigatório",
-        "descriptionRequired": "A descrição é obrigatória",
-        "addressRequired": "O endereço é obrigatório",
+        "nameRequired": "Nome do local é obrigatório",
+        "descriptionRequired": "Descrição é obrigatória",
+        "addressRequired": "Endereço é obrigatório",
         "invalidCoordinates": "Por favor, selecione um endereço válido das sugestões",
-        "general": "Falha ao atualizar local. Por favor, tente novamente."
+        "general": "Falha ao atualizar local. Por favor, tente novamente.",
+        "network": "Erro de rede. Por favor, verifique sua conexão e tente novamente.",
+        "sessionExpired": "Sua sessão expirou. Por favor, faça login novamente."
       }
     },
     "contactType": {

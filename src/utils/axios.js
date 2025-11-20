@@ -25,10 +25,16 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    // Handle authentication errors (401 Unauthorized or 403 Forbidden with expired token)
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      console.warn('Authentication error - session expired or unauthorized')
       const authStore = useAuthStore()
       authStore.logout()
-      router.push('/login')
+      
+      // Only redirect if not already on login page
+      if (router.currentRoute.value.path !== '/login') {
+        router.push('/login')
+      }
     }
     return Promise.reject(error)
   }
