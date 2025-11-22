@@ -69,7 +69,7 @@
                   <input
                     v-model="form.email"
                     type="email"
-                    :placeholder="t('addUser.emailPlaceholder')"
+                    placeholder="contato@atipicali.com"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-atipical-blue focus:border-transparent"
                     required
                   />
